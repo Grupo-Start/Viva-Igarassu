@@ -37,11 +37,6 @@ Cada ponto turístico visitado gera uma figurinha digital colecionável, formand
 Estimula o visitante a explorar novos locais e aprender sobre a história e o patrimônio da cidade.
 Pode incluir recompensas simbólicas ou descontos para os participantes mais engajados.
 
-## 🗺️ **Roteiros Personalizados**
-
-Permite ao usuário criar roteiros turísticos sob medida, de acordo com seus interesses, tempo disponível e perfil de visita.
-Gera sugestões automáticas de locais, trilhas e experiências personalizadas.
-Facilita o planejamento e torna a visita mais organizada e educativa.
 
 ## **Tecnologias Utilizadas**
 
