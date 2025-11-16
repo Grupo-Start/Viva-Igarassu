@@ -88,7 +88,7 @@ model usuario_figurinhas {
 
 model usuarios {
   id_usuario         Int                   @id @default(autoincrement())
-  nome_completo      String?               @map("nome completo") @db.VarChar(150)
+  nome_completo      String?               @map("nome_completo") @db.VarChar(150)
   email              String                @unique(map: "email") @db.VarChar(100)
   senha              String?               @db.VarChar(100)
   preferencia        usuarios_preferencia?
