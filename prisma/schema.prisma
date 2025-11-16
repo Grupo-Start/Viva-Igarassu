@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model empresa {
+  id_empresa    Int                   @default(autoincrement())
+  nome_empresa  String?               @db.VarChar(100)
+  cnpj          String?               @db.VarChar(18)
+  tipo_servico  empresa_tipo_servico?
+  data_cadastro DateTime?             @db.Date
+  id_usuario    Int
+  usuarios      usuarios              @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_empresa_usuarios1")
+
+  @@id([id_empresa, id_usuario])
+  @@index([id_usuario], map: "fk_empresa_usuarios1_idx")
+}
+
+model enderecos {
+  id_endereco       Int                 @id @default(autoincrement())
+  logradouro        String              @db.VarChar(150)
+  numero            String              @db.VarChar(10)
+  bairro            String              @db.VarChar(100)
+  cidade            String              @db.VarChar(100)
+  estado            String              @db.Char(2)
+  cep               String              @db.Char(9)
+  latitude          Decimal?            @db.Decimal(10, 8)
+  longitude         Decimal?            @db.Decimal(10, 8)
+  pontos_turisticos pontos_turisticos[]
+}
+
+model figurinhas {
+  id_figurinhas      Int                  @id @default(autoincrement())
+  nome               String               @db.VarChar(100)
+  descricao          String               @db.Text
+  data_cadastro      DateTime?            @default(now()) @db.Timestamp(0)
+  valor_figurinhas   Int
+  pontos_turisticos  pontos_turisticos[]
+  usuario_figurinhas usuario_figurinhas[]
+}
+
+model pontos_turisticos {
+  id_ponto              Int                     @default(autoincrement())
+  nome                  String                  @db.VarChar(150)
+  descricao             String                  @db.Text
+  horario_funcionamento String?                 @db.VarChar(150)
+  preco_entrada         Decimal?                @db.Decimal(10, 2)
+  tipo                  pontos_turisticos_tipo? @default(Hist_rico)
+  id_figurinhas         Int                     @default(1)
+  id_endereco           Int                     @default(1)
+  enderecos             enderecos               @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_enderecos1")
+  figurinhas            figurinhas              @relation(fields: [id_figurinhas], references: [id_figurinhas], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_figurinhas1")
+
+  @@id([id_ponto, id_figurinhas, id_endereco])
+  @@index([id_endereco], map: "fk_pontos_turisticos_enderecos1_idx")
+  @@index([id_figurinhas], map: "fk_pontos_turisticos_figurinhas1_idx")
+}
+
+model resgates {
+  id_resgates     Int       @default(autoincrement())
+  data_resgate    DateTime? @default(now()) @db.Timestamp(0)
+  valor_resgatado Int?
+  id_recompensas  Int
+  id_usuario      Int
+  usuarios        usuarios  @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_resgates_usuarios1")
+
+  @@id([id_resgates, id_recompensas, id_usuario])
+  @@index([id_recompensas], map: "fk_resgates_recompensas1_idx")
+  @@index([id_usuario], map: "fk_resgates_usuarios1_idx")
+}
+
+model usuario_figurinhas {
+  id_usuario_figurinha Int        @default(autoincrement())
+  conquistada_em       DateTime?  @default(now()) @db.Timestamp(0)
+  id_figurinhas        Int
+  id_usuario           Int
+  figurinhas           figurinhas @relation(fields: [id_figurinhas], references: [id_figurinhas], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_figurinhas_figurinhas1")
+  usuarios             usuarios   @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_figurinhas_usuarios1")
+
+  @@id([id_usuario_figurinha, id_figurinhas, id_usuario])
+  @@index([id_figurinhas], map: "fk_usuario_figurinhas_figurinhas1_idx")
+  @@index([id_usuario], map: "fk_usuario_figurinhas_usuarios1_idx")
+}
+
+model usuarios {
+  id_usuario         Int                   @id @default(autoincrement())
+  nome_completo      String?               @map("nome completo") @db.VarChar(150)
+  email              String                @unique(map: "email") @db.VarChar(100)
+  senha              String?               @db.VarChar(100)
+  preferencia        usuarios_preferencia?
+  data_cadastro      DateTime?             @default(now()) @db.DateTime(0)
+  saldo_moedas       Int?
+  role               usuarios_role?
+  empresa            empresa[]
+  resgates           resgates[]
+  usuario_figurinhas usuario_figurinhas[]
+}
+
+enum empresa_tipo_servico {
+  hospedagem
+  alimenta__o   @map("alimentação")
+  artesanato
+  guiaturistico
+  transporte
+  outros
+}
+
+enum usuarios_preferencia {
+  eventos_culturais  @map("eventos culturais")
+  trilhas_hist_ricas @map("trilhas históricas")
+  gastronomia
+  artesanato
+  educativo
+}
+
+enum pontos_turisticos_tipo {
+  Hist_rico @map("Histórico")
+  Natural
+  cultural
+  outro
+}
+
+enum usuarios_role {
+  comum
+  adm
+  empreendedor
+}
