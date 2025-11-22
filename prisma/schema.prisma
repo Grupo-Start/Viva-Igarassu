@@ -15,6 +15,8 @@ model empresa {
   data_cadastro DateTime?             @db.Date
   id_usuario    Int
   usuarios      usuarios              @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_empresa_usuarios1")
+  eventos       eventos[]
+  recompensas   recompensas[]
 
   @@id([id_empresa, id_usuario])
   @@index([id_usuario], map: "fk_empresa_usuarios1_idx")
@@ -30,6 +32,7 @@ model enderecos {
   cep               String              @db.Char(9)
   latitude          Decimal?            @db.Decimal(10, 8)
   longitude         Decimal?            @db.Decimal(10, 8)
+  eventos           eventos[]
   pontos_turisticos pontos_turisticos[]
 }
 
@@ -61,12 +64,13 @@ model pontos_turisticos {
 }
 
 model resgates {
-  id_resgates     Int       @default(autoincrement())
-  data_resgate    DateTime? @default(now()) @db.Timestamp(0)
+  id_resgates     Int         @default(autoincrement())
+  data_resgate    DateTime?   @default(now()) @db.Timestamp(0)
   valor_resgatado Int?
   id_recompensas  Int
   id_usuario      Int
-  usuarios        usuarios  @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_resgates_usuarios1")
+  recompensas     recompensas @relation(fields: [id_recompensas], references: [id_recompensas], onDelete: NoAction, onUpdate: NoAction, map: "fk_resgates_recompensas1")
+  usuarios        usuarios    @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_resgates_usuarios1")
 
   @@id([id_resgates, id_recompensas, id_usuario])
   @@index([id_recompensas], map: "fk_resgates_recompensas1_idx")
@@ -88,8 +92,8 @@ model usuario_figurinhas {
 
 model usuarios {
   id_usuario         Int                   @id @default(autoincrement())
-  nome_completo      String?               @map("nome_completo") @db.VarChar(150)
-  email              String                @unique(map: "email") @db.VarChar(100)
+  nome_completo      String?               @map("nome completo") @db.VarChar(150)
+  email              String?               @db.VarChar(100)
   senha              String?               @db.VarChar(100)
   preferencia        usuarios_preferencia?
   data_cadastro      DateTime?             @default(now()) @db.DateTime(0)
@@ -98,6 +102,36 @@ model usuarios {
   empresa            empresa[]
   resgates           resgates[]
   usuario_figurinhas usuario_figurinhas[]
+}
+
+model eventos {
+  id_evento   Int       @default(autoincrement())
+  nome        String?   @db.VarChar(100)
+  descricao   String?   @db.Text
+  data        DateTime? @db.Date
+  horario     DateTime? @db.Time(0)
+  id_endereco Int
+  id_empresa  Int
+  empresa     empresa   @relation(fields: [id_empresa], references: [id_empresa], onDelete: NoAction, onUpdate: NoAction, map: "fk_eventos_empresa1")
+  enderecos   enderecos @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_eventos_enderecos1")
+
+  @@id([id_evento, id_endereco, id_empresa])
+  @@index([id_empresa], map: "fk_eventos_empresa1_idx")
+  @@index([id_endereco], map: "fk_eventos_enderecos1_idx")
+}
+
+model recompensas {
+  id_recompensas        Int        @default(autoincrement())
+  nome                  String?    @db.VarChar(100)
+  descricao             String?    @db.Text
+  quantidade_disponivel Int?
+  preco_moedas          Int?
+  id_empresa            Int
+  empresa               empresa    @relation(fields: [id_empresa], references: [id_empresa], onDelete: NoAction, onUpdate: NoAction, map: "fk_recompensas_empresa1")
+  resgates              resgates[]
+
+  @@id([id_recompensas, id_empresa])
+  @@index([id_empresa], map: "fk_recompensas_empresa1_idx")
 }
 
 enum empresa_tipo_servico {
