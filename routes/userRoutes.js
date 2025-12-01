@@ -1,10 +1,22 @@
-import express from 'express';
-import { login, cadastrar } from "../controllers/userController.js";
+import express from "express";
+import userController from "../controllers/userController.js";
+import { permitir, isAdm, isComum, isEmpreendedor } from "../middleware/roles.js";
+import { auth } from "../middleware/auth.js";
 
+
+import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post('/login', login);
-router.post('/cadastrar', cadastrar);
+router.post("/login", userController.login);
+router.post("/cadastrar", userController.cadastrar);
+router.get("/me", auth, userController.getMe);
+router.put("/me", auth, userController.updateMe);
+router.get("/usuarios", auth, isAdm, userController.listarTodos);
+
+
 
 export default router;
+
+
+
