@@ -13,3 +13,4 @@ router.put("/:id", auth, isAdm, pontosController.atualizarPonto);
 router.delete("/:id", auth, isAdm, pontosController.deletarPonto);
 
 export default router;
+ 
