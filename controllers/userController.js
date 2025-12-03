@@ -1,48 +1,63 @@
-import pontosService from "../services/pontos_turisticosService.js";
+import userService from "../services/userService.js";
 
-async function listarPublico(req, res) {
+async function login(req, res) {
   try {
-    const pontos = await pontosService.listarPublico();
-    return res.status(200).json(pontos);
+    const { email, senha } = req.body;
+
+    const result = await userService.login(email, senha);
+
+    return res.status(200).json(result);
 
   } catch (error) {
-    return res.status(500).json({ message: "Erro ao listar pontos turísticos", error });
+    return res.status(400).json({ message: error.message });
   }
 }
 
-async function criarPonto(req, res) {
+async function cadastrar(req, res) {
   try {
-    const ponto = await pontosService.criar(req.body);
-    return res.status(201).json(ponto);
+    const novo = await userService.cadastrar(req.body);
+    return res.status(201).json(novo);
 
   } catch (error) {
-    return res.status(500).json({ message: "Erro ao criar ponto turístico", error });
+    const status = error.status || 400;
+    return res.status(status).json({ message: error.message });
   }
 }
 
-async function atualizarPonto(req, res) {
+async function getMe(req, res) {
   try {
-    const ponto = await pontosService.atualizar(req.params.id, req.body);
-    return res.status(200).json(ponto);
+    const userId = req.userId;
+    const user = await userService.getById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    return res.status(200).json(user);
 
   } catch (error) {
-    return res.status(500).json({ message: "Erro ao atualizar ponto turístico", error });
+    return res.status(500).json({ message: "Erro ao buscar perfil" });
   }
 }
 
-async function deletarPonto(req, res) {
+async function updateMe(req, res) {
   try {
-    const resposta = await pontosService.deletar(req.params.id);
-    return res.status(200).json(resposta);
+    const userId = req.userId;
+    const dados = req.body;
+
+    const atualizado = await userService.updateMe(userId, dados);
+
+    return res.status(200).json(atualizado);
 
   } catch (error) {
-    return res.status(500).json({ message: "Erro ao deletar ponto turístico", error });
+    const status = error.status || 500;
+    return res.status(status).json({ message: error.message });
   }
 }
 
 export default {
-  listarPublico,
-  criarPonto,
-  atualizarPonto,
-  deletarPonto
+  login,
+  cadastrar,
+  getMe,
+  updateMe
 };

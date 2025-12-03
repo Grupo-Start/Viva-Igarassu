@@ -9,6 +9,8 @@ import recompensasRoutes from "./routes/recompensasRoutes.js";
 import resgatesRoutes from "./routes/resgatesRoutes.js";
 import pontos_turisticosRoutes from "./routes/pontos_turisticosRoutes.js";
 
+import dotenv from "dotenv";
+dotenv.config();
 
 
 
