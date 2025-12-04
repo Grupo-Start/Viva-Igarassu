@@ -29,6 +29,6 @@ app.use("/recompensas", recompensasRoutes);
 app.use("/resgates", resgatesRoutes);
 app.use("/pontos-turisticos", pontos_turisticosRoutes);
 
-app.listen(3001, () => console.log("Rodando..."));
+//app.listen(3001, () => console.log("Rodando...")); 
 
 export default app;
