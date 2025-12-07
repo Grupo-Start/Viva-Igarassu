@@ -13,10 +13,13 @@ async function listarPublico(req, res) {
 
 async function criarPonto(req, res) {
   try {
-    const novoPonto = await pontosService.criar(req.body);
+    const novoPonto = await pontosService.criarPonto(req.body);
     return res.status(201).json(novoPonto);
 
-  } catch (error) {
+  } 
+  catch (error) {
+    console.error("ERRO AO CRIAR PONTO TURÍSTICO:", error);
+
     const status = error.status || 500;
     return res.status(status).json({ message: "Erro ao criar ponto turístico" });
   }
@@ -25,11 +28,12 @@ async function criarPonto(req, res) {
 async function atualizarPonto(req, res) {
   try {
     const id = req.params.id;
-    const pontoAtualizado = await pontosService.atualizar(id, req.body);
+    const pontoAtualizado = await pontosService.atualizarPonto(id, req.body);
 
     return res.status(200).json(pontoAtualizado);
 
   } catch (error) {
+    console.error("ERRO AO ATUALIZAR PONTO TURÍSTICO:", error);
     const status = error.status || 500;
     return res.status(status).json({ message: "Erro ao atualizar ponto turístico" });
   }
@@ -38,13 +42,16 @@ async function atualizarPonto(req, res) {
 async function deletarPonto(req, res) {
   try {
     const id = req.params.id;
-    const resultado = await pontosService.deletar(id);
+    const resultado = await pontosService.deletarPonto(id);
 
-    return res.status(200).json(resultado);
+    if (resultado.notFound) {
+      return res.status(404).json({ message: "Ponto turístico não encontrado" });
+    }
 
+    return res.status(204).send(); // sucesso, sem conteúdo
   } catch (error) {
-    const status = error.status || 500;
-    return res.status(status).json({ message: "Erro ao remover ponto turístico" });
+    console.error("ERRO AO DELETAR PONTO TURÍSTICO:", error);
+    return res.status(500).json({ message: "Erro ao remover ponto turístico" });
   }
 }
 

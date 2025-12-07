@@ -5,16 +5,21 @@ async function listarPublico() {
 }
 
 async function criarPonto(dados) {
-  return await pontosRepo.criar(dados);
+  return await pontosRepo.criarPonto(dados);
 }
 
 async function atualizarPonto(id, dados) {
-  return await pontosRepo.atualizar(id, dados);
+  return await pontosRepo.atualizarPonto(id, dados);
 }
 
 async function deletarPonto(id) {
-  return await pontosRepo.deletar(id);
+  const resultado = await pontosRepo.deletarPonto(id);
+  if (!resultado) {
+    return { notFound: true };
+  }
+  return resultado;
 }
+
 
 export default {
   listarPublico,
