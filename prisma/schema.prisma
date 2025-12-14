@@ -22,21 +22,21 @@ model empresa {
 }
 
 model enderecos {
-  id_endereco       Int                 @id @default(autoincrement())
-  logradouro        String              @db.VarChar(150)
-  numero            String              @db.VarChar(10)
-  bairro            String              @db.VarChar(100)
-  cidade            String              @db.VarChar(100)
-  estado            String              @db.Char(2)
-  cep               String              @db.Char(9)
-  latitude          Decimal?            @db.Decimal(10, 8)
-  longitude         Decimal?            @db.Decimal(10, 8)
+  id_endereco       String                 @id @default(uuid())
+  logradouro        String               @db.VarChar(150)
+  numero            String               @db.VarChar(10)
+  bairro            String               @db.VarChar(100)
+  cidade            String               @db.VarChar(100)
+  estado            String               @db.Char(2)
+  cep               String               @db.Char(9)
+  latitude          Decimal?             @db.Decimal(10, 8)
+  longitude         Decimal?             @db.Decimal(10, 8)
   eventos           eventos[]
   pontos_turisticos pontos_turisticos[]
 }
 
 model figurinhas {
-  id_figurinha       Int                  @id @default(autoincrement())
+  id_figurinha       String                  @id @default(uuid())
   nome               String               @db.VarChar(100)
   descricao          String               @db.Text
   data_cadastro      DateTime             @default(now()) @db.Timestamp(0)
@@ -46,14 +46,14 @@ model figurinhas {
 }
 
 model pontos_turisticos {
-  id_ponto              Int                    @id @default(autoincrement())
+  id_ponto              String                    @id @default(uuid())
   nome                  String                 @db.VarChar(150)
   descricao             String                 @db.Text
   horario_funcionamento String?                @db.VarChar(150)
   preco_entrada         Decimal?               @db.Decimal(10, 2)
   tipo                  pontos_turisticos_tipo @default(Hist_rico)
-  id_figurinha          Int                    @default(1)
-  id_endereco           Int                    @default(1)
+  id_figurinha          String
+  id_endereco           String
   enderecos             enderecos              @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_enderecos1")
   figurinhas            figurinhas             @relation(fields: [id_figurinha], references: [id_figurinha], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_figurinhas1")
 
@@ -62,10 +62,10 @@ model pontos_turisticos {
 }
 
 model resgates {
-  id_resgates     Int         @id @default(autoincrement())
+  id_resgates     String      @id @default(uuid())
   data_resgate    DateTime?   @default(now()) @db.Timestamp(0)
   valor_resgatado Int
-  id_recompensas  Int
+  id_recompensas  String
   id_usuario      String
   recompensas     recompensas @relation(fields: [id_recompensas], references: [id_recompensas], onDelete: NoAction, onUpdate: NoAction, map: "fk_resgates_recompensas1")
   usuarios        usuarios    @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_resgates_usuarios1")
@@ -75,9 +75,9 @@ model resgates {
 }
 
 model usuario_figurinhas {
-  id_usuario_figurinha Int        @id @default(autoincrement())
-  conquistada_em       DateTime?  @default(now()) @db.Timestamp(0)
-  id_figurinha         Int
+  id_usuario_figurinha String        @id @default(uuid())
+  conquistada_em       DateTime?   @default(now()) @db.Timestamp(0)
+  id_figurinha         String
   id_usuario           String
   figurinhas           figurinhas @relation(fields: [id_figurinha], references: [id_figurinha], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_figurinhas_figurinhas1")
   usuarios             usuarios   @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_figurinhas_usuarios1")
@@ -87,12 +87,12 @@ model usuario_figurinhas {
 }
 
 model usuarios {
-  id_usuario         String                @id @default(uuid())
-  nome_completo      String                @map("nome_completo") @db.VarChar(150)
-  email              String                @unique @db.VarChar(100)
-  senha              String                @db.VarChar(100)
+  id_usuario         String                 @id @default(uuid())
+  nome_completo      String                 @map("nome_completo") @db.VarChar(150)
+  email              String                 @unique @db.VarChar(100)
+  senha              String                 @db.VarChar(100)
   preferencia        usuarios_preferencia?
-  data_cadastro      DateTime              @default(now()) @db.DateTime(0)
+  data_cadastro      DateTime               @default(now()) @db.DateTime(0)
   saldo_moedas       Int?
   role               usuarios_role
   empresa            empresa[]
@@ -101,12 +101,12 @@ model usuarios {
 }
 
 model eventos {
-  id_evento   Int       @id @default(autoincrement())
+  id_evento   String    @id @default(uuid())
   nome        String    @db.VarChar(100)
   descricao   String?   @db.Text
   data        DateTime  @db.Date
   horario     DateTime? @db.Time(0)
-  id_endereco Int
+  id_endereco String
   id_empresa  String
   empresa     empresa   @relation(fields: [id_empresa], references: [id_empresa], onDelete: NoAction, onUpdate: NoAction, map: "fk_eventos_empresa1")
   enderecos   enderecos @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_eventos_enderecos1")
@@ -116,7 +116,7 @@ model eventos {
 }
 
 model recompensas {
-  id_recompensas        Int        @id @default(autoincrement())
+  id_recompensas        String     @id @default(uuid())
   nome                  String?    @db.VarChar(100)
   descricao             String?    @db.Text
   quantidade_disponivel Int?

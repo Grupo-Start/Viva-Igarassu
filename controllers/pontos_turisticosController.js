@@ -48,7 +48,7 @@ async function deletarPonto(req, res) {
       return res.status(404).json({ message: "Ponto turístico não encontrado" });
     }
 
-    return res.status(204).send(); // sucesso, sem conteúdo
+    return res.status(204).send(); 
   } catch (error) {
     console.error("ERRO AO DELETAR PONTO TURÍSTICO:", error);
     return res.status(500).json({ message: "Erro ao remover ponto turístico" });

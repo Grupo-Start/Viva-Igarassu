@@ -12,7 +12,7 @@ async function criarPonto(data) {
 
 async function atualizarPonto(id, data) {
   return await prisma.pontos_turisticos.update({
-    where: { id_ponto: Number(id) },
+    where: { id_ponto: String(id) },
     data
   });
 }
