@@ -1,21 +1,39 @@
 import { Router } from "express";
 import eventosController from "../controllers/eventosController.js";
+import { auth } from "../middleware/auth.js";
+import { PermitirEvento } from "../middleware/roles.js";
 
 const router = Router();
 
-// lista todos
+// lista eventos
 router.get('/', eventosController.getAll);
 
-// busca por id
+// busca evento por id
 router.get('/:id', eventosController.getById);
 
-// cria
-router.post('/', eventosController.create);
+// cria evento
+router.post(
+    '/',
+    auth,
+    PermitirEvento,
+    eventosController.create
+);
 
-// atualiza
-router.put('/:id', eventosController.update);
+// atualiza evento
+router.put(
+    '/:id',
+    auth,
+    PermitirEvento,
+    eventosController.update
+);
 
-// deleta
-router.delete('/:id', eventosController.delete);
+// deleta evento
+router.delete(
+    '/:id',
+    auth,
+    PermitirEvento,
+    eventosController.delete
+);
 
 export default router;
+

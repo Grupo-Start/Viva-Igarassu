@@ -28,3 +28,15 @@ export function isEmpreendedor(req, res, next) {
     }
     next();
 };
+
+export function PermitirEvento(req, res, next) {
+    const permitido = ["adm", "empreendedor"];
+
+    if (!permitido.includes(req.role)) {
+        return res.status(403).json({
+            message: "Somente administradores ou empreendedores podem criar eventos."
+        });
+    }
+
+    next();
+}
