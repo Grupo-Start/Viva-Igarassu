@@ -44,6 +44,12 @@ Backend da plataforma **Viva Igarassu**, um sistema voltado para o turismo cultu
 
 ---
 
+# 🌍 Viva Igarassu — Backend
+
+Backend da plataforma **Viva Igarassu**, um sistema voltado para o turismo cultural e histórico da cidade de Igarassu, integrando pontos turísticos, eventos, figurinhas digitais, recompensas e visitas via QR Code.
+
+---
+
 ## 🚀 Tecnologias Utilizadas
 
 * **Node.js**
@@ -121,6 +127,32 @@ Cada rota valida o papel do usuário antes de executar a ação.
 * Cadastro e login
 * Perfil do usuário
 * Controle de saldo de moedas
+* Controle de permissões por role (`adm`, `comum`, `empreendedor`)
+
+### 🏢 Empresas
+
+* Cadastro e gerenciamento de empresas locais
+* Empresas associadas a eventos, recompensas e serviços
+* Acesso restrito por perfil (empreendedor / admin)
+
+### 📅 Eventos
+
+* CRUD de eventos culturais e turísticos
+* Associação com empresas
+* Controle de permissão (admin e empreendedor)
+* Listagem pública para usuários
+
+### 🎁 Recompensas
+
+* Cadastro de recompensas pelo administrador
+* Recompensas associadas a empresas
+* Definição de custo em moedas
+
+### 🔄 Resgates
+
+* Usuário troca moedas por recompensas
+* Validação de saldo disponível
+* Registro histórico de resgates
 
 ### 📍 Pontos Turísticos
 
@@ -147,6 +179,21 @@ Retorna:
 * total de figurinhas
 * quantas o usuário conquistou
 * lista com status `conquistada: true | false`
+
+---
+
+### 📸 QR Code e Visitas
+
+* QR Codes são gerados pelo admin
+* Cada QR aponta para um ponto turístico
+* Usuário escaneia o QR estando logado
+* A visita concede automaticamente a figurinha (se ainda não conquistada)
+
+Endpoint:
+
+```
+POST /visitas/qr?token=TOKEN
+```
 
 ---
 
