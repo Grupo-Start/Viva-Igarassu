@@ -1,22 +1,22 @@
 import empresaRepository from "../repositories/empresaRepository.js";
 
-class EmpresaService {
+async function getAll() {
+  return await empresaRepository.findAll();
+}
 
-  async getAll() {
-    return await empresaRepository.findAll();
+async function getById(id) {
+  const empresa = await empresaRepository.findById(id);
+
+  if (!empresa) {
+    const error = new Error("Empresa não encontrada");
+    error.status = 404;
+    throw error;
   }
 
-  async getById(id) {
-    const empresa = await empresaRepository.findById(id);
+  return empresa;
+}
 
-    if (!empresa) {
-      throw new Error("Empresa não encontrada");
-    }
-
-    return empresa;
-  }
-
-  async create(data) {
+async function create(data) {
   const {
     nome_empresa,
     cnpj,
@@ -24,9 +24,10 @@ class EmpresaService {
     id_usuario
   } = data;
 
-  // validações básicas
   if (!nome_empresa || !cnpj || !tipo_servico || !id_usuario) {
-    throw new Error("Campos obrigatórios não preenchidos");
+    const error = new Error("Campos obrigatórios não preenchidos");
+    error.status = 400;
+    throw error;
   }
 
   return await empresaRepository.create({
@@ -38,29 +39,35 @@ class EmpresaService {
   });
 }
 
+async function update(id, data) {
+  await getById(id);
 
-  async update(id, data) {
-    await this.getById(id);
+  const {
+    nome_empresa,
+    cnpj,
+    tipo_servico,
+    id_usuario
+  } = data;
 
-    const {
-      nome_empresa,
-      cnpj,
-      tipo_servico,
-      id_usuario
-    } = data;
-
-    return await empresaRepository.update(id, {
-      nome_empresa,
-      cnpj,
-      tipo_servico,
-      id_usuario: id_usuario !== undefined ? String(id_usuario) : undefined
-    });
-  }
-
-  async delete(id) {
-    await this.getById(id);
-    return await empresaRepository.delete(id);
-  }
+  return await empresaRepository.update(id, {
+    nome_empresa,
+    cnpj,
+    tipo_servico,
+    id_usuario: id_usuario !== undefined ? String(id_usuario) : undefined
+  });
 }
 
-export default new EmpresaService();
+async function deleteEmpresa(id) {
+  await getById(id);
+  return await empresaRepository.delete(id);
+}
+
+export default {
+  getAll,
+  getById,
+  create,
+  update,
+  delete: deleteEmpresa
+};
+
+

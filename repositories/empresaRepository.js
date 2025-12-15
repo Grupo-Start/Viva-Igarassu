@@ -1,44 +1,46 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../database/prismaClient.js";
 
-const prisma = new PrismaClient();
 
-class EmpresaRepository {
-
-  async findAll() {
-    return await prisma.empresa.findMany({
-      include: {
-        usuarios: true, 
-      }
-    });
-  }
-
-  async findById(id) {
-    return await prisma.empresa.findUnique({
-      where: { id_empresa: String(id) },
-      include: {
-        usuarios: true,
-      }
-    });
-  }
-
-  async create(data) {
-    return await prisma.empresa.create({
-      data
-    });
-  }
-
-  async update(id, data) {
-    return await prisma.empresa.update({
-      where: { id_empresa: String(id) },
-      data
-    });
-  }
-
-  async delete(id) {
-    return await prisma.empresa.delete({
-      where: { id_empresa: String(id) }
-    });
-  }
+async function findAll() {
+  return await prisma.empresa.findMany({
+    include: {
+      usuarios: true,
+    },
+  });
 }
 
-export default new EmpresaRepository();
+async function findById(id) {
+  return await prisma.empresa.findUnique({
+    where: { id_empresa: String(id) },
+    include: {
+      usuarios: true,
+    },
+  });
+}
+
+async function create(data) {
+  return await prisma.empresa.create({
+    data,
+  });
+}
+
+async function update(id, data) {
+  return await prisma.empresa.update({
+    where: { id_empresa: String(id) },
+    data,
+  });
+}
+
+async function deleteEmpresa(id) {
+  return await prisma.empresa.delete({
+    where: { id_empresa: String(id) },
+  });
+}
+
+export default {
+  findAll,
+  findById,
+  create,
+  update,
+  delete: deleteEmpresa
+};
