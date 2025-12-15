@@ -26,7 +26,8 @@ async function cadastrar(req, res) {
 
 async function getMe(req, res) {
   try {
-    const userId = req.userId;
+    const userId = req.userId; 
+
     const user = await userService.getById(userId);
 
     if (!user) {

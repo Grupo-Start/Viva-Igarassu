@@ -1,4 +1,4 @@
-import pontosService from "../services/pontos_turisticosService.js";
+import pontosService from "../services/pontosTuristicosService.js";
 
 async function listarPublico(req, res) {
   try {
@@ -30,12 +30,15 @@ async function atualizarPonto(req, res) {
     const id = req.params.id;
     const pontoAtualizado = await pontosService.atualizarPonto(id, req.body);
 
+    if (!pontoAtualizado) {
+      return res.status(404).json({ message: "Ponto turístico não encontrado" });
+    }
+
     return res.status(200).json(pontoAtualizado);
 
   } catch (error) {
     console.error("ERRO AO ATUALIZAR PONTO TURÍSTICO:", error);
-    const status = error.status || 500;
-    return res.status(status).json({ message: "Erro ao atualizar ponto turístico" });
+    return res.status(500).json({ message: "Erro ao atualizar ponto turístico" });
   }
 }
 

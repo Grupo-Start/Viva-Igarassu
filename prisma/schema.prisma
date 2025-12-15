@@ -59,6 +59,8 @@ model pontos_turisticos {
 
   @@index([id_endereco], map: "fk_pontos_turisticos_enderecos1_idx")
   @@index([id_figurinha], map: "fk_pontos_turisticos_figurinha_idx")
+
+  qr_codes qr_codes_pontos[]
 }
 
 model resgates {
@@ -84,6 +86,9 @@ model usuario_figurinhas {
 
   @@index([id_figurinha], map: "fk_usuario_figurinha_figurinha_idx")
   @@index([id_usuario], map: "fk_usuario_figurinha_usuario_idx")
+
+  @@unique([id_usuario, id_figurinha], map: "usuario_figurinha_unique")
+  @@map("usuario_figurinhas")
 }
 
 model usuarios {
@@ -126,6 +131,17 @@ model recompensas {
   resgates              resgates[]
 
   @@index([id_empresa], map: "fk_recompensas_empresa1_idx")
+}
+
+model qr_codes_pontos {
+  id_qr_code   String   @id @default(uuid())
+  token        String   @unique
+  id_ponto     String
+  imagem_path  String?
+  pdf_path     String?
+  criado_em    DateTime @default(now())
+
+  ponto        pontos_turisticos @relation(fields: [id_ponto], references: [id_ponto])
 }
 
 enum empresa_tipo_servico {
