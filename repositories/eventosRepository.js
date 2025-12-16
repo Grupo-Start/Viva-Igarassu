@@ -1,49 +1,56 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../database/prismaClient.js";
 
-const prisma = new PrismaClient();
-
-class EventosRepository {
-  async findAll() {
-    return await prisma.eventos.findMany({
-      include: {
-        empresa: true,
-        enderecos: true,
-      },
-    });
-  }
-
-  async findById(id) {
-    return await prisma.eventos.findUnique({
-      where: { id_evento: Number(id) },
-      include: {
-        empresa: true,
-        enderecos: true,
-      },
-    });
-  }
-
-  async create(data) {
-    return await prisma.eventos.create({
-      data,
-    });
-  }
-
-  async update(id, data) {
-    return await prisma.eventos.update({
-      where: { id_evento: Number(id) },
-      data,
-    });
-  }
-
-  async delete(id) {
-    return await prisma.eventos.delete({
-      where: { id_evento: Number(id) },
-      include: {
-        empresa: true,
-        enderecos: true,
-      },
-    });
-  }
+// Listar todos os eventos
+async function findAll() {
+  return await prisma.eventos.findMany({
+    include: {
+      empresa: true,
+      enderecos: true,
+    },
+  });
 }
 
-export default new EventosRepository();
+// Buscar evento por ID
+async function findById(id) {
+  return await prisma.eventos.findUnique({
+    where: { id_evento: Number(id) },
+    include: {
+      empresa: true,
+      enderecos: true,
+    },
+  });
+}
+
+// Criar evento
+async function create(data) {
+  return await prisma.eventos.create({
+    data,
+  });
+}
+
+// Atualizar evento
+async function update(id, data) {
+  return await prisma.eventos.update({
+    where: { id_evento: Number(id) },
+    data,
+  });
+}
+
+// Deletar evento
+async function deleteEvento(id) {
+  return await prisma.eventos.delete({
+    where: { id_evento: Number(id) },
+    include: {
+      empresa: true,
+      enderecos: true,
+    },
+  });
+}
+
+export default {
+  findAll,
+  findById,
+  create,
+  update,
+  delete: deleteEvento
+};
