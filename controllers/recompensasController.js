@@ -1,4 +1,5 @@
 import recompensasService from "../services/recompensasService.js";
+import empresaRepository from "../repositories/empresaRepository.js";
 
 async function getAll(req, res) {
   try {
@@ -23,7 +24,18 @@ async function getById(req, res) {
 
 async function create(req, res) {
   try {
-    const recompensa = await recompensasService.create(req.body);
+    // Buscar a empresa do usuário logado
+    const empresa = await empresaRepository.findByUserId(req.userId);
+    if (!empresa) {
+      return res.status(400).json({ message: "Usuário não possui empresa cadastrada" });
+    }
+
+    const data = {
+      ...req.body,
+      id_empresa: empresa.id_empresa
+    };
+
+    const recompensa = await recompensasService.create(data);
     return res.status(201).json(recompensa);
   } catch (error) {
     return res.status(400).json({ message: error.message });

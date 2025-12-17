@@ -18,6 +18,12 @@ async function findById(id) {
   });
 }
 
+async function findByUserId(userId) {
+  return await prisma.empresa.findFirst({
+    where: { id_usuario: String(userId) },
+  });
+}
+
 async function create(data) {
   return await prisma.empresa.create({
     data,
@@ -40,6 +46,7 @@ async function deleteEmpresa(id) {
 export default {
   findAll,
   findById,
+  findByUserId,
   create,
   update,
   delete: deleteEmpresa

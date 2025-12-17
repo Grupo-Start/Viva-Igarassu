@@ -12,13 +12,12 @@ export default function auth(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.userId = decoded.id;
+    req.userId = decoded.id_usuario;
     req.role = decoded.role;
 
     return next();
   } catch (error) {
-    return res.status(401).json({ message: "Token inválido" });
     console.log("AUTH HEADER:", req.headers.authorization);
-
+    return res.status(401).json({ message: "Token inválido" });
   }
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import recompensasController from "../controllers/recompensasController.js";
-import { auth } from "../middleware/auth.js";
+import auth from "../middleware/auth.js";
 import { permitir } from "../middleware/roles.js";
 
 const router = Router();

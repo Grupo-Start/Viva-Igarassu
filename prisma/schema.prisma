@@ -12,7 +12,7 @@ model empresa {
   nome_empresa  String               @db.VarChar(100)
   cnpj          String               @db.VarChar(18)
   tipo_servico  empresa_tipo_servico
-  data_cadastro DateTime             @db.Date
+  data_cadastro DateTime             @default(now()) @db.Timestamp(0)
   id_usuario    String
   usuarios      usuarios             @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_empresa_usuarios1")
   eventos       eventos[]
@@ -35,7 +35,7 @@ model enderecos {
   pontos_turisticos pontos_turisticos[]
 }
 
-model figurinha {
+model figurinhas {
   id_figurinha       String                  @id @default(uuid())
   nome               String               @db.VarChar(100)
   descricao          String               @db.Text
@@ -52,10 +52,10 @@ model pontos_turisticos {
   horario_funcionamento String?                @db.VarChar(150)
   preco_entrada         Decimal?               @db.Decimal(10, 2)
   tipo                  pontos_turisticos_tipo @default(Hist_rico)
-  id_figurinha          String
+  id_figurinha          String                  @unique
   id_endereco           String                 @unique
   enderecos             enderecos              @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_enderecos1")
-  figurinha            figurinha             @relation(fields: [id_figurinha], references: [id_figurinha], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_figurinhas1")
+  figurinhas            figurinhas             @relation(fields: [id_figurinha], references: [id_figurinha], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_figurinhas1")
 
   @@index([id_endereco], map: "fk_pontos_turisticos_enderecos1_idx")
   @@index([id_figurinha], map: "fk_pontos_turisticos_figurinha_idx")
@@ -98,7 +98,7 @@ model usuarios {
   senha              String                 @db.VarChar(100)
   preferencia        usuarios_preferencia?
   data_cadastro      DateTime               @default(now()) @db.DateTime(0)
-  saldo_moedas       Int?
+  saldo_moedas       Int?                   @default(0)
   role               usuarios_role
   empresa            empresa[]
   resgates           resgates[]
@@ -146,7 +146,7 @@ model qr_codes_pontos {
 
 enum empresa_tipo_servico {
   hospedagem
-  alimenta_o    @map("alimentação")
+  alimentacao    @map("alimentação")
   artesanato
   guiaturistico
   transporte
