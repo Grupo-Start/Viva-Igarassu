@@ -35,13 +35,13 @@ model enderecos {
   pontos_turisticos pontos_turisticos[]
 }
 
-model figurinhas {
+model figurinha {
   id_figurinha       String                  @id @default(uuid())
   nome               String               @db.VarChar(100)
   descricao          String               @db.Text
   data_cadastro      DateTime             @default(now()) @db.Timestamp(0)
   valor_figurinha    Int
-  pontos_turisticos  pontos_turisticos[]
+  ponto              pontos_turisticos?
   usuario_figurinhas usuario_figurinhas[]
 }
 
@@ -53,9 +53,9 @@ model pontos_turisticos {
   preco_entrada         Decimal?               @db.Decimal(10, 2)
   tipo                  pontos_turisticos_tipo @default(Hist_rico)
   id_figurinha          String
-  id_endereco           String
+  id_endereco           String                 @unique
   enderecos             enderecos              @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_enderecos1")
-  figurinhas            figurinhas             @relation(fields: [id_figurinha], references: [id_figurinha], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_figurinhas1")
+  figurinha            figurinha             @relation(fields: [id_figurinha], references: [id_figurinha], onDelete: NoAction, onUpdate: NoAction, map: "fk_pontos_turisticos_figurinhas1")
 
   @@index([id_endereco], map: "fk_pontos_turisticos_enderecos1_idx")
   @@index([id_figurinha], map: "fk_pontos_turisticos_figurinha_idx")

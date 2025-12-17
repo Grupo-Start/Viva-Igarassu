@@ -18,5 +18,7 @@ export default function auth(req, res, next) {
     return next();
   } catch (error) {
     return res.status(401).json({ message: "Token inválido" });
+    console.log("AUTH HEADER:", req.headers.authorization);
+
   }
 }

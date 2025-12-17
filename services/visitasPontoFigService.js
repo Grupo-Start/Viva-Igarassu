@@ -1,9 +1,15 @@
 import prisma from "../database/prismaClient.js";
-import userFigurinhaRepository from "../repositories/userFigurinhaRepository.js";
 
-async function visitarViaQr({ token, usuarioId }) {
+async function visitarViaQr({ token, usuarioId, role }) {
 
-  const qr = await prisma.qr_codes_pontos.findUnique({
+  if (role !== "comum") {
+    throw {
+      status: 403,
+      message: "Apenas usuários comuns podem ganhar figurinhas"
+    };
+  }
+
+  const qr = await prisma.qr_codes_pontos.findFirst({
     where: { token },
     include: {
       ponto: {
@@ -15,27 +21,26 @@ async function visitarViaQr({ token, usuarioId }) {
   });
 
   if (!qr) {
-    throw new Error("QR Code inválido");
+    throw { status: 404, message: "QR Code inválido" };
   }
 
-  const ponto = qr.ponto;
+  const figurinha = qr.ponto.figurinhas;
 
-  if (!ponto || !ponto.figurinhas) {
-    return {
-      message: "Ponto visitado com sucesso, mas não possui figurinha associada"
-    };
+  if (!figurinha) {
+    throw { status: 404, message: "Ponto sem figurinha vinculada" };
   }
 
-  const figurinha = ponto.figurinhas;
-
-  const jaPossui = await userFigurinhaRepository.findByUsuarioEFigurinha(
-    usuarioId,
-    figurinha.id_figurinha
-  );
+  const jaPossui = await prisma.usuario_figurinhas.findFirst({
+    where: {
+      id_usuario: usuarioId,
+      id_figurinha: figurinha.id_figurinha
+    }
+  });
 
   if (jaPossui) {
-    return {
-      message: "Usuário já possui essa figurinha"
+    throw {
+      status: 409,
+      message: "Você já possui essa figurinha"
     };
   }
 
@@ -56,8 +61,12 @@ async function visitarViaQr({ token, usuarioId }) {
   });
 
   return {
-    message: "Figurinha conquistada com sucesso!",
-    figurinha
+    message: "Parabéns! Figurinha conquistada 🎉",
+    figurinha: {
+      id: figurinha.id_figurinha,
+      nome: figurinha.nome,
+      valor: figurinha.valor_figurinha
+    }
   };
 }
 

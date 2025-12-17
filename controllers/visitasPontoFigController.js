@@ -1,20 +1,24 @@
-import visitasService from "../services/visitasPontoFigService.js";
+import visitasPontoFigService from "../services/visitasPontoFigService.js";
 
 async function visitarViaQr(req, res) {
   try {
     const { token } = req.query;
-    const usuarioId = req.userId; 
 
-    const resultado = await visitasService.visitarViaQr({
+    if (!token) {
+      return res.status(400).json({ message: "Token do QR não informado" });
+    }
+
+    const resultado = await visitasPontoFigService.visitarViaQr({
       token,
-      usuarioId
+      usuarioId: req.userId,
+      role: req.role
     });
 
     return res.status(201).json(resultado);
 
   } catch (error) {
-    return res.status(400).json({
-      message: error.message || "Erro ao registrar visita"
+    return res.status(error.status || 400).json({
+      message: error.message || "Erro ao ganhar figurinha"
     });
   }
 }
