@@ -126,6 +126,7 @@ model recompensas {
   descricao             String?    @db.Text
   quantidade_disponivel Int?
   preco_moedas          Int?
+  imagem_path           String?
   id_empresa            String
   empresa               empresa    @relation(fields: [id_empresa], references: [id_empresa], onDelete: NoAction, onUpdate: NoAction, map: "fk_recompensas_empresa1")
   resgates              resgates[]

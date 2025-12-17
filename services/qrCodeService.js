@@ -93,4 +93,50 @@ async function criarQrCode(idPonto) {
   };
 }
 
-export default { criarQrCode };
+async function criarQrCodesParaTodosPontos() {
+  const pontos = await prisma.pontos_turisticos.findMany({
+    include: {
+      qr_codes: true
+    }
+  });
+
+  const resultados = [];
+  const erros = [];
+
+  for (const ponto of pontos) {
+    try {
+      if (ponto.qr_codes && ponto.qr_codes.length > 0) {
+        resultados.push({
+          id_ponto: ponto.id_ponto,
+          nome: ponto.nome,
+          status: "já possui QR code",
+          token: ponto.qr_codes[0].token
+        });
+        continue;
+      }
+
+      const qrResult = await criarQrCode(ponto.id_ponto);
+      resultados.push({
+        id_ponto: ponto.id_ponto,
+        nome: ponto.nome,
+        status: "QR code criado",
+        ...qrResult
+      });
+
+    } catch (error) {
+      erros.push({
+        id_ponto: ponto.id_ponto,
+        nome: ponto.nome,
+        erro: error.message
+      });
+    }
+  }
+
+  return {
+    message: `Processamento concluído. ${resultados.length} pontos processados, ${erros.length} erros.`,
+    resultados,
+    erros
+  };
+}
+
+export default { criarQrCode, criarQrCodesParaTodosPontos };

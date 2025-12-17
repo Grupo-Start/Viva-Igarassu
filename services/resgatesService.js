@@ -44,7 +44,7 @@ async function resgatarRecompensa({ id_usuario, role, id_recompensa }) {
     });
 
     await tx.recompensas.update({
-      where: { id_recompensas: Number(id_recompensa) },
+      where: { id_recompensas: String(id_recompensa) },
       data: {
         quantidade_disponivel: recompensa.quantidade_disponivel - 1
       }
@@ -53,7 +53,8 @@ async function resgatarRecompensa({ id_usuario, role, id_recompensa }) {
     return await tx.resgates.create({
       data: {
         id_usuario,
-        id_recompensa: String(id_recompensa)
+        id_recompensas: String(id_recompensa),
+        valor_resgatado: recompensa.preco_moedas
       }
     });
   });

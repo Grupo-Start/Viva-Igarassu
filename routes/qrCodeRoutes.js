@@ -12,4 +12,11 @@ router.post(
   qrCodeController.gerarParaPonto
 );
 
+router.post(
+  "/gerar-todos",
+  auth,
+  permitir("adm"),
+  qrCodeController.gerarParaTodosPontos
+);
+
 export default router;

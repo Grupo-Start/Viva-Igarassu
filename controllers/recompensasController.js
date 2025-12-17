@@ -1,5 +1,6 @@
 import recompensasService from "../services/recompensasService.js";
 import empresaRepository from "../repositories/empresaRepository.js";
+import { uploadRecompensaImagem } from "../middleware/upload.js";
 
 async function getAll(req, res) {
   try {
@@ -64,10 +65,31 @@ async function deleteRecompensa(req, res) {
   }
 }
 
+async function uploadImagem(req, res) {
+  try {
+    const { id } = req.params;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "Nenhuma imagem foi enviada" });
+    }
+
+    const imagemPath = `/uploads/recompensas/${req.file.filename}`;
+    const recompensa = await recompensasService.updateImagem(id, imagemPath);
+
+    return res.status(200).json({
+      message: "Imagem da recompensa atualizada com sucesso",
+      recompensa: recompensa
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+}
+
 export default {
   getAll,
   getById,
   create,
   update,
-  delete: deleteRecompensa
+  delete: deleteRecompensa,
+  uploadImagem
 };

@@ -37,10 +37,18 @@ async function deleteRecompensa(id) {
   });
 }
 
+async function updateImagem(id, imagemPath) {
+  return await prisma.recompensas.update({
+    where: { id_recompensas: String(id) },
+    data: { imagem_path: imagemPath }
+  });
+}
+
 export default {
   findAllByEmpresa,
   findById,
   create,
   update,
-  delete: deleteRecompensa
+  delete: deleteRecompensa,
+  updateImagem
 };

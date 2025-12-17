@@ -61,7 +61,7 @@ async function visitarViaQr({ token, usuarioId, role }) {
   });
 
   return {
-    message: "Parabéns! Figurinha conquistada 🎉",
+    message: "Parabéns! Figurinha conquistada!",
     figurinha: {
       id: figurinha.id_figurinha,
       nome: figurinha.nome,
