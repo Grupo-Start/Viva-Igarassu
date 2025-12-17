@@ -5,13 +5,12 @@ import { PermitirEvento } from "../middleware/roles.js";
 
 const router = Router();
 
-// lista eventos
 router.get('/', eventosController.getAll);
 
-// busca evento por id
+
 router.get('/:id', eventosController.getById);
 
-// cria evento
+
 router.post(
     '/',
     auth,
@@ -19,7 +18,7 @@ router.post(
     eventosController.create
 );
 
-// atualiza evento
+
 router.put(
     '/:id',
     auth,
@@ -27,7 +26,7 @@ router.put(
     eventosController.update
 );
 
-// deleta evento
+
 router.delete(
     '/:id',
     auth,
