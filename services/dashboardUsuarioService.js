@@ -37,7 +37,10 @@ async function getDashboardUsuario(userId) {
     empresa: r.recompensas.empresa.nome_empresa,
     valor: r.valor_resgatado,
     codigo: r.id_resgates.slice(0, 6).toUpperCase(),
-    imagem: null 
+    data_resgate: r.data_resgate,
+    imagem: r.recompensas.imagem_path
+      ? `${process.env.API_URL}${r.recompensas.imagem_path}`
+      : null
   }));
 
   return {
