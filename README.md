@@ -38,12 +38,270 @@ Estimula o visitante a explorar novos locais e aprender sobre a história e o pa
 Pode incluir recompensas simbólicas ou descontos para os participantes mais engajados.
 
 
-## **Tecnologias Utilizadas**
+# 🌍 Viva Igarassu — Backend
 
-| Categoria                    | Tecnologias             |
-| ---------------------------- | ----------------------- |
-|  **Frontend**                | React, Javascript e CSS3|
-|  **Backend**                 | Node.js                 |
-|  **Banco de Dados**          | MySQL                   |
-|  **Design e Prototipagem**   | Figma                   |
-|  **Controle de Versão**      | Git e GitHub            |
+Backend da plataforma **Viva Igarassu**, um sistema voltado para o turismo cultural e histórico da cidade de Igarassu, integrando pontos turísticos, eventos, figurinhas digitais, recompensas e visitas via QR Code.
+
+---
+
+# 🌍 Viva Igarassu — Backend
+
+Backend da plataforma **Viva Igarassu**, um sistema voltado para o turismo cultural e histórico da cidade de Igarassu, integrando pontos turísticos, eventos, figurinhas digitais, recompensas e visitas via QR Code.
+
+---
+
+## 🚀 Tecnologias Utilizadas
+
+* **Node.js**
+* **Express**
+* **Prisma ORM**
+* **MySQL**
+* **JWT (JSON Web Token)**
+* **Docker / Docker Compose**
+* **QRCode (npm)**
+
+---
+
+## 🧱 Arquitetura
+
+O projeto segue uma arquitetura em camadas:
+
+```
+Routes → Controllers → Services → Repositories → Prisma → Banco
+```
+
+### 📌 Responsabilidades
+
+* **Routes**: definem as rotas da API
+* **Controllers**: recebem requisições e retornam respostas
+* **Services**: concentram as regras de negócio
+* **Repositories**: acesso ao banco de dados (Prisma)
+* **Middlewares**: autenticação, autorização e validações
+
+---
+
+## 📂 Estrutura de Pastas
+
+```
+src/
+├── controllers/
+├── services/
+├── repositories/
+├── routes/
+├── middleware/
+├── database/
+│   └── prismaClient.js
+├── prisma/
+│   └── schema.prisma
+├── app.js
+└── server.js
+```
+
+---
+
+## 🔐 Autenticação e Permissões
+
+A API utiliza **JWT** para autenticação.
+
+### Roles disponíveis:
+
+* `adm`
+* `comum`
+* `empreendedor`
+
+### Middleware de permissão:
+
+```js
+permitir("adm")
+permitir("comum")
+```
+
+Cada rota valida o papel do usuário antes de executar a ação.
+
+---
+
+## 🏛️ Funcionalidades Principais
+
+### 👤 Usuários
+
+* Cadastro e login
+* Perfil do usuário
+* Controle de saldo de moedas
+* Controle de permissões por role (`adm`, `comum`, `empreendedor`)
+
+### 🏢 Empresas
+
+* Cadastro e gerenciamento de empresas locais
+* Empresas associadas a eventos, recompensas e serviços
+* Acesso restrito por perfil (empreendedor / admin)
+
+### 📅 Eventos
+
+* CRUD de eventos culturais e turísticos
+* Associação com empresas
+* Controle de permissão (admin e empreendedor)
+* Listagem pública para usuários
+
+### 🎁 Recompensas
+
+* Cadastro de recompensas pelo administrador
+* Recompensas associadas a empresas
+* Definição de custo em moedas
+
+### 🔄 Resgates
+
+* Usuário troca moedas por recompensas
+* Validação de saldo disponível
+* Registro histórico de resgates
+
+### 📍 Pontos Turísticos
+
+* CRUD completo
+* Associação com figurinhas
+* Base para visitas via QR Code
+
+### ⭐ Figurinhas
+
+* CRUD (admin)
+* Associadas a pontos turísticos
+* Valor em moedas
+
+### 🎒 Álbum de Figurinhas (Usuário)
+
+Endpoint:
+
+```
+GET /meu-album-de-figurinhas
+```
+
+Retorna:
+
+* total de figurinhas
+* quantas o usuário conquistou
+* lista com status `conquistada: true | false`
+
+---
+
+### 📸 QR Code e Visitas
+
+* QR Codes são gerados pelo admin
+* Cada QR aponta para um ponto turístico
+* Usuário escaneia o QR estando logado
+* A visita concede automaticamente a figurinha (se ainda não conquistada)
+
+Endpoint:
+
+```
+POST /visitas/qr?token=TOKEN
+```
+
+---
+
+### 📸 QR Code e Visitas
+
+* QR Codes são gerados pelo admin
+* Cada QR aponta para um ponto turístico
+* Usuário escaneia o QR estando logado
+* A visita concede automaticamente a figurinha (se ainda não conquistada)
+
+Endpoint:
+
+```
+POST /visitas/qr?token=TOKEN
+```
+
+---
+
+### 🎁 Recompensas e Resgates
+
+* Recompensas cadastradas pelo admin
+* Usuário troca moedas por recompensas
+* Controle de resgates
+
+---
+
+## 🗄️ Banco de Dados (Prisma)
+
+### Relacionamentos Importantes
+
+* `usuarios` ↔ `usuario_figurinha`
+* `figurinhas` ↔ `usuario_figurinha`
+* `pontos_turisticos` ↔ `figurinhas`
+* `pontos_turisticos` ↔ `qr_codes_pontos`
+
+A tabela `usuario_figurinha` possui **unique composto**:
+
+```prisma
+@@unique([id_usuario, id_figurinha])
+```
+
+Garantindo que o usuário não ganhe a mesma figurinha duas vezes.
+
+---
+
+## 🧪 Rodando o Projeto
+
+### 1️⃣ Instalar dependências
+
+```bash
+npm install
+```
+
+### 2️⃣ Configurar variáveis de ambiente
+
+Crie um arquivo `.env`:
+
+```env
+DATABASE_URL="mysql://user:password@localhost:3307/bdvivaigarassu"
+JWT_SECRET="sua_chave_secreta"
+API_URL="http://localhost:3001"
+```
+
+### 3️⃣ Rodar migrations
+
+```bash
+npx prisma migrate dev
+```
+
+### 4️⃣ Iniciar o servidor
+
+```bash
+npm run dev
+```
+
+---
+
+## 📬 Padrão de Respostas
+
+### Sucesso
+
+```json
+{
+  "message": "Operação realizada com sucesso"
+}
+```
+
+### Erro
+
+```json
+{
+  "error": "Mensagem de erro"
+}
+```
+
+---
+
+## 🧠 Observações Finais
+
+* O backend foi pensado para ser **escalável** e **manutenível**
+* Regras de negócio centralizadas nos services
+* Sem duplicação de lógica
+* Pronto para integração com front-end (Web ou Mobile)
+
+---
+
+## 💙 Viva Igarassu
+
+Uma plataforma que une **história, cultura e tecnologia** para impulsionar o turismo local.
+
+**Viva Igarassu. Viva nossa história.**

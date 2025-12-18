@@ -24,7 +24,11 @@ async function getById(req, res) {
 
 async function create(req, res) {
   try {
-    const empresa = await empresaService.create(req.body);
+    const data = {
+      ...req.body,
+      id_usuario: req.userId
+    };
+    const empresa = await empresaService.create(data);
     return res.status(201).json(empresa);
   } catch (error) {
     return res.status(400).json({ message: error.message });

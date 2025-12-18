@@ -18,11 +18,14 @@ async function login(email, senha) {
     throw { message: "Email ou senha inválidos" };
   }
 
-  const token = jwt.sign(
-    { id: user.id_usuario, role: user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
+ const token = jwt.sign(
+  {
+    id_usuario: user.id_usuario,
+    role: user.role
+  },
+  process.env.JWT_SECRET,
+  { expiresIn: "1h" }
+);
 
   delete user.senha;
 

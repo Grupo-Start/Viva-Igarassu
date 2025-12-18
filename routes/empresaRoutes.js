@@ -1,5 +1,7 @@
 import { Router } from "express";
 import empresaController from "../controllers/empresaController.js";
+import auth from "../middleware/auth.js";
+import { permitir } from "../middleware/roles.js";
 
 const router = Router();
 
@@ -7,7 +9,8 @@ router.get('/', empresaController.getAll);
 
 router.get('/:id', empresaController.getById);
 
-router.post('/', empresaController.create);
+// cria
+router.post('/', auth, permitir("empreendedor"), empresaController.create);
 
 router.put('/:id', empresaController.update);
 

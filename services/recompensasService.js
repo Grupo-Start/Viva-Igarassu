@@ -59,10 +59,16 @@ async function deleteRecompensa(id) {
   return await recompensasRepository.delete(id);
 }
 
+async function updateImagem(id, imagemPath) {
+  await getById(id);
+  return await recompensasRepository.updateImagem(id, imagemPath);
+}
+
 export default {
   getAllByEmpresa,
   getById,
   create,
   update,
-  delete: deleteRecompensa
+  delete: deleteRecompensa,
+  updateImagem
 };

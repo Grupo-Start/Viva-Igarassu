@@ -12,16 +12,25 @@ async function criarPonto(data) {
 
 async function atualizarPonto(id, data) {
   return await prisma.pontos_turisticos.update({
-    where: { id: Number(id) },
+    where: { id_ponto: String(id) },
     data
   });
 }
 
 async function deletarPonto(id) {
-  return await prisma.pontos_turisticos.delete({
-    where: { id: Number(id) }
-  });
+  try {
+    return await prisma.pontos_turisticos.delete({
+      where: { id_ponto: id }
+    });
+  } catch (error) {
+    if (error.code === 'P2025') {
+      return null; 
+    }
+    throw error;
+  }
 }
+
+
 
 export default {
   listarTodos,

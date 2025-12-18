@@ -1,7 +1,8 @@
 import { Router } from "express";
 import recompensasController from "../controllers/recompensasController.js";
-import { auth } from "../middleware/auth.js";
+import auth from "../middleware/auth.js";
 import { permitir } from "../middleware/roles.js";
+import { uploadRecompensaImagem } from "../middleware/upload.js";
 
 const router = Router();
 
@@ -9,6 +10,7 @@ router.use(auth);
 
 router.post("/", permitir("empreendedor"), recompensasController.create);
 router.put("/:id", permitir("empreendedor"), recompensasController.update);
+router.post("/:id/imagem", permitir("empreendedor"), uploadRecompensaImagem, recompensasController.uploadImagem);
 router.delete("/:id", permitir("empreendedor"), recompensasController.delete);
 
 
