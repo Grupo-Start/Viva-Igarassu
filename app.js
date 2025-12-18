@@ -13,7 +13,7 @@ import pontosTuristicosRoutes from "./routes/pontosTuristicosRoutes.js";
 import minhasFigurinhasRoutes from "./routes/minhasFigurinhasRoutes.js";
 import qrCodeRoutes from "./routes/qrCodeRoutes.js";
 import qrCodePdfRoutes from "./routes/qrCodePdfRoutes.js";
-import dashboardUsuarioRoutes from "./routes/dashboardUsuarioRoutes.js";
+import dashboardsRoutes from "./routes/dashboardsRoutes.js";
 import visitasPontoFigRoutes from "./routes/visitasPontoFigRoutes.js";
 import auth from "./middleware/auth.js";
 
@@ -42,7 +42,7 @@ app.use("/meu-album-de-figurinhas", minhasFigurinhasRoutes);
 app.use("/qrcodes", qrCodeRoutes);
 app.use("/qrcodes", qrCodePdfRoutes);
 app.use("/visitas", visitasPontoFigRoutes);
-app.use("/dashboard", dashboardUsuarioRoutes);
+app.use("/dashboard", dashboardsRoutes);
 
 
 export default app;
