@@ -44,259 +44,596 @@ Backend da plataforma **Viva Igarassu**, um sistema voltado para o turismo cultu
 
 ---
 
-# 🌍 Viva Igarassu — Backend
-
-Backend da plataforma **Viva Igarassu**, um sistema voltado para o turismo cultural e histórico da cidade de Igarassu, integrando pontos turísticos, eventos, figurinhas digitais, recompensas e visitas via QR Code.
-
----
-
 ## 🚀 Tecnologias Utilizadas
 
-* **Node.js**
-* **Express**
-* **Prisma ORM**
-* **MySQL**
-* **JWT (JSON Web Token)**
-* **Docker / Docker Compose**
-* **QRCode (npm)**
+* **Node.js** + **Express**
+* **Prisma ORM** + **MySQL**
+* **JWT** (autenticação)
+* **Bcrypt** (hash de senhas)
+* **Multer** (upload de imagens)
+* **QRCode** + **PDFKit** (geração de QR codes e PDFs)
+* **Docker Compose** (banco de dados)
 
 ---
 
 ## 🧱 Arquitetura
 
-O projeto segue uma arquitetura em camadas:
-
 ```
-Routes → Controllers → Services → Repositories → Prisma → Banco
+Routes → Controllers → Services → Repositories → Prisma → MySQL
 ```
 
-### 📌 Responsabilidades
+### Camadas
 
-* **Routes**: definem as rotas da API
-* **Controllers**: recebem requisições e retornam respostas
-* **Services**: concentram as regras de negócio
-* **Repositories**: acesso ao banco de dados (Prisma)
-* **Middlewares**: autenticação, autorização e validações
+* **Routes**: definição de rotas e middlewares
+* **Controllers**: recebem requisições HTTP e retornam respostas
+* **Services**: lógica de negócio e validações
+* **Repositories**: acesso direto ao banco via Prisma
+* **Middlewares**: autenticação (JWT), autorização (roles), upload de arquivos
 
 ---
 
 ## 📂 Estrutura de Pastas
 
 ```
-src/
-├── controllers/
-├── services/
-├── repositories/
-├── routes/
-├── middleware/
-├── database/
-│   └── prismaClient.js
-├── prisma/
-│   └── schema.prisma
-├── app.js
-└── server.js
+Vivaigarassu/
+├── controllers/        # Lógica de controle das rotas
+├── services/          # Regras de negócio
+├── repositories/      # Queries ao banco de dados
+├── routes/            # Definição de rotas da API
+├── middleware/        # Auth, roles, upload, validações
+├── prisma/            # Schema e migrations do Prisma
+│   ├── schema.prisma
+│   ├── seed.js
+│   └── migrations/
+├── database/          # Cliente Prisma
+├── uploads/           # Arquivos enviados (imagens, QR codes, PDFs)
+│   ├── recompensas/
+│   ├── qrcodes/
+│   └── pdfs/
+├── utils/             # Funções auxiliares (bcrypt, jwt, response)
+├── app.js             # Configuração do Express
+├── server.js          # Inicialização do servidor
+└── package.json
 ```
 
 ---
 
 ## 🔐 Autenticação e Permissões
 
-A API utiliza **JWT** para autenticação.
+### Sistema de Autenticação
+- **JWT** (JSON Web Token) para autenticação stateless
+- Token enviado no header: `Authorization: Bearer <token>`
+- Middleware `auth.js` extrai e valida o token
 
-### Roles disponíveis:
+### Roles de Usuário
 
-* `adm`
-* `comum`
-* `empreendedor`
+| Role | Descrição |
+|------|-----------|
+| `comum` | Usuário padrão — coleciona figurinhas, resgata recompensas |
+| `empreendedor` | Gerencia empresas, cria recompensas |
+| `adm` | Administrador — acesso total ao sistema |
 
-### Middleware de permissão:
+### Middleware de Permissão
 
 ```js
-permitir("adm")
-permitir("comum")
+permitir("adm")                    // Apenas admin
+permitir("empreendedor")           // Apenas empreendedor
+permitir("comum", "adm")           // Comum ou admin
 ```
-
-Cada rota valida o papel do usuário antes de executar a ação.
 
 ---
 
 ## 🏛️ Funcionalidades Principais
 
 ### 👤 Usuários
+- **Cadastro** e **Login** com hash de senha (bcrypt)
+- **Perfil do usuário** (GET/PUT `/usuarios/me`)
+- **Saldo de moedas** (ganho ao conquistar figurinhas)
+- **Controle de role** (comum, empreendedor, adm)
 
-* Cadastro e login
-* Perfil do usuário
-* Controle de saldo de moedas
-* Controle de permissões por role (`adm`, `comum`, `empreendedor`)
+**Endpoints:**
+```
+POST   /usuarios/cadastrar
+POST   /usuarios/login
+GET    /usuarios/me              (autenticado)
+PUT    /usuarios/me              (autenticado)
+```
+
+---
 
 ### 🏢 Empresas
+- Cadastradas por **empreendedores** ou **admins**
+- Associadas automaticamente ao usuário logado
+- Base para **eventos** e **recompensas**
 
-* Cadastro e gerenciamento de empresas locais
-* Empresas associadas a eventos, recompensas e serviços
-* Acesso restrito por perfil (empreendedor / admin)
+**Endpoints:**
+```
+POST   /empresa                  (empreendedor/adm)
+GET    /empresa
+GET    /empresa/:id
+PUT    /empresa/:id              (empreendedor/adm)
+DELETE /empresa/:id              (empreendedor/adm)
+```
+
+---
 
 ### 📅 Eventos
+- Eventos culturais e turísticos
+- Associados a empresas e endereços
+- CRUD completo para empreendedores e admins
 
-* CRUD de eventos culturais e turísticos
-* Associação com empresas
-* Controle de permissão (admin e empreendedor)
-* Listagem pública para usuários
+**Endpoints:**
+```
+POST   /eventos                  (empreendedor/adm)
+GET    /eventos
+GET    /eventos/:id
+PUT    /eventos/:id              (empreendedor/adm)
+DELETE /eventos/:id              (empreendedor/adm)
+```
+
+---
 
 ### 🎁 Recompensas
+- Cadastradas por **empreendedores**
+- Associadas automaticamente à empresa do usuário
+- **Upload de imagens** das recompensas
+- Usuários trocam moedas por recompensas
 
-* Cadastro de recompensas pelo administrador
-* Recompensas associadas a empresas
-* Definição de custo em moedas
+**Endpoints:**
+```
+POST   /recompensas                      (empreendedor)
+POST   /recompensas/:id/imagem           (empreendedor) - upload
+GET    /recompensas
+GET    /recompensas/:id
+PUT    /recompensas/:id                  (empreendedor)
+DELETE /recompensas/:id                  (empreendedor)
+```
+
+**Upload de Imagem:**
+- Form-data com campo `imagem`
+- Aceita: jpeg, jpg, png, gif, webp
+- Limite: 5MB
+- Salva em: `/uploads/recompensas/`
+
+---
 
 ### 🔄 Resgates
+- **Usuários comuns** resgatam recompensas com moedas
+- Validações: saldo suficiente, quantidade disponível
+- Registro completo do resgate
 
-* Usuário troca moedas por recompensas
-* Validação de saldo disponível
-* Registro histórico de resgates
+**Endpoints:**
+```
+POST   /resgates/:id_recompensa          (comum)
+GET    /resgates/meus                    (comum)
+```
+
+**Fluxo de Resgate:**
+1. Usuário envia POST com ID da recompensa
+2. Sistema valida saldo e disponibilidade
+3. Debita moedas do usuário
+4. Decrementa quantidade disponível
+5. Cria registro de resgate
+6. Retorna confirmação
+
+---
 
 ### 📍 Pontos Turísticos
+- CRUD completo de pontos históricos
+- Cada ponto possui **1 figurinha** associada
+- Base para **QR Codes** de visitas
 
-* CRUD completo
-* Associação com figurinhas
-* Base para visitas via QR Code
+**Endpoints:**
+```
+POST   /pontos-turisticos               (adm)
+GET    /pontos-turisticos
+GET    /pontos-turisticos/:id
+PUT    /pontos-turisticos/:id           (adm)
+DELETE /pontos-turisticos/:id           (adm)
+```
+
+---
 
 ### ⭐ Figurinhas
+- Cada figurinha representa um ponto turístico
+- Possui **valor em moedas**
+- Conquistadas via **visita com QR Code**
 
-* CRUD (admin)
-* Associadas a pontos turísticos
-* Valor em moedas
-
-### 🎒 Álbum de Figurinhas (Usuário)
-
-Endpoint:
-
+**Endpoints:**
 ```
-GET /meu-album-de-figurinhas
-```
-
-Retorna:
-
-* total de figurinhas
-* quantas o usuário conquistou
-* lista com status `conquistada: true | false`
-
----
-
-### 📸 QR Code e Visitas
-
-* QR Codes são gerados pelo admin
-* Cada QR aponta para um ponto turístico
-* Usuário escaneia o QR estando logado
-* A visita concede automaticamente a figurinha (se ainda não conquistada)
-
-Endpoint:
-
-```
-POST /visitas/qr?token=TOKEN
+POST   /figurinhas                      (adm)
+GET    /figurinhas
+GET    /figurinhas/:id
+PUT    /figurinhas/:id                  (adm)
+DELETE /figurinhas/:id                  (adm)
 ```
 
 ---
 
-### 📸 QR Code e Visitas
+### 🎒 Álbum de Figurinhas
 
-* QR Codes são gerados pelo admin
-* Cada QR aponta para um ponto turístico
-* Usuário escaneia o QR estando logado
-* A visita concede automaticamente a figurinha (se ainda não conquistada)
+Mostra progresso do usuário na coleção de figurinhas.
 
-Endpoint:
-
+**Endpoint:**
 ```
-POST /visitas/qr?token=TOKEN
+GET /meu-album-de-figurinhas            (autenticado)
+```
+
+**Resposta:**
+```json
+{
+  "total_figurinhas": 10,
+  "conquistadas": 3,
+  "faltando": 7,
+  "album": [
+    {
+      "id_figurinha": "uuid",
+      "nome": "Igreja dos Mártires",
+      "descricao": "...",
+      "valor_figurinha": 50,
+      "conquistada": true,
+      "data_conquista": "2025-12-15T10:30:00Z"
+    },
+    {
+      "id_figurinha": "uuid",
+      "nome": "Convento Santo Antônio",
+      "conquistada": false
+    }
+  ]
+}
 ```
 
 ---
 
-### 🎁 Recompensas e Resgates
+### 📸 QR Codes e Visitas
 
-* Recompensas cadastradas pelo admin
-* Usuário troca moedas por recompensas
-* Controle de resgates
+**Geração de QR Codes (Admin):**
+
+```
+POST /qrcodes/pontos-turisticos/:id/qrcode    (adm)
+POST /qrcodes/gerar-todos                     (adm)
+```
+
+- Gera QR Code **PNG** e **PDF** para cada ponto
+- Token único por ponto
+- Salva em `/uploads/qrcodes/` e `/uploads/pdfs/`
+
+**Visita via QR Code (Usuário Comum):**
+
+```
+POST /visitas/qr?token=TOKEN                  (comum)
+```
+
+**Fluxo da Visita:**
+1. Usuário escaneia QR Code no ponto turístico
+2. App envia token para a API
+3. Sistema valida token e verifica se usuário já tem a figurinha
+4. Se não tem: concede a figurinha e adiciona moedas
+5. Se já tem: retorna erro "Você já possui essa figurinha"
 
 ---
 
-## 🗄️ Banco de Dados (Prisma)
+### 📊 Dashboard
+
+#### Dashboard do Usuário (comum)
+```
+GET /dashboard/usuario                        (comum)
+```
+
+**Retorna:**
+```json
+{
+  "usuario": {
+    "nome": "João Silva",
+    "saldo": 150
+  },
+  "figurinhas": {
+    "total_conquistadas": 5
+  },
+  "recompensas_resgatadas": [
+    {
+      "id_resgate": "uuid",
+      "nome": "Desconto 10%",
+      "empresa": "Restaurante Igarassu",
+      "valor": 50,
+      "codigo": "ABC123",
+      "data_resgate": "2025-12-15",
+      "imagem": "http://localhost:3001/uploads/recompensas/imagem.jpg"
+    }
+  ]
+}
+```
+
+#### Dashboard Admin
+```
+GET /dashboard/admin                          (adm)
+```
+
+**Retorna:**
+```json
+{
+  "usuarios": 120,
+  "empresas": 25,
+  "eventos": 15,
+  "pontos_turisticos": 10,
+  "figurinhas": 10,
+  "recompensas_disponiveis": 30,
+  "recompensas_resgatadas": 45,
+  "total_moedas_resgatadas": 2250,
+  "total_visitas": 89
+}
+```
+
+#### Visitas por Ponto
+```
+GET /dashboard/visitas-por-ponto              (adm)
+```
+
+**Retorna:**
+```json
+[
+  {
+    "ponto_id": "uuid",
+    "ponto_nome": "Igreja dos Mártires",
+    "figurinha_nome": "Figurinha Igreja",
+    "total_visitas": 45
+  },
+  {
+    "ponto_id": "uuid",
+    "ponto_nome": "Convento Santo Antônio",
+    "figurinha_nome": "Figurinha Convento",
+    "total_visitas": 0
+  }
+]
+```
+
+#### Visitas por Período
+```
+GET /dashboard/visitas-por-periodo?dias=30    (adm)
+```
+
+**Parâmetros:**
+- `dias`: número de dias (padrão: 30)
+
+**Retorna:**
+```json
+[
+  {
+    "data": "2025-12-01",
+    "total_visitas": 5
+  },
+  {
+    "data": "2025-12-02",
+    "total_visitas": 0
+  },
+  {
+    "data": "2025-12-03",
+    "total_visitas": 8
+  }
+]
+```
+
+---
+
+## 🗄️ Banco de Dados
+
+### Principais Modelos
+
+- `usuarios` - Usuários do sistema
+- `empresa` - Empresas locais
+- `eventos` - Eventos culturais
+- `pontos_turisticos` - Pontos históricos
+- `figurinhas` - Figurinhas colecionáveis
+- `usuario_figurinhas` - Relação usuário ↔ figurinha (unique composto)
+- `qr_codes_pontos` - QR Codes dos pontos
+- `recompensas` - Recompensas disponíveis
+- `resgates` - Histórico de resgates
+- `enderecos` - Endereços (eventos e pontos)
 
 ### Relacionamentos Importantes
 
-* `usuarios` ↔ `usuario_figurinha`
-* `figurinhas` ↔ `usuario_figurinha`
-* `pontos_turisticos` ↔ `figurinhas`
-* `pontos_turisticos` ↔ `qr_codes_pontos`
+```
+usuarios ──┬── empresa (1:N)
+           ├── resgates (1:N)
+           └── usuario_figurinhas (1:N)
 
-A tabela `usuario_figurinha` possui **unique composto**:
+pontos_turisticos ──┬── figurinhas (1:1)
+                    ├── qr_codes_pontos (1:N)
+                    └── enderecos (1:1)
 
-```prisma
-@@unique([id_usuario, id_figurinha])
+empresa ──┬── eventos (1:N)
+          └── recompensas (1:N)
+
+recompensas ──── resgates (1:N)
+figurinhas ──── usuario_figurinhas (1:N)
 ```
 
-Garantindo que o usuário não ganhe a mesma figurinha duas vezes.
+### Unique Constraints
+
+```prisma
+// Garante que usuário não ganhe a mesma figurinha 2x
+@@unique([id_usuario, id_figurinha])
+```
 
 ---
 
 ## 🧪 Rodando o Projeto
 
-### 1️⃣ Instalar dependências
+### 1️⃣ Clonar o repositório
+
+```bash
+git clone <repo-url>
+cd Vivaigarassu
+```
+
+### 2️⃣ Instalar dependências
 
 ```bash
 npm install
 ```
 
-### 2️⃣ Configurar variáveis de ambiente
+### 3️⃣ Configurar variáveis de ambiente
 
-Crie um arquivo `.env`:
+Crie `.env`:
 
 ```env
-DATABASE_URL="mysql://user:password@localhost:3307/bdvivaigarassu"
-JWT_SECRET="sua_chave_secreta"
+DATABASE_URL="mysql://user:password@localhost:3306/bdvivaigarassu"
+JWT_SECRET="sua_chave_secreta_aqui"
 API_URL="http://localhost:3001"
 ```
 
-### 3️⃣ Rodar migrations
+### 4️⃣ Subir banco de dados (Docker)
+
+```bash
+cd database
+docker-compose up -d
+```
+
+### 5️⃣ Rodar migrations
 
 ```bash
 npx prisma migrate dev
 ```
 
-### 4️⃣ Iniciar o servidor
+Ou sincronizar schema direto:
 
 ```bash
-npm run dev
+npx prisma db push
 ```
+
+### 6️⃣ Gerar cliente Prisma
+
+```bash
+npx prisma generate
+```
+
+### 7️⃣ (Opcional) Popular banco com dados iniciais
+
+```bash
+npx prisma db seed
+```
+
+### 8️⃣ Iniciar o servidor
+
+```bash
+npm start
+# ou
+node server.js
+```
+
+Servidor rodando em: `http://localhost:3001`
 
 ---
 
-## 📬 Padrão de Respostas
+## 📬 Padrão de Respostas da API
 
 ### Sucesso
-
 ```json
 {
-  "message": "Operação realizada com sucesso"
+  "message": "Operação realizada com sucesso",
+  "data": { ... }
 }
 ```
 
-### Erro
-
+### Erro de Validação
 ```json
 {
-  "error": "Mensagem de erro"
+  "message": "Campos obrigatórios não preenchidos"
+}
+```
+
+### Erro de Autenticação
+```json
+{
+  "message": "Token inválido"
+}
+```
+
+### Erro de Permissão
+```json
+{
+  "message": "Acesso permitido apenas para administradores"
 }
 ```
 
 ---
 
-## 🧠 Observações Finais
+## 🔑 Testando a API
 
-* O backend foi pensado para ser **escalável** e **manutenível**
-* Regras de negócio centralizadas nos services
-* Sem duplicação de lógica
-* Pronto para integração com front-end (Web ou Mobile)
+### 1. Cadastrar usuário
+```http
+POST /usuarios/cadastrar
+Content-Type: application/json
+
+{
+  "nome_completo": "João Silva",
+  "email": "joao@email.com",
+  "senha": "senha123",
+  "role": "comum"
+}
+```
+
+### 2. Fazer login
+```http
+POST /usuarios/login
+Content-Type: application/json
+
+{
+  "email": "joao@email.com",
+  "senha": "senha123"
+}
+```
+
+Salve o `token` retornado.
+
+### 3. Acessar rota protegida
+```http
+GET /dashboard/usuario
+Authorization: Bearer <token>
+```
+
+### 4. Resgatar recompensa
+```http
+POST /resgates/:id_recompensa
+Authorization: Bearer <token>
+```
+
+---
+
+## 🛡️ Segurança
+
+- ✅ Senhas com hash (bcrypt)
+- ✅ Tokens JWT com expiração (1h)
+- ✅ Validação de roles em rotas sensíveis
+- ✅ Unique constraints no banco
+- ✅ Validação de tipos de arquivo no upload
+- ✅ Limite de tamanho de arquivo (5MB)
+
+---
+
+## 🧠 Observações Técnicas
+
+- **Arquitetura em camadas** para separação de responsabilidades
+- **Services** concentram lógica de negócio (não duplicada)
+- **Repositories** isolam queries ao banco
+- **Middlewares** reutilizáveis e compostos
+- **Prisma Client** gerado automaticamente com types
+- **Uploads** salvos localmente (pode migrar para S3/CDN)
+- **QR Codes** únicos por ponto turístico
+- **Transações** garantem consistência (ex: resgate de recompensa)
+
+---
+
+## 📦 Próximas Melhorias
+
+- [ ] Integração com Storage (AWS S3, Cloudinary)
+- [ ] Sistema de notificações (push/email)
+- [ ] Websockets para atualizações em tempo real
+- [ ] Rate limiting e throttling
+- [ ] Logs estruturados (Winston, Pino)
+- [ ] Testes automatizados (Jest)
+- [ ] CI/CD (GitHub Actions)
+- [ ] Documentação com Swagger/OpenAPI
 
 ---
 

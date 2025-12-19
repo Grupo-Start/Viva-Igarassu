@@ -1,5 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import QRCode from "qrcode";
+import crypto from "crypto";
+import fs from "fs";
+import path from "path";
+import PDFDocument from "pdfkit";
 
 const prisma = new PrismaClient();
 
@@ -19,16 +24,8 @@ async function main() {
 
   const enderecosCriados = [];
   for (const data of enderecosData) {
-      const endereco = await prisma.enderecos.upsert({
-          where: { unique_endereco_key: { 
-              logradouro: data.logradouro, 
-              numero: data.numero, 
-              bairro: data.bairro, 
-              cidade: data.cidade, 
-              estado: data.estado 
-          } },
-          update: {},
-          create: data,
+      const endereco = await prisma.enderecos.create({
+          data: data
       });
       enderecosCriados.push(endereco);
   }
@@ -37,7 +34,7 @@ async function main() {
   const figurinhasData = [
       { nome: "Igreja Matriz dos Santos Cosme e Damião", descricao: "Igreja", valor_figurinha: 100 }, // [0]
       { nome: "Convento do Sagrado Coração de Jesus", descricao: "Igreja", valor_figurinha: 100 }, // [1]
-      { nome: "Convento Franciscano e Museu Pinacoteca", descricao: "Igreja", valor_figurinha: 100 }, // [2]
+      { nome: "Convento Franciscano e Museu Pinacoteca", descricao: "Igreja", valor_figurinha: 200 }, // [2]
       { nome: "Sobrado do Imperador", descricao: "Museu", valor_figurinha: 100 }, // [3]
       { nome: "Biblioteca Municipal", descricao: "Outros", valor_figurinha: 100 }, // [4]
       { nome: "Museu Histórico de Igarassu", descricao: "Museu", valor_figurinha: 100 }, // [5]
@@ -46,10 +43,8 @@ async function main() {
 
   const figurinhasCriadas = [];
   for (const data of figurinhasData) {
-      const figurinha = await prisma.figurinhas.upsert({
-          where: { nome: data.nome }, 
-          update: {},
-          create: data,
+      const figurinha = await prisma.figurinhas.create({
+          data: data
       });
       figurinhasCriadas.push(figurinha);
   }
@@ -127,29 +122,188 @@ async function main() {
   console.log("Criando usuários...");
   const senhaCriptografada = await bcrypt.hash("123456", 10);
 
-  await prisma.usuarios.createMany({
+  const usuarioAdmin = await prisma.usuarios.upsert({
+    where: { email: "admin@test.com" },
+    update: {},
+    create: {
+      nome_completo: "Admin Teste",
+      email: "admin@test.com",
+      senha: senhaCriptografada,
+      role: "adm",
+      saldo_moedas: 0
+    }
+  });
+
+  const usuarioEmpreendedor = await prisma.usuarios.upsert({
+    where: { email: "empresa@test.com" },
+    update: {},
+    create: {
+      nome_completo: "Empresa Teste",
+      email: "empresa@test.com",
+      senha: senhaCriptografada,
+      role: "empreendedor",
+      saldo_moedas: 0
+    }
+  });
+
+  const usuarioComum = await prisma.usuarios.upsert({
+    where: { email: "comum@test.com" },
+    update: {},
+    create: {
+      nome_completo: "Usuário Teste",
+      email: "comum@test.com",
+      senha: senhaCriptografada,
+      role: "comum",
+      saldo_moedas: 500
+    }
+  });
+
+  console.log("Criando empresa...");
+  const empresaExistente = await prisma.empresa.findFirst({
+    where: { id_usuario: usuarioEmpreendedor.id_usuario }
+  });
+
+  const empresa = empresaExistente || await prisma.empresa.create({
+    data: {
+      nome_empresa: "Restaurante Viva Igarassu",
+      cnpj: "12.345.678/0001-90",
+      tipo_servico: "alimentacao",
+      id_usuario: usuarioEmpreendedor.id_usuario
+    }
+  });
+
+  console.log("Criando eventos...");
+  await prisma.eventos.createMany({
     data: [
       {
-        nome_completo: "Admin Teste",
-        email: "admin@test.com",
-        senha: senhaCriptografada,
-        role: "adm"
+        nome: "Festival Cultural de Igarassu",
+        descricao: "Festival anual com música, dança e gastronomia local",
+        data: new Date("2025-01-15"),
+        horario: new Date("2025-01-15T09:00:00"),
+        id_empresa: empresa.id_empresa,
+        id_endereco: enderecosCriados[0].id_endereco
       },
       {
-        nome_completo: "Empresa Teste",
-        email: "empresa@test.com",
-        senha: senhaCriptografada,
-        role: "empreendedor"
-      },
-      {
-        nome_completo: "Usuário Teste",
-        email: "comum@test.com",
-        senha: senhaCriptografada,
-        role: "comum"
+        nome: "Feira de Artesanato",
+        descricao: "Exposição e venda de artesanato local",
+        data: new Date("2025-02-10"),
+        horario: new Date("2025-02-10T10:00:00"),
+        id_empresa: empresa.id_empresa,
+        id_endereco: enderecosCriados[6].id_endereco
       }
     ],
     skipDuplicates: true
   });
+
+  console.log("Criando recompensas...");
+  await prisma.recompensas.createMany({
+    data: [
+      {
+        nome: "Desconto 10% no Restaurante",
+        descricao: "Ganhe 10% de desconto em qualquer prato do cardápio",
+        preco_moedas: 50,
+        quantidade_disponivel: 100,
+        id_empresa: empresa.id_empresa
+      },
+      {
+        nome: "Sobremesa Grátis",
+        descricao: "Ganhe uma sobremesa grátis na compra de um prato principal",
+        preco_moedas: 30,
+        quantidade_disponivel: 50,
+        id_empresa: empresa.id_empresa
+      },
+      {
+        nome: "Entrada Premium Grátis",
+        descricao: "Uma entrada premium por nossa conta",
+        preco_moedas: 80,
+        quantidade_disponivel: 30,
+        id_empresa: empresa.id_empresa
+      }
+    ],
+    skipDuplicates: true
+  });
+
+  console.log("Criando algumas visitas de exemplo...");
+  const pontosTuristicos = await prisma.pontos_turisticos.findMany({
+    take: 3
+  });
+
+  for (const ponto of pontosTuristicos) {
+    await prisma.usuario_figurinhas.upsert({
+      where: {
+        id_usuario_id_figurinha: {
+          id_usuario: usuarioComum.id_usuario,
+          id_figurinha: ponto.id_figurinha
+        }
+      },
+      update: {},
+      create: {
+        id_usuario: usuarioComum.id_usuario,
+        id_figurinha: ponto.id_figurinha,
+        conquistada_em: new Date()
+      }
+    });
+  }
+
+  console.log("Atualizando saldo do usuário comum com as figurinhas conquistadas...");
+  const figurinhasConquistadas = await prisma.usuario_figurinhas.findMany({
+    where: { id_usuario: usuarioComum.id_usuario },
+    include: { figurinhas: true }
+  });
+
+  const saldoTotal = figurinhasConquistadas.reduce((acc, uf) => acc + uf.figurinhas.valor_figurinha, 0) + 500;
+  
+  await prisma.usuarios.update({
+    where: { id_usuario: usuarioComum.id_usuario },
+    data: { saldo_moedas: saldoTotal }
+  });
+
+  console.log("Gerando QR Codes para todos os pontos turísticos...");
+  const todosPontos = await prisma.pontos_turisticos.findMany();
+  
+  const pastaQr = path.resolve("uploads/qrcodes");
+  const pastaPdf = path.resolve("uploads/pdfs");
+  fs.mkdirSync(pastaQr, { recursive: true });
+  fs.mkdirSync(pastaPdf, { recursive: true });
+
+  for (const ponto of todosPontos) {
+    const token = crypto.randomBytes(16).toString("hex");
+    const url = `${process.env.API_URL}/visitas/qr?token=${token}`;
+
+    const nomeQr = `ponto-${ponto.id_ponto}.png`;
+    const caminhoQr = path.join(pastaQr, nomeQr);
+
+    await QRCode.toFile(caminhoQr, url, {
+      width: 400,
+      margin: 2
+    });
+
+    const nomePdf = `qr-ponto-${ponto.id_ponto}.pdf`;
+    const caminhoPdf = path.join(pastaPdf, nomePdf);
+
+    const doc = new PDFDocument({ margin: 50 });
+    doc.pipe(fs.createWriteStream(caminhoPdf));
+    
+    doc.fontSize(20).text("Viva Igarassu", { align: "center" });
+    doc.moveDown();
+    doc.fontSize(16).text(ponto.nome, { align: "center" });
+    doc.moveDown();
+    doc.fontSize(12).text("Escaneie o QR Code para marcar sua visita:", { align: "center" });
+    doc.moveDown();
+    doc.image(caminhoQr, { fit: [300, 300], align: "center" });
+    doc.end();
+
+    await prisma.qr_codes_pontos.create({
+      data: {
+        token,
+        id_ponto: ponto.id_ponto,
+        imagem_path: `/uploads/qrcodes/${nomeQr}`,
+        pdf_path: `/uploads/pdfs/${nomePdf}`
+      }
+    });
+
+    console.log(`QR Code gerado para: ${ponto.nome}`);
+  }
 
   console.log("Seed finalizado com sucesso!");
 }
