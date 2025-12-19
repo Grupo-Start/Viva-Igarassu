@@ -4,10 +4,14 @@ services:
     container_name: viva_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bdvivaigarassu
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     ports:
-      - "3308:3306"  
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./database/bdvivaigarassu_export.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
 
 volumes:
   mysql_data:
