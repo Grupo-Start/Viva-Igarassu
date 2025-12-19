@@ -119,75 +119,85 @@ async function main() {
     skipDuplicates: true 
   });
 
-  console.log("Criando usuários...");
-  const senhaCriptografada = await bcrypt.hash("123456", 10);
+  // Usuários de teste apenas em desenvolvimento
+  let usuarioAdmin, usuarioEmpreendedor, usuarioComum, empresa;
+  
+  if (process.env.NODE_ENV !== 'production') {
+    console.log("🔧 Ambiente de desenvolvimento detectado - criando usuários de teste...");
+    const senhaCriptografada = await bcrypt.hash("123456", 10);
 
-  const usuarioAdmin = await prisma.usuarios.upsert({
-    where: { email: "admin@test.com" },
-    update: {},
-    create: {
-      nome_completo: "Admin Teste",
-      email: "admin@test.com",
-      senha: senhaCriptografada,
-      role: "adm",
-      saldo_moedas: 0
-    }
-  });
+    usuarioAdmin = await prisma.usuarios.upsert({
+      where: { email: "admin@test.com" },
+      update: {},
+      create: {
+        nome_completo: "Admin Teste",
+        email: "admin@test.com",
+        senha: senhaCriptografada,
+        role: "adm",
+        saldo_moedas: 0
+      }
+    });
 
-  const usuarioEmpreendedor = await prisma.usuarios.upsert({
-    where: { email: "empresa@test.com" },
-    update: {},
-    create: {
-      nome_completo: "Empresa Teste",
-      email: "empresa@test.com",
-      senha: senhaCriptografada,
-      role: "empreendedor",
-      saldo_moedas: 0
-    }
-  });
+    usuarioEmpreendedor = await prisma.usuarios.upsert({
+      where: { email: "empresa@test.com" },
+      update: {},
+      create: {
+        nome_completo: "Empresa Teste",
+        email: "empresa@test.com",
+        senha: senhaCriptografada,
+        role: "empreendedor",
+        saldo_moedas: 0
+      }
+    });
 
-  const usuarioComum = await prisma.usuarios.upsert({
-    where: { email: "comum@test.com" },
-    update: {},
-    create: {
-      nome_completo: "Usuário Teste",
-      email: "comum@test.com",
-      senha: senhaCriptografada,
-      role: "comum",
-      saldo_moedas: 500
-    }
-  });
+    usuarioComum = await prisma.usuarios.upsert({
+      where: { email: "comum@test.com" },
+      update: {},
+      create: {
+        nome_completo: "Usuário Teste",
+        email: "comum@test.com",
+        senha: senhaCriptografada,
+        role: "comum",
+        saldo_moedas: 500
+      }
+    });
 
-  console.log("Criando empresa...");
-  const empresaExistente = await prisma.empresa.findFirst({
-    where: { id_usuario: usuarioEmpreendedor.id_usuario }
-  });
+    console.log("Criando empresa de teste...");
+    const empresaExistente = await prisma.empresa.findFirst({
+      where: { id_usuario: usuarioEmpreendedor.id_usuario }
+    });
 
-  const empresa = empresaExistente || await prisma.empresa.create({
-    data: {
-      nome_empresa: "Restaurante Viva Igarassu",
-      cnpj: "12.345.678/0001-90",
-      tipo_servico: "alimentacao",
-      id_usuario: usuarioEmpreendedor.id_usuario
-    }
-  });
+    empresa = empresaExistente || await prisma.empresa.create({
+      data: {
+        nome_empresa: "Restaurante Viva Igarassu",
+        cnpj: "12.345.678/0001-90",
+        tipo_servico: "alimentacao",
+        id_usuario: usuarioEmpreendedor.id_usuario
+      }
+    });
+  } else {
+    console.log("⚠️  Ambiente de produção - usuários de teste não serão criados");
+    console.log("Use o endpoint POST /usuarios/cadastrar para criar usuários");
+  }
 
-  console.log("Criando eventos...");
-  await prisma.eventos.createMany({
-    data: [
-      {
-        nome: "Festival Cultural de Igarassu",
-        descricao: "Festival anual com música, dança e gastronomia local",
-        data: new Date("2025-01-15"),
-        horario: new Date("2025-01-15T09:00:00"),
-        id_empresa: empresa.id_empresa,
-        id_endereco: enderecosCriados[0].id_endereco
-      },
-      {
-        nome: "Feira de Artesanato",
-        descricao: "Exposição e venda de artesanato local",
-        data: new Date("2025-02-10"),
-        horario: new Date("2025-02-10T10:00:00"),
+  // Eventos e recompensas apenas se empresa existir
+  if (empresa) {
+    console.log("Criando eventos...");
+    await prisma.eventos.createMany({
+      data: [
+        {
+          nome: "Festival Cultural de Igarassu",
+          descricao: "Festival anual com música, dança e gastronomia local",
+          data: new Date("2025-01-15"),
+          horario: new Date("2025-01-15T09:00:00"),
+          id_empresa: empresa.id_empresa,
+          id_endereco: enderecosCriados[0].id_endereco
+        },
+        {
+          nome: "Feira de Artesanato",
+          descricao: "Exposição e venda de artesanato local",
+          data: new Date("2025-02-10"),
+          horario: new Date("2025-02-10T10:00:00"),
         id_empresa: empresa.id_empresa,
         id_endereco: enderecosCriados[6].id_endereco
       }
@@ -195,49 +205,52 @@ async function main() {
     skipDuplicates: true
   });
 
-  console.log("Criando recompensas...");
-  await prisma.recompensas.createMany({
-    data: [
-      {
-        nome: "Desconto 10% no Restaurante",
-        descricao: "Ganhe 10% de desconto em qualquer prato do cardápio",
-        preco_moedas: 50,
-        quantidade_disponivel: 100,
-        id_empresa: empresa.id_empresa
-      },
-      {
-        nome: "Sobremesa Grátis",
-        descricao: "Ganhe uma sobremesa grátis na compra de um prato principal",
-        preco_moedas: 30,
-        quantidade_disponivel: 50,
-        id_empresa: empresa.id_empresa
-      },
-      {
-        nome: "Entrada Premium Grátis",
-        descricao: "Uma entrada premium por nossa conta",
-        preco_moedas: 80,
-        quantidade_disponivel: 30,
-        id_empresa: empresa.id_empresa
-      }
-    ],
-    skipDuplicates: true
-  });
-
-  console.log("Criando algumas visitas de exemplo...");
-  const pontosTuristicos = await prisma.pontos_turisticos.findMany({
-    take: 3
-  });
-
-  for (const ponto of pontosTuristicos) {
-    await prisma.usuario_figurinhas.upsert({
-      where: {
-        id_usuario_id_figurinha: {
-          id_usuario: usuarioComum.id_usuario,
-          id_figurinha: ponto.id_figurinha
+    console.log("Criando recompensas...");
+    await prisma.recompensas.createMany({
+      data: [
+        {
+          nome: "Desconto 10% no Restaurante",
+          descricao: "Ganhe 10% de desconto em qualquer prato do cardápio",
+          preco_moedas: 50,
+          quantidade_disponivel: 100,
+          id_empresa: empresa.id_empresa
+        },
+        {
+          nome: "Sobremesa Grátis",
+          descricao: "Ganhe uma sobremesa grátis na compra de um prato principal",
+          preco_moedas: 30,
+          quantidade_disponivel: 50,
+          id_empresa: empresa.id_empresa
+        },
+        {
+          nome: "Entrada Premium Grátis",
+          descricao: "Uma entrada premium por nossa conta",
+          preco_moedas: 80,
+          quantidade_disponivel: 30,
+          id_empresa: empresa.id_empresa
         }
-      },
-      update: {},
-      create: {
+      ],
+      skipDuplicates: true
+    });
+  }
+
+  // Visitas de exemplo apenas em desenvolvimento
+  if (usuarioComum) {
+    console.log("Criando algumas visitas de exemplo...");
+    const pontosTuristicos = await prisma.pontos_turisticos.findMany({
+      take: 3
+    });
+
+    for (const ponto of pontosTuristicos) {
+      await prisma.usuario_figurinhas.upsert({
+        where: {
+          id_usuario_id_figurinha: {
+            id_usuario: usuarioComum.id_usuario,
+            id_figurinha: ponto.id_figurinha
+          }
+        },
+        update: {},
+        create: {
         id_usuario: usuarioComum.id_usuario,
         id_figurinha: ponto.id_figurinha,
         conquistada_em: new Date()
@@ -245,18 +258,19 @@ async function main() {
     });
   }
 
-  console.log("Atualizando saldo do usuário comum com as figurinhas conquistadas...");
-  const figurinhasConquistadas = await prisma.usuario_figurinhas.findMany({
-    where: { id_usuario: usuarioComum.id_usuario },
-    include: { figurinhas: true }
-  });
+    console.log("Atualizando saldo do usuário comum com as figurinhas conquistadas...");
+    const figurinhasConquistadas = await prisma.usuario_figurinhas.findMany({
+      where: { id_usuario: usuarioComum.id_usuario },
+      include: { figurinhas: true }
+    });
 
-  const saldoTotal = figurinhasConquistadas.reduce((acc, uf) => acc + uf.figurinhas.valor_figurinha, 0) + 500;
-  
-  await prisma.usuarios.update({
-    where: { id_usuario: usuarioComum.id_usuario },
-    data: { saldo_moedas: saldoTotal }
-  });
+    const saldoTotal = figurinhasConquistadas.reduce((acc, uf) => acc + uf.figurinhas.valor_figurinha, 0) + 500;
+    
+    await prisma.usuarios.update({
+      where: { id_usuario: usuarioComum.id_usuario },
+      data: { saldo_moedas: saldoTotal }
+    });
+  }
 
   console.log("Gerando QR Codes para todos os pontos turísticos...");
   const todosPontos = await prisma.pontos_turisticos.findMany();

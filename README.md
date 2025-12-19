@@ -128,6 +128,7 @@ permitir("comum", "adm")           // Comum ou admin
 ### 👤 Usuários
 - **Cadastro** e **Login** com hash de senha (bcrypt)
 - **Perfil do usuário** (GET/PUT `/usuarios/me`)
+- **Logout com blacklist** de tokens (invalidação segura)
 - **Saldo de moedas** (ganho ao conquistar figurinhas)
 - **Controle de role** (comum, empreendedor, adm)
 
@@ -135,9 +136,16 @@ permitir("comum", "adm")           // Comum ou admin
 ```
 POST   /usuarios/cadastrar
 POST   /usuarios/login
+POST   /usuarios/logout          (autenticado)
 GET    /usuarios/me              (autenticado)
 PUT    /usuarios/me              (autenticado)
 ```
+
+**Sistema de Logout:**
+- Token é adicionado à blacklist no banco de dados
+- Middleware verifica blacklist em cada requisição autenticada
+- Token invalidado não pode mais ser usado
+- Maior segurança contra tokens roubados ou comprometidos
 
 ---
 
@@ -420,6 +428,7 @@ GET /dashboard/visitas-por-periodo?dias=30    (adm)
 ### Principais Modelos
 
 - `usuarios` - Usuários do sistema
+- `token_blacklist` - Tokens invalidados (logout)
 - `empresa` - Empresas locais
 - `eventos` - Eventos culturais
 - `pontos_turisticos` - Pontos históricos
@@ -509,9 +518,22 @@ npx prisma generate
 
 ### 7️⃣ (Opcional) Popular banco com dados iniciais
 
+O seed cria automaticamente:
+- 7 pontos turísticos com figurinhas
+- 3 usuários de teste (admin, empresa, comum)
+- 1 empresa de alimentação
+- 2 eventos culturais
+- 3 recompensas
+- QR Codes para todos os pontos turísticos
+
 ```bash
 npx prisma db seed
 ```
+
+**Credenciais de teste:**
+- Admin: `admin@test.com` / `123456`
+- Empreendedor: `empresa@test.com` / `123456`
+- Comum: `comum@test.com` / `123456`
 
 ### 8️⃣ Iniciar o servidor
 
@@ -592,7 +614,15 @@ GET /dashboard/usuario
 Authorization: Bearer <token>
 ```
 
-### 4. Resgatar recompensa
+### 4. Fazer logout
+```http
+POST /usuarios/logout
+Authorization: Bearer <token>
+```
+
+Token será invalidado e adicionado à blacklist.
+
+### 5. Resgatar recompensa
 ```http
 POST /resgates/:id_recompensa
 Authorization: Bearer <token>
@@ -604,6 +634,8 @@ Authorization: Bearer <token>
 
 - ✅ Senhas com hash (bcrypt)
 - ✅ Tokens JWT com expiração (1h)
+- ✅ Sistema de blacklist para logout seguro
+- ✅ Validação de tokens em cada requisição autenticada
 - ✅ Validação de roles em rotas sensíveis
 - ✅ Unique constraints no banco
 - ✅ Validação de tipos de arquivo no upload

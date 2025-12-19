@@ -56,9 +56,21 @@ async function updateMe(req, res) {
   }
 }
 
+async function logout(req, res) {
+  try {
+    const token = req.token;
+    const result = await userService.logout(token);
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Erro no logout:", error);
+    return res.status(500).json({ message: "Erro ao realizar logout" });
+  }
+}
+
 export default {
   login,
   cadastrar,
   getMe,
-  updateMe
+  updateMe,
+  logout
 };

@@ -145,6 +145,13 @@ model qr_codes_pontos {
   ponto        pontos_turisticos @relation(fields: [id_ponto], references: [id_ponto])
 }
 
+model token_blacklist {
+  id         String   @id @default(uuid())
+  token      String   @unique @db.VarChar(500)
+  expira_em  DateTime
+  criado_em  DateTime @default(now())
+}
+
 enum empresa_tipo_servico {
   hospedagem
   alimentacao    @map("alimentação")

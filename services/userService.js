@@ -111,9 +111,24 @@ async function updateMe(id, dados) {
 }
 };
 
+async function logout(token) {
+  const decoded = jwt.decode(token);
+  const expiraEm = new Date(decoded.exp * 1000);
+
+  await prisma.token_blacklist.create({
+    data: {
+      token,
+      expira_em: expiraEm
+    }
+  });
+
+  return { message: "Logout realizado com sucesso" };
+}
+
 export default {
   login,
   cadastrar,
   getById,
-  updateMe  
+  updateMe,
+  logout
 };

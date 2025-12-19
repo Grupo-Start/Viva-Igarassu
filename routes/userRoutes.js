@@ -9,5 +9,6 @@ router.post("/cadastrar", userController.cadastrar);
 
 router.get("/me", auth, userController.getMe);
 router.put("/me", auth, userController.updateMe);
+router.post("/logout", auth, userController.logout);
 
 export default router;
