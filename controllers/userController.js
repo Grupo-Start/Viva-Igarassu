@@ -67,10 +67,21 @@ async function logout(req, res) {
   }
 }
 
+async function getAllUsers(req, res) {
+  try {
+    const usuarios = await userService.getAllUsers();
+    return res.status(200).json(usuarios);
+  } catch (error) {
+    console.error("Erro ao listar usuários:", error);
+    return res.status(500).json({ message: "Erro ao listar usuários" });
+  }
+}
+
 export default {
   login,
   cadastrar,
   getMe,
   updateMe,
-  logout
+  logout,
+  getAllUsers
 };

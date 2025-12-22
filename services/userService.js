@@ -125,10 +125,30 @@ async function logout(token) {
   return { message: "Logout realizado com sucesso" };
 }
 
+async function getAllUsers() {
+  const usuarios = await prisma.usuarios.findMany({
+    select: {
+      id_usuario: true,
+      nome_completo: true,
+      email: true,
+      role: true,
+      preferencia: true,
+      data_cadastro: true,
+      saldo_moedas: true
+    },
+    orderBy: {
+      data_cadastro: 'desc'
+    }
+  });
+
+  return usuarios;
+}
+
 export default {
   login,
   cadastrar,
   getById,
   updateMe,
-  logout
+  logout,
+  getAllUsers
 };

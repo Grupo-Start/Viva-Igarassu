@@ -63,7 +63,7 @@ async function getVisitasPorPonto() {
 
 async function getVisitasPorPeriodo(dias = 30) {
   const dataInicio = new Date();
-  dataInicio.setDate(dataInicio.getDate() - dias);
+  dataInicio.setDate(dataInicio.getDate() - (dias - 1));
   dataInicio.setHours(0, 0, 0, 0);
 
   const dataFim = new Date();

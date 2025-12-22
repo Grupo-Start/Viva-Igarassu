@@ -1,11 +1,11 @@
 import { Router } from "express";
 import empresaController from "../controllers/empresaController.js";
 import auth from "../middleware/auth.js";
-import { permitir } from "../middleware/roles.js";
+import { permitir, isAdm } from "../middleware/roles.js";
 
 const router = Router();
 
-router.get('/', empresaController.getAll); 
+router.get('/', auth, isAdm, empresaController.getAll); 
 
 router.get('/:id', empresaController.getById);
 
