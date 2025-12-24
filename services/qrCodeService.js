@@ -19,16 +19,18 @@ async function criarQrCode(idPonto) {
     where: { id_ponto: idPonto }
   });
 
+  let token;
+  let qrId;
+
   if (qrExistente) {
-    return {
-      message: "Este ponto já possui QR Code",
-      token: qrExistente.token,
-      imagem: `${process.env.API_URL}${qrExistente.imagem_path}`,
-      pdf: `${process.env.API_URL}${qrExistente.pdf_path}`
-    };
+    // Se já existe, reutilizar token e regenerar arquivos
+    token = qrExistente.token;
+    qrId = qrExistente.id_qr_code;
+  } else {
+    // Se não existe, criar novo token
+    token = crypto.randomBytes(16).toString("hex");
   }
 
-  const token = crypto.randomBytes(16).toString("hex");
   const url = `${process.env.API_URL}/visitas/qr?token=${token}`;
 
   const pastaQr = path.resolve("uploads/qrcodes");
@@ -40,9 +42,11 @@ async function criarQrCode(idPonto) {
   const nomeQr = `ponto-${idPonto}.png`;
   const caminhoQr = path.join(pastaQr, nomeQr);
 
+  // Gerar QR Code simples sem logo no centro
   await QRCode.toFile(caminhoQr, url, {
     width: 400,
-    margin: 2
+    margin: 2,
+    errorCorrectionLevel: 'H'
   });
 
   const nomePdf = `qr-ponto-${idPonto}.pdf`;
@@ -53,21 +57,75 @@ async function criarQrCode(idPonto) {
     const writeStream = fs.createWriteStream(caminhoPdf);
     doc.pipe(writeStream);
 
-    doc.fontSize(22).text("Viva Igarassu", { align: "center" }).moveDown(1);
-    doc.fontSize(18).text(ponto.nome, { align: "center" }).moveDown(2);
+    // Header com fundo azul
+    doc.rect(0, 0, doc.page.width, 140).fill('#003d6b');
+    
+    // Logo no header
+    const logoPath = path.resolve("uploads/logo-viva-igarassu.png");
+    if (fs.existsSync(logoPath)) {
+      try {
+        const logoWidth = 200;
+        const logoHeight = 90;
+        const pageWidth = doc.page.width;
+        doc.image(logoPath, (pageWidth - logoWidth) / 2, 25, {
+          width: logoWidth,
+          height: logoHeight
+        });
+      } catch (logoError) {
+        console.error('Erro ao adicionar logo no header:', logoError);
+        // Fallback para texto se houver erro
+        doc.fill('#ffffff').fontSize(20).font('Helvetica')
+           .text("viva", 0, 35, { align: "center", width: doc.page.width });
+        doc.fontSize(42).font('Helvetica-Bold')
+           .text("IGARASSU", 0, 60, { align: "center", width: doc.page.width });
+      }
+    } else {
+      // Se não encontrar a logo, usar texto
+      doc.fill('#ffffff').fontSize(20).font('Helvetica')
+         .text("viva", 0, 35, { align: "center", width: doc.page.width });
+      doc.fontSize(42).font('Helvetica-Bold')
+         .text("IGARASSU", 0, 60, { align: "center", width: doc.page.width });
+    }
+    
+    // Mover para baixo do header
+    doc.y = 160;
+    
+    // Nome do ponto
+    doc.fill('#003d6b').fontSize(22).font('Helvetica-Bold')
+       .text(ponto.nome, 50, doc.y, { 
+         align: "center",
+         width: doc.page.width - 100
+       });
+    doc.moveDown(1.5);
 
-    const pageWidth = doc.page.width;
-    const imageWidth = 300;
-
-    doc.image(caminhoQr, (pageWidth - imageWidth) / 2, doc.y, {
-      width: imageWidth
-    });
-
+    // Instruções
+    doc.fill('#000000').fontSize(14).font('Helvetica')
+       .text("Escaneie o QR Code abaixo para registrar sua visita", { align: "center" });
+    doc.text("e ganhar sua figurinha exclusiva!", { align: "center" });
     doc.moveDown(2);
-    doc.fontSize(14).text(
-      "Escaneie este QR Code para registrar sua visita\ne ganhar sua figurinha no Viva Igarassu",
-      { align: "center" }
-    );
+
+    // QR Code centralizado com borda (sem logo adicional acima)
+    const pageWidth = doc.page.width;
+    const imageWidth = 280;
+    const qrX = (pageWidth - imageWidth) / 2;
+    const qrY = doc.y;
+    
+    // Borda com sombra
+    doc.rect(qrX - 15, qrY - 15, imageWidth + 30, imageWidth + 30)
+       .fill('#f0f0f0');
+    doc.rect(qrX - 10, qrY - 10, imageWidth + 20, imageWidth + 20)
+       .stroke('#003d6b');
+    
+    doc.image(caminhoQr, qrX, qrY, { width: imageWidth });
+    
+    doc.y = qrY + imageWidth + 40;
+
+    // Footer
+    doc.fontSize(11).fillColor('#666666')
+       .text("Explore Igarassu e colecione todas as figurinhas!", { align: "center" });
+    doc.moveDown(0.5);
+    doc.fontSize(10)
+       .text("© 2025 Viva Igarassu - Todos os direitos reservados", { align: "center" });
 
     doc.end();
 
@@ -75,21 +133,35 @@ async function criarQrCode(idPonto) {
     writeStream.on('error', reject);
   });
 
-  const qr = await prisma.qr_codes_pontos.create({
-    data: {
-      token,
-      id_ponto: idPonto,
-      imagem_path: `/uploads/qrcodes/${nomeQr}`,
-      pdf_path: `/uploads/pdfs/${nomePdf}`
-    }
-  });
+  let qr;
+  if (qrId) {
+    // Atualizar registro existente
+    qr = await prisma.qr_codes_pontos.update({
+      where: { id_qr_code: qrId },
+      data: {
+        imagem_path: `/uploads/qrcodes/${nomeQr}`,
+        pdf_path: `/uploads/pdfs/${nomePdf}`
+      }
+    });
+  } else {
+    // Criar novo registro
+    qr = await prisma.qr_codes_pontos.create({
+      data: {
+        token,
+        id_ponto: idPonto,
+        imagem_path: `/uploads/qrcodes/${nomeQr}`,
+        pdf_path: `/uploads/pdfs/${nomePdf}`
+      }
+    });
+  }
 
   return {
     id_qr_code: qr.id_qr_code,
     token,
     url,
     imagem: `${process.env.API_URL}${qr.imagem_path}`,
-    pdf: `${process.env.API_URL}${qr.pdf_path}`
+    pdf: `${process.env.API_URL}${qr.pdf_path}`,
+    message: qrId ? "QR Code regenerado com sucesso" : "QR Code criado com sucesso"
   };
 }
 
@@ -105,21 +177,10 @@ async function criarQrCodesParaTodosPontos() {
 
   for (const ponto of pontos) {
     try {
-      if (ponto.qr_codes && ponto.qr_codes.length > 0) {
-        resultados.push({
-          id_ponto: ponto.id_ponto,
-          nome: ponto.nome,
-          status: "já possui QR code",
-          token: ponto.qr_codes[0].token
-        });
-        continue;
-      }
-
       const qrResult = await criarQrCode(ponto.id_ponto);
       resultados.push({
         id_ponto: ponto.id_ponto,
         nome: ponto.nome,
-        status: "QR code criado",
         ...qrResult
       });
 

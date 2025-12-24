@@ -1,7 +1,21 @@
 import prisma from "../database/prismaClient.js";
 
 async function listarTodos() {
-  return await prisma.pontos_turisticos.findMany();
+  return await prisma.pontos_turisticos.findMany({
+    include: {
+      enderecos: {
+        select: {
+          logradouro: true,
+          numero: true,
+          bairro: true,
+          cidade: true,
+          estado: true,
+          cep: true
+        }
+      },
+      figurinhas: true
+    }
+  });
 }
 
 async function criarPonto(data) {

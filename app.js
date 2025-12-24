@@ -40,7 +40,6 @@ app.use("/resgates", resgatesRoutes);
 app.use("/pontos-turisticos", pontosTuristicosRoutes);
 app.use("/meu-album-de-figurinhas", minhasFigurinhasRoutes);
 app.use("/qrcodes", qrCodeRoutes);
-app.use("/qrcodes", qrCodePdfRoutes);
 app.use("/visitas", visitasPontoFigRoutes);
 app.use("/dashboard", dashboardsRoutes);
 
