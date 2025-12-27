@@ -84,7 +84,6 @@ async function getVisitasPorPeriodo(dias = 30) {
     }
   });
 
-  // Criar array com todos os dias do período
   const visitasPorDia = {};
   for (let i = 0; i < dias; i++) {
     const data = new Date(dataInicio);
@@ -92,8 +91,6 @@ async function getVisitasPorPeriodo(dias = 30) {
     const dataStr = data.toISOString().split('T')[0];
     visitasPorDia[dataStr] = 0;
   }
-
-  // Contar visitas por dia
   visitas.forEach(v => {
     if (v.conquistada_em) {
       const data = v.conquistada_em.toISOString().split('T')[0];

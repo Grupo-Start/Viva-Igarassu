@@ -25,7 +25,6 @@ async function getById(req, res) {
 
 async function create(req, res) {
   try {
-    // Buscar a empresa do usuário logado
     const empresa = await empresaRepository.findByUserId(req.userId);
     if (!empresa) {
       return res.status(400).json({ message: "Usuário não possui empresa cadastrada" });

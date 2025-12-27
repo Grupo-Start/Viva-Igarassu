@@ -23,11 +23,9 @@ async function criarQrCode(idPonto) {
   let qrId;
 
   if (qrExistente) {
-    // Se já existe, reutilizar token e regenerar arquivos
     token = qrExistente.token;
     qrId = qrExistente.id_qr_code;
   } else {
-    // Se não existe, criar novo token
     token = crypto.randomBytes(16).toString("hex");
   }
 
@@ -42,7 +40,6 @@ async function criarQrCode(idPonto) {
   const nomeQr = `ponto-${idPonto}.png`;
   const caminhoQr = path.join(pastaQr, nomeQr);
 
-  // Gerar QR Code simples sem logo no centro
   await QRCode.toFile(caminhoQr, url, {
     width: 400,
     margin: 2,
@@ -57,10 +54,9 @@ async function criarQrCode(idPonto) {
     const writeStream = fs.createWriteStream(caminhoPdf);
     doc.pipe(writeStream);
 
-    // Header com fundo azul
-    doc.rect(0, 0, doc.page.width, 140).fill('#003d6b');
+     doc.rect(0, 0, doc.page.width, 140).fill('#003d6b');
     
-    // Logo no header
+    
     const logoPath = path.resolve("uploads/logo-viva-igarassu.png");
     if (fs.existsSync(logoPath)) {
       try {
@@ -73,24 +69,18 @@ async function criarQrCode(idPonto) {
         });
       } catch (logoError) {
         console.error('Erro ao adicionar logo no header:', logoError);
-        // Fallback para texto se houver erro
         doc.fill('#ffffff').fontSize(20).font('Helvetica')
            .text("viva", 0, 35, { align: "center", width: doc.page.width });
         doc.fontSize(42).font('Helvetica-Bold')
            .text("IGARASSU", 0, 60, { align: "center", width: doc.page.width });
       }
     } else {
-      // Se não encontrar a logo, usar texto
       doc.fill('#ffffff').fontSize(20).font('Helvetica')
          .text("viva", 0, 35, { align: "center", width: doc.page.width });
       doc.fontSize(42).font('Helvetica-Bold')
          .text("IGARASSU", 0, 60, { align: "center", width: doc.page.width });
     }
-    
-    // Mover para baixo do header
     doc.y = 160;
-    
-    // Nome do ponto
     doc.fill('#003d6b').fontSize(22).font('Helvetica-Bold')
        .text(ponto.nome, 50, doc.y, { 
          align: "center",
@@ -98,19 +88,16 @@ async function criarQrCode(idPonto) {
        });
     doc.moveDown(1.5);
 
-    // Instruções
     doc.fill('#000000').fontSize(14).font('Helvetica')
        .text("Escaneie o QR Code abaixo para registrar sua visita", { align: "center" });
     doc.text("e ganhar sua figurinha exclusiva!", { align: "center" });
     doc.moveDown(2);
 
-    // QR Code centralizado com borda (sem logo adicional acima)
     const pageWidth = doc.page.width;
     const imageWidth = 280;
     const qrX = (pageWidth - imageWidth) / 2;
     const qrY = doc.y;
     
-    // Borda com sombra
     doc.rect(qrX - 15, qrY - 15, imageWidth + 30, imageWidth + 30)
        .fill('#f0f0f0');
     doc.rect(qrX - 10, qrY - 10, imageWidth + 20, imageWidth + 20)
@@ -120,7 +107,6 @@ async function criarQrCode(idPonto) {
     
     doc.y = qrY + imageWidth + 40;
 
-    // Footer
     doc.fontSize(11).fillColor('#666666')
        .text("Explore Igarassu e colecione todas as figurinhas!", { align: "center" });
     doc.moveDown(0.5);
@@ -135,7 +121,6 @@ async function criarQrCode(idPonto) {
 
   let qr;
   if (qrId) {
-    // Atualizar registro existente
     qr = await prisma.qr_codes_pontos.update({
       where: { id_qr_code: qrId },
       data: {
@@ -144,7 +129,6 @@ async function criarQrCode(idPonto) {
       }
     });
   } else {
-    // Criar novo registro
     qr = await prisma.qr_codes_pontos.create({
       data: {
         token,

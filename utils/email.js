@@ -11,11 +11,10 @@ if (host && port && user && pass) {
   transporter = nodemailer.createTransport({
     host,
     port: Number(port),
-    secure: Number(port) === 465, // true for 465, false for other ports
+    secure: Number(port) === 465,
     auth: { user, pass }
   });
 } else {
-  // Fallback: no transporter configured
   transporter = null;
 }
 

@@ -39,30 +39,27 @@ async function gerarArquivosQr(idPonto) {
   const doc = new PDFDocument({ size: "A4", margin: 50 });
   doc.pipe(fs.createWriteStream(caminhoPdf));
 
-  // Header with background
-  doc.rect(0, 0, doc.page.width, 80).fill('#007bff'); // Blue background
+  doc.rect(0, 0, doc.page.width, 80).fill('#007bff');
   doc.fill('#ffffff').fontSize(24).text("Viva Igarassu", 0, 25, { align: "center" });
-  doc.y = 100; // Move below header
+  doc.y = 100;
 
-  // Point name
   doc.fill('#000000').fontSize(20).text(ponto.nome, { align: "center" });
   doc.moveDown(1);
 
-  // Instructions
   doc.fontSize(14).text("Bem-vindo! Escaneie o QR Code abaixo para registrar sua visita", { align: "center" });
   doc.text("e ganhar sua figurinha exclusiva no Viva Igarassu.", { align: "center" });
   doc.moveDown(2);
 
-  // QR Code with border
+  
   const qrWidth = 250;
   const qrX = (doc.page.width - qrWidth) / 2;
   const qrY = doc.y;
-  doc.rect(qrX - 10, qrY - 10, qrWidth + 20, qrWidth + 20).stroke('#007bff'); // Border
+  doc.rect(qrX - 10, qrY - 10, qrWidth + 20, qrWidth + 20).stroke('#007bff');
   doc.image(caminhoQr, qrX, qrY, { width: qrWidth });
-  doc.y += qrWidth + 20; // Move below image and border
+  doc.y += qrWidth + 20;
   doc.moveDown(2);
 
-  // Footer
+  
   doc.fontSize(12).text("Para mais informações, visite nosso site ou entre em contato.", { align: "center" });
   doc.text("© 2025 Viva Igarassu - Todos os direitos reservados.", { align: "center" });
 

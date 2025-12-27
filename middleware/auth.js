@@ -11,7 +11,6 @@ export default async function auth(req, res, next) {
   const [, token] = authHeader.split(" ");
 
   try {
-    // Verificar se o token está na blacklist
     const tokenNaBlacklist = await prisma.token_blacklist.findUnique({
       where: { token }
     });
@@ -24,7 +23,7 @@ export default async function auth(req, res, next) {
 
     req.userId = decoded.id_usuario;
     req.role = decoded.role;
-    req.token = token; // Salvar token para usar no logout
+    req.token = token;
 
     return next();
   } catch (error) {

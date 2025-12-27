@@ -32,13 +32,13 @@ async function main() {
 
   console.log("Criando figurinhas e capturando IDs...");
   const figurinhasData = [
-      { nome: "Igreja Matriz dos Santos Cosme e Damião", descricao: "Igreja", valor_figurinha: 100 }, // [0]
-      { nome: "Convento do Sagrado Coração de Jesus", descricao: "Igreja", valor_figurinha: 100 }, // [1]
-      { nome: "Convento Franciscano e Museu Pinacoteca", descricao: "Igreja", valor_figurinha: 200 }, // [2]
-      { nome: "Sobrado do Imperador", descricao: "Museu", valor_figurinha: 100 }, // [3]
-      { nome: "Biblioteca Municipal", descricao: "Outros", valor_figurinha: 100 }, // [4]
-      { nome: "Museu Histórico de Igarassu", descricao: "Museu", valor_figurinha: 100 }, // [5]
-      { nome: "Casa do Artesão e Centro de informações turísticas", descricao: "Outros", valor_figurinha: 100 }, // [6]
+      { nome: "Igreja Matriz dos Santos Cosme e Damião", descricao: "Igreja", valor_figurinha: 100 },
+      { nome: "Convento do Sagrado Coração de Jesus", descricao: "Igreja", valor_figurinha: 100 },
+      { nome: "Convento Franciscano e Museu Pinacoteca", descricao: "Igreja", valor_figurinha: 200 },
+      { nome: "Sobrado do Imperador", descricao: "Museu", valor_figurinha: 100 },
+      { nome: "Biblioteca Municipal", descricao: "Outros", valor_figurinha: 100 },
+      { nome: "Museu Histórico de Igarassu", descricao: "Museu", valor_figurinha: 100 },
+      { nome: "Casa do Artesão e Centro de informações turísticas", descricao: "Outros", valor_figurinha: 100 },
   ];
 
   const figurinhasCriadas = [];
@@ -119,7 +119,6 @@ async function main() {
     skipDuplicates: true 
   });
 
-  // Usuários de teste apenas em desenvolvimento
   let usuarioAdmin, usuarioEmpreendedor, usuarioComum, empresa;
   
   if (process.env.NODE_ENV !== 'production') {
@@ -180,7 +179,7 @@ async function main() {
     console.log("Use o endpoint POST /usuarios/cadastrar para criar usuários");
   }
 
-  // Eventos e recompensas apenas se empresa existir
+  
   if (empresa) {
     console.log("Criando eventos...");
     await prisma.eventos.createMany({
@@ -234,7 +233,6 @@ async function main() {
     });
   }
 
-  // Visitas de exemplo apenas em desenvolvimento
   if (usuarioComum) {
     console.log("Criando algumas visitas de exemplo...");
     const pontosTuristicos = await prisma.pontos_turisticos.findMany({

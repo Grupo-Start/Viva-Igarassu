@@ -151,20 +151,16 @@ async function forgotPassword(email) {
 
   const user = await prisma.usuarios.findUnique({ where: { email } });
   if (!user) {
-    // Não vazar informação: responder OK mesmo se não existir
     return { message: "Se o e-mail existir, instruções serão enviadas" };
   }
 
   const token = await resetTokens.createToken(user.id_usuario);
 
-  // Enviar token por e-mail
   try {
     await emailUtil.sendResetPasswordEmail(user.email, token);
   } catch (err) {
     console.error("Erro ao enviar e-mail de reset:", err);
   }
-
-  // Não retornar o token na resposta em produção
   return { message: "Se o e-mail existir, instruções foram enviadas" };
 }
 

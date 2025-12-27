@@ -1,6 +1,5 @@
 import prisma from "../database/prismaClient.js";
 
-// Listar todos os eventos
 async function findAll() {
   return await prisma.eventos.findMany({
     include: {
@@ -10,7 +9,6 @@ async function findAll() {
   });
 }
 
-// Buscar evento por ID
 async function findById(id) {
   return await prisma.eventos.findUnique({
     where: { id_evento: Number(id) },
@@ -21,14 +19,12 @@ async function findById(id) {
   });
 }
 
-// Criar evento
 async function create(data) {
   return await prisma.eventos.create({
     data,
   });
 }
 
-// Atualizar evento
 async function update(id, data) {
   return await prisma.eventos.update({
     where: { id_evento: Number(id) },
@@ -36,7 +32,6 @@ async function update(id, data) {
   });
 }
 
-// Deletar evento
 async function deleteEvento(id) {
   return await prisma.eventos.delete({
     where: { id_evento: Number(id) },
