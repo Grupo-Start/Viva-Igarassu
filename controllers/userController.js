@@ -77,6 +77,28 @@ async function getAllUsers(req, res) {
   }
 }
 
+async function forgotPassword(req, res) {
+  try {
+    const { email } = req.body;
+    const result = await userService.forgotPassword(email);
+    return res.status(200).json(result);
+  } catch (error) {
+    const status = error.status || 500;
+    return res.status(status).json({ message: error.message });
+  }
+}
+
+async function resetPassword(req, res) {
+  try {
+    const { token, novaSenha } = req.body;
+    const result = await userService.resetPassword(token, novaSenha);
+    return res.status(200).json(result);
+  } catch (error) {
+    const status = error.status || 500;
+    return res.status(status).json({ message: error.message });
+  }
+}
+
 export default {
   login,
   cadastrar,
@@ -84,4 +106,5 @@ export default {
   updateMe,
   logout,
   getAllUsers
+  ,forgotPassword, resetPassword
 };

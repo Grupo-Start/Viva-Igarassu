@@ -1,6 +1,8 @@
 import prisma from "../database/prismaClient.js";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
+import resetTokens from "../utils/resetTokens.js";
+import emailUtil from "../utils/email.js";
 
 
 async function login(email, senha) {
@@ -144,6 +146,46 @@ async function getAllUsers() {
   return usuarios;
 }
 
+async function forgotPassword(email) {
+  if (!email) throw { status: 400, message: "Email é obrigatório" };
+
+  const user = await prisma.usuarios.findUnique({ where: { email } });
+  if (!user) {
+    // Não vazar informação: responder OK mesmo se não existir
+    return { message: "Se o e-mail existir, instruções serão enviadas" };
+  }
+
+  const token = await resetTokens.createToken(user.id_usuario);
+
+  // Enviar token por e-mail
+  try {
+    await emailUtil.sendResetPasswordEmail(user.email, token);
+  } catch (err) {
+    console.error("Erro ao enviar e-mail de reset:", err);
+  }
+
+  // Não retornar o token na resposta em produção
+  return { message: "Se o e-mail existir, instruções foram enviadas" };
+}
+
+async function resetPassword(token, novaSenha) {
+  if (!token || !novaSenha) throw { status: 400, message: "Token e nova senha são obrigatórios" };
+
+  const data = await resetTokens.findToken(token);
+  if (!data) throw { status: 400, message: "Token inválido ou expirado" };
+
+  const hash = await bcrypt.hash(novaSenha, 10);
+
+  await prisma.usuarios.update({
+    where: { id_usuario: data.userId },
+    data: { senha: hash }
+  });
+
+  await resetTokens.removeToken(token);
+
+  return { message: "Senha redefinida com sucesso" };
+}
+
 export default {
   login,
   cadastrar,
@@ -151,4 +193,6 @@ export default {
   updateMe,
   logout,
   getAllUsers
+  ,forgotPassword, resetPassword
 };
+
