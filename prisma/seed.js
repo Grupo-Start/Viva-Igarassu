@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import QRCode from "qrcode";
 import crypto from "crypto";
 import fs from "fs";
@@ -123,7 +123,7 @@ async function main() {
   
   if (process.env.NODE_ENV !== 'production') {
     console.log("🔧 Ambiente de desenvolvimento detectado - criando usuários de teste...");
-    const senhaCriptografada = await bcrypt.hash("123456", 10);
+    const senhaCriptografada = bcrypt.hashSync("123456", 10);
 
     usuarioAdmin = await prisma.usuarios.upsert({
       where: { email: "admin@test.com" },

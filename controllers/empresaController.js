@@ -61,12 +61,74 @@ async function deleteEmpresa(req, res) {
   }
 }
 
+async function getEventosCount(req, res) {
+  try {
+    const { id } = req.params;
+    const result = await empresaService.countEventos(id);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.message === "Empresa não encontrada") {
+      return res.status(404).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+}
+
+async function getMeEventosCount(req, res) {
+  try {
+    const userId = req.userId;
+    const result = await empresaService.countEventosByUser(userId);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.message === "Empresa não encontrada") {
+      return res.status(404).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+}
+
+async function getEventosCountByMonth(req, res) {
+  try {
+    const { id } = req.params;
+    const { year } = req.query;
+    if (year !== undefined && isNaN(Number(year))) {
+      return res.status(400).json({ message: "Ano inválido" });
+    }
+    const result = await empresaService.countEventosByMonth(id, year);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.message === "Empresa não encontrada") {
+      return res.status(404).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+}
+
+async function getMeEventosCountByMonth(req, res) {
+  try {
+    const userId = req.userId;
+    const { year } = req.query;
+    if (year !== undefined && isNaN(Number(year))) {
+      return res.status(400).json({ message: "Ano inválido" });
+    }
+    const result = await empresaService.countMeEventosByMonth(userId, year);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.message === "Empresa não encontrada") {
+      return res.status(404).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+}
+
 export default {
   getAll,
   getById,
   create,
   update,
   delete: deleteEmpresa
+  ,getEventosCount,getMeEventosCount
+  ,getEventosCountByMonth,getMeEventosCountByMonth
 };
 
 

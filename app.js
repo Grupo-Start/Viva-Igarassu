@@ -15,6 +15,8 @@ import qrCodeRoutes from "./routes/qrCodeRoutes.js";
 import qrCodePdfRoutes from "./routes/qrCodePdfRoutes.js";
 import dashboardsRoutes from "./routes/dashboardsRoutes.js";
 import visitasPontoFigRoutes from "./routes/visitasPontoFigRoutes.js";
+import debugRoutes from "./routes/debugRoutes.js";
+import enderecosRoutes from "./routes/enderecosRoutes.js";
 import auth from "./middleware/auth.js";
 
 dotenv.config();
@@ -28,6 +30,7 @@ app.use("/uploads", express.static(path.resolve("uploads")));
 
 
 app.use("/usuarios", userRoutes);
+app.use("/enderecos", enderecosRoutes);
 
 
 app.use(auth);
@@ -35,6 +38,7 @@ app.use(auth);
 app.use("/eventos", eventosRoutes);
 app.use("/empresa", empresaRoutes);
 app.use("/figurinhas", figurinhasRoutes);
+app.use("/debug", debugRoutes);
 app.use("/recompensas", recompensasRoutes);
 app.use("/resgates", resgatesRoutes);
 app.use("/pontos-turisticos", pontosTuristicosRoutes);

@@ -8,10 +8,10 @@ const router = Router();
 
 router.use(auth);
 
-router.post("/", permitir("empreendedor"), recompensasController.create);
-router.put("/:id", permitir("empreendedor"), recompensasController.update);
-router.post("/:id/imagem", permitir("empreendedor"), uploadRecompensaImagem, recompensasController.uploadImagem);
-router.delete("/:id", permitir("empreendedor"), recompensasController.delete);
+router.post("/", permitir("empreendedor", "adm"), uploadRecompensaImagem, recompensasController.create);
+router.put("/:id", permitir("empreendedor", "adm"), recompensasController.update);
+router.post("/:id/imagem", permitir("empreendedor", "adm"), uploadRecompensaImagem, recompensasController.uploadImagem);
+router.delete("/:id", permitir("empreendedor", "adm"), recompensasController.delete);
 
 
 router.get("/", recompensasController.getAll);

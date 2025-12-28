@@ -20,20 +20,36 @@ async function create(data) {
     descricao,
     quantidade_disponivel,
     preco_moedas,
-    id_empresa
+    id_empresa,
+    imagem_path
   } = data;
 
-  if (!nome || !preco_moedas || !id_empresa) {
+  if (!nome || preco_moedas === undefined || !id_empresa) {
     throw new Error("Campos obrigatórios não preenchidos");
   }
 
-  return await recompensasRepository.create({
+  // Converter campos numéricos que podem vir como string
+  const quantidadeNum = quantidade_disponivel !== undefined ? Number(quantidade_disponivel) : undefined;
+  const precoNum = preco_moedas !== undefined ? Number(preco_moedas) : undefined;
+
+  if (quantidade_disponivel !== undefined && Number.isNaN(quantidadeNum)) {
+    throw new Error("Campo 'quantidade_disponivel' inválido");
+  }
+  if (preco_moedas !== undefined && Number.isNaN(precoNum)) {
+    throw new Error("Campo 'preco_moedas' inválido");
+  }
+
+  const createData = {
     nome,
     descricao,
-    quantidade_disponivel,
-    preco_moedas,
+    quantidade_disponivel: quantidadeNum,
+    preco_moedas: precoNum,
     id_empresa: String(id_empresa)
-  });
+  };
+
+  if (imagem_path) createData.imagem_path = imagem_path;
+
+  return await recompensasRepository.create(createData);
 }
 
 async function update(id, data) {
@@ -46,11 +62,22 @@ async function update(id, data) {
     preco_moedas
   } = data;
 
+  // Converter strings para números se necessário
+  const quantidadeNum = quantidade_disponivel !== undefined ? Number(quantidade_disponivel) : undefined;
+  const precoNum = preco_moedas !== undefined ? Number(preco_moedas) : undefined;
+
+  if (quantidade_disponivel !== undefined && Number.isNaN(quantidadeNum)) {
+    throw new Error("Campo 'quantidade_disponivel' inválido");
+  }
+  if (preco_moedas !== undefined && Number.isNaN(precoNum)) {
+    throw new Error("Campo 'preco_moedas' inválido");
+  }
+
   return await recompensasRepository.update(id, {
     nome,
     descricao,
-    quantidade_disponivel,
-    preco_moedas
+    quantidade_disponivel: quantidadeNum,
+    preco_moedas: precoNum
   });
 }
 

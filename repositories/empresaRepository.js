@@ -24,6 +24,13 @@ async function findByUserId(userId) {
   });
 }
 
+async function findByName(nome) {
+  if (!nome) return null;
+  return await prisma.empresa.findFirst({
+    where: { nome_empresa: String(nome) }
+  });
+}
+
 async function create(data) {
   return await prisma.empresa.create({
     data,
@@ -43,11 +50,52 @@ async function deleteEmpresa(id) {
   });
 }
 
+async function countEventosByEmpresaId(id) {
+  return await prisma.eventos.count({
+    where: { id_empresa: String(id) }
+  });
+}
+
+async function countEventosByEmpresaByMonth(id, year) {
+  const y = Number(year) || new Date().getFullYear();
+  const start = new Date(y, 0, 1);
+  const end = new Date(y, 11, 31, 23, 59, 59, 999);
+
+  const eventos = await prisma.eventos.findMany({
+    where: {
+      id_empresa: String(id),
+      data: {
+        gte: start,
+        lte: end
+      }
+    },
+    select: {
+      data: true
+    }
+  });
+
+  const counts = Array(12).fill(0);
+  eventos.forEach(e => {
+    if (e.data instanceof Date) {
+      const m = e.data.getMonth(); // 0-11
+      counts[m]++;
+    } else {
+      const d = new Date(e.data);
+      if (!isNaN(d)) counts[d.getMonth()]++;
+    }
+  });
+
+  return counts; // index 0 => janeiro
+}
+
 export default {
   findAll,
   findById,
   findByUserId,
+  findByName,
   create,
   update,
-  delete: deleteEmpresa
+  delete: deleteEmpresa,
+  countEventosByEmpresaId
+  ,countEventosByEmpresaByMonth
 };

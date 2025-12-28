@@ -25,9 +25,41 @@ async function getById(req, res) {
 
 async function create(req, res) {
   try {
-    const empresa = await empresaRepository.findByUserId(req.userId);
+
+    console.log("[DEBUG] Recompensas.create - userId:", req.userId, "role:", req.role);
+    console.log("[DEBUG] Recompensas.create - body:", req.body);
+
+    // Priorizar id da empresa automático fornecido pelo middleware `auth`
+    // Se `req.id_empresa` existir, usá-lo. Se não existir e o usuário for `adm`,
+    // iremos procurar/usar a empresa compartilhada `Empresa Admin` ou criá-la.
+    const empresaIdAutomatico = req.id_empresa;
+    let empresaIdToUse = empresaIdAutomatico;
+
+    if (!empresaIdToUse && req.role === "adm" && req.body && req.body.id_empresa) {
+      empresaIdToUse = req.body.id_empresa;
+    }
+
+    let empresa = null;
+    if (empresaIdToUse) {
+      empresa = await empresaRepository.findById(empresaIdToUse);
+    }
+
+    // Se for admin e ainda não houver empresa, usar/criar a empresa compartilhada "Empresa Admin"
+    if (!empresa && req.role === "adm") {
+      empresa = (empresaRepository.findByName) ? await empresaRepository.findByName("Empresa Admin") : null;
+      if (!empresa) {
+        const adminEmpresaData = {
+          nome_empresa: "Empresa Admin",
+          cnpj: "00.000.000/0001-00",
+          tipo_servico: "outros",
+          id_usuario: req.userId
+        };
+        empresa = await empresaRepository.create(adminEmpresaData);
+      }
+    }
+
     if (!empresa) {
-      return res.status(400).json({ message: "Usuário não possui empresa cadastrada" });
+      return res.status(404).json({ message: "Usuário não possui empresa cadastrada" });
     }
 
     const data = {
@@ -35,10 +67,17 @@ async function create(req, res) {
       id_empresa: empresa.id_empresa
     };
 
+    // se veio arquivo, adiciona o caminho da imagem
+    if (req.file) {
+      data.imagem_path = `/uploads/recompensas/${req.file.filename}`;
+    }
+
     const recompensa = await recompensasService.create(data);
     return res.status(201).json(recompensa);
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    console.error("[ERROR] Recompensas.create -", error);
+    const status = error.status || 400;
+    return res.status(status).json({ message: error.message });
   }
 }
 

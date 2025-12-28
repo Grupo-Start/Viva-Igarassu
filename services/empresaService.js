@@ -62,12 +62,51 @@ async function deleteEmpresa(id) {
   return await empresaRepository.delete(id);
 }
 
+async function countEventos(id) {
+  await getById(id); 
+  const total = await empresaRepository.countEventosByEmpresaId(id);
+  return { total };
+}
+
+async function countEventosByUser(userId) {
+  const empresa = await empresaRepository.findByUserId(userId);
+  if (!empresa) {
+    const error = new Error("Empresa não encontrada");
+    error.status = 404;
+    throw error;
+  }
+
+  const total = await empresaRepository.countEventosByEmpresaId(empresa.id_empresa);
+  return { total };
+}
+
+async function countEventosByMonth(id, year = new Date().getFullYear()) {
+  await getById(id);
+  const counts = await empresaRepository.countEventosByEmpresaByMonth(id, year);
+  return { year: Number(year), counts };
+}
+
+async function countMeEventosByMonth(userId, year = new Date().getFullYear()) {
+  const empresa = await empresaRepository.findByUserId(userId);
+  if (!empresa) {
+    const error = new Error("Empresa não encontrada");
+    error.status = 404;
+    throw error;
+  }
+
+  const counts = await empresaRepository.countEventosByEmpresaByMonth(empresa.id_empresa, year);
+  return { year: Number(year), counts };
+}
+
 export default {
   getAll,
   getById,
   create,
   update,
-  delete: deleteEmpresa
+  delete: deleteEmpresa,
+  countEventos
+  ,countEventosByUser
+  ,countEventosByMonth, countMeEventosByMonth
 };
 
 
