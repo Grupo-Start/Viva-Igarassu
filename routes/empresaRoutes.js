@@ -9,6 +9,7 @@ router.get('/', auth, permitir("empreendedor", "adm"), empresaController.getAll)
 
 router.get('/me/eventos/count', auth, permitir("empreendedor", "adm"), empresaController.getMeEventosCount);
 router.get('/me/eventos/count-by-month', auth, permitir("empreendedor", "adm"), empresaController.getMeEventosCountByMonth);
+router.get('/me/eventos', auth, permitir("empreendedor", "adm"), empresaController.getMeEventos);
 
 router.get('/:id/eventos/count-by-month', auth, permitir("empreendedor", "adm"), empresaController.getEventosCountByMonth);
 router.get('/:id', auth, permitir("empreendedor", "adm"), empresaController.getById);

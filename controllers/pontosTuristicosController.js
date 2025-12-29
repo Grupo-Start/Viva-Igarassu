@@ -46,15 +46,23 @@ async function criarPonto(req, res) {
       return res.status(400).json({ message: "Usuário não possui empresa cadastrada" });
     }
 
-    // Se veio endereco_completo, parsear e criar registro em enderecos
+    // Se veio endereco_completo (ou variações), parsear e criar registro em enderecos
     let id_endereco_final = body.id_endereco;
-    if (!id_endereco_final && body.endereco_completo) {
-      const parsed = parseEndereco(body.endereco_completo);
+    const rawEndereco = body.endereco_completo || body.enderecoCompleto || body.endereco || body.address || body.address_full;
+    if (!id_endereco_final && rawEndereco) {
+      console.log('[DEBUG] Ponto.create - endereco raw:', rawEndereco);
+      const parsed = parseEndereco(rawEndereco);
+      console.log('[DEBUG] Ponto.create - parsed endereco:', parsed);
       if (!parsed.logradouro || !parsed.cidade || !parsed.estado) {
         return res.status(400).json({ message: "Endereço completo deve conter logradouro, cidade e estado." });
       }
-      const enderecoCriado = await enderecosRepository.create(parsed);
-      id_endereco_final = enderecoCriado.id_endereco;
+      try {
+        const enderecoCriado = await enderecosRepository.create(parsed);
+        id_endereco_final = enderecoCriado.id_endereco;
+      } catch (err) {
+        console.error('Erro ao criar endereco a partir de endereco_completo:', err);
+        return res.status(500).json({ message: 'Erro ao criar endereço a partir do texto fornecido' });
+      }
     }
 
     // Garantir criação de figurinha mínima se não foi informada
@@ -72,13 +80,29 @@ async function criarPonto(req, res) {
 
     const dadosParaCriar = {
       ...body,
-      id_empresa,
       id_endereco: id_endereco_final,
       id_figurinha: id_figurinha_final
     };
 
-    const novoPonto = await pontosService.criarPonto(dadosParaCriar);
-    return res.status(201).json(novoPonto);
+    // remover campos temporários de endereço que não existem no model Prisma
+    delete dadosParaCriar.endereco_completo;
+    delete dadosParaCriar.enderecoCompleto;
+    delete dadosParaCriar.endereco;
+    delete dadosParaCriar.address;
+    delete dadosParaCriar.address_full;
+    // pontos_turisticos model does not have id_empresa — não enviar
+    delete dadosParaCriar.id_empresa;
+
+    console.log('[DEBUG] Ponto.create - dadosParaCriar:', JSON.stringify(dadosParaCriar));
+
+    try {
+      const novoPonto = await pontosService.criarPonto(dadosParaCriar);
+      return res.status(201).json(novoPonto);
+    } catch (err) {
+      console.error('ERRO AO CRIAR PONTO TURÍSTICO (detalhado):', err && err.stack ? err.stack : err);
+      const status = err.status || 500;
+      return res.status(status).json({ message: "Erro ao criar ponto turístico", detail: err && err.message ? err.message : String(err), code: err.code || null, meta: err.meta || null });
+    }
 
   } catch (error) {
     console.error("ERRO AO CRIAR PONTO TURÍSTICO:", error);

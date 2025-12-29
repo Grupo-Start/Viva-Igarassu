@@ -1,4 +1,5 @@
 import empresaRepository from "../repositories/empresaRepository.js";
+import eventosRepository from "../repositories/eventosRepository.js";
 
 async function getAll() {
   return await empresaRepository.findAll();
@@ -98,6 +99,18 @@ async function countMeEventosByMonth(userId, year = new Date().getFullYear()) {
   return { year: Number(year), counts };
 }
 
+async function getMeEventos(userId) {
+  const empresa = await empresaRepository.findByUserId(userId);
+  if (!empresa) {
+    const error = new Error("Empresa não encontrada");
+    error.status = 404;
+    throw error;
+  }
+
+  const eventos = await eventosRepository.findByEmpresaId(empresa.id_empresa);
+  return eventos;
+}
+
 export default {
   getAll,
   getById,
@@ -107,6 +120,7 @@ export default {
   countEventos
   ,countEventosByUser
   ,countEventosByMonth, countMeEventosByMonth
+  ,getMeEventos
 };
 
 

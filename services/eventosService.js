@@ -35,11 +35,9 @@ async function create(data) {
   }
   let idEnderecoFinal = id_endereco;
 
-  // Se foi enviado um endereço completo, parseia, valida e cria o registro
   if (!idEnderecoFinal && endereco_completo) {
     const parsed = parseEndereco(endereco_completo);
 
-    // Validação mínima dos campos essenciais
     if (!parsed.logradouro || !parsed.cidade || !parsed.estado) {
       const error = new Error("Endereço completo deve conter logradouro, cidade e estado.");
       error.status = 400;
@@ -71,9 +69,6 @@ async function create(data) {
   });
 }
 
-// Função utilitária simples para separar um endereço completo em campos.
-// Estratégia: separa por vírgulas e interpreta os últimos trechos como
-// [cep], [estado], [cidade], [bairro], rest => logradouro+numero.
 function parseEndereco(completo) {
   const parts = completo.split(",").map(p => p.trim()).filter(Boolean);
 
@@ -83,7 +78,6 @@ function parseEndereco(completo) {
   let bairro = null;
   let restante = [];
 
-  // Identifica CEP no final
   if (parts.length > 0) {
     const last = parts[parts.length - 1];
     if (/\d{5}-?\d{3}/.test(last)) {
@@ -92,7 +86,6 @@ function parseEndereco(completo) {
     }
   }
 
-  // Estado com 2 letras
   if (parts.length > 0) {
     const last = parts[parts.length - 1];
     if (/^[A-Za-zÀ-ÖØ-öø-ÿ]{2}$/.test(last)) {
@@ -111,12 +104,10 @@ function parseEndereco(completo) {
 
   restante = parts;
 
-  // Junta o restante em logradouro possivelmente com número
   let logradouro = restante.join(", ") || null;
   let numero = null;
 
   if (logradouro) {
-    // tenta extrair número do final do logradouro
     const m = logradouro.match(/(.*)\s+(\d+[A-Za-z0-9\/-]*)$/);
     if (m) {
       logradouro = m[1].trim();
@@ -171,7 +162,6 @@ async function update(id, data) {
 }
 
 async function deleteEvento(id, usuario) {
-  // usuario: { id_usuario, role, id_empresa }
   const evento = await getById(id);
   if (!evento) {
     const error = new Error("Evento não encontrado");
@@ -179,12 +169,10 @@ async function deleteEvento(id, usuario) {
     throw error;
   }
 
-  // Permite se for admin
   if (usuario.role === "adm") {
     return await eventosRepository.delete(id);
   }
 
-  // Permite se o usuário for dono da empresa do evento
   if (usuario.id_empresa && evento.id_empresa === usuario.id_empresa) {
     return await eventosRepository.delete(id);
   }

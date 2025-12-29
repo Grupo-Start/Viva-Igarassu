@@ -9,6 +9,23 @@ async function findAll() {
   });
 }
 
+async function findByEmpresaId(id_empresa) {
+  if (!id_empresa) {
+    const error = new Error("Parâmetro 'id_empresa' é obrigatório para buscar eventos.");
+    error.status = 400;
+    throw error;
+  }
+
+  return await prisma.eventos.findMany({
+    where: { id_empresa: String(id_empresa) },
+    include: {
+      empresa: true,
+      enderecos: true,
+    },
+    orderBy: { data: 'desc' }
+  });
+}
+
 async function findById(id) {
   if (!id) {
     const error = new Error("Parâmetro 'id' é obrigatório para buscar evento.");
@@ -62,6 +79,7 @@ async function deleteEvento(id) {
 
 export default {
   findAll,
+  findByEmpresaId,
   findById,
   create,
   update,

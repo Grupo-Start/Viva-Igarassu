@@ -6,14 +6,25 @@ async function listarPublico() {
 }
 
 async function criarPonto(dados) {
-  const ponto = await pontosRepository.criarPonto(dados);
-
-  const qr = await qrCodeService.gerarQrCodeParaPonto(ponto.id_ponto);
-
-  return {
-    ...ponto,
-    qr_code: qr.qrCodeBase64
-  };
+  try {
+    const ponto = await pontosRepository.criarPonto(dados);
+    try {
+      const qr = await qrCodeService.gerarQrCodeParaPonto(ponto.id_ponto);
+      return {
+        ...ponto,
+        qr_code: qr.qrCodeBase64
+      };
+    } catch (qrErr) {
+      console.error('Erro ao gerar QR para ponto:', qrErr && qrErr.stack ? qrErr.stack : qrErr);
+      return ponto;
+    }
+  } catch (err) {
+    console.error('pontosService.criarPonto - erro ao criar ponto:', err && err.stack ? err.stack : err);
+    const e = new Error(err.message || 'Erro ao criar ponto');
+    e.code = err.code || null;
+    e.meta = err.meta || null;
+    throw e;
+  }
 }
 
 async function atualizarPonto(id, dados) {

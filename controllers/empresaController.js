@@ -87,6 +87,19 @@ async function getMeEventosCount(req, res) {
   }
 }
 
+async function getMeEventos(req, res) {
+  try {
+    const userId = req.userId;
+    const eventos = await empresaService.getMeEventos(userId);
+    return res.status(200).json(eventos);
+  } catch (error) {
+    if (error.message === "Empresa não encontrada") {
+      return res.status(404).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+}
+
 async function getEventosCountByMonth(req, res) {
   try {
     const { id } = req.params;
@@ -129,6 +142,7 @@ export default {
   delete: deleteEmpresa
   ,getEventosCount,getMeEventosCount
   ,getEventosCountByMonth,getMeEventosCountByMonth
+  ,getMeEventos
 };
 
 

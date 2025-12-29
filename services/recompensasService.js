@@ -28,7 +28,6 @@ async function create(data) {
     throw new Error("Campos obrigatórios não preenchidos");
   }
 
-  // Converter campos numéricos que podem vir como string
   const quantidadeNum = quantidade_disponivel !== undefined ? Number(quantidade_disponivel) : undefined;
   const precoNum = preco_moedas !== undefined ? Number(preco_moedas) : undefined;
 
@@ -62,7 +61,6 @@ async function update(id, data) {
     preco_moedas
   } = data;
 
-  // Converter strings para números se necessário
   const quantidadeNum = quantidade_disponivel !== undefined ? Number(quantidade_disponivel) : undefined;
   const precoNum = preco_moedas !== undefined ? Number(preco_moedas) : undefined;
 

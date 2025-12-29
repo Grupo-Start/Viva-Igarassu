@@ -27,7 +27,6 @@ async function create(req, res) {
     console.log("[DEBUG] Eventos.create - userId:", req.userId, "role:", req.role);
     console.log("[DEBUG] Eventos.create - body:", req.body);
 
-    // Determinar id_empresa automaticamente
     let id_empresa = req.id_empresa;
     if (!id_empresa && req.body && req.body.id_empresa) {
       id_empresa = req.body.id_empresa;
@@ -38,7 +37,6 @@ async function create(req, res) {
       empresa = await empresaRepository.findById(id_empresa);
     }
 
-    // Se não houver empresa e for admin, usar/criar Empresa Admin
     if (!empresa && req.role === "adm") {
       empresa = (empresaRepository.findByName) ? await empresaRepository.findByName("Empresa Admin") : null;
       if (!empresa) {
@@ -53,7 +51,6 @@ async function create(req, res) {
       id_empresa = empresa.id_empresa;
     }
 
-    // Se ainda não houver empresa, para usuários não-admin tentamos buscar por userId
     if (!empresa && req.userId) {
       empresa = await empresaRepository.findByUserId(req.userId);
       if (empresa) id_empresa = empresa.id_empresa;
@@ -78,7 +75,6 @@ async function update(req, res) {
   try {
     const { id } = req.params;
 
-    // Preencher id_empresa automaticamente similar à criação
     let id_empresa = req.body && req.body.id_empresa ? req.body.id_empresa : req.id_empresa;
     let empresa = null;
     if (id_empresa) empresa = await empresaRepository.findById(id_empresa);
@@ -122,11 +118,10 @@ async function deleteEvento(req, res) {
     if (!id) {
       return res.status(400).json({ message: "Parâmetro 'id' do evento é obrigatório." });
     }
-    // Recupera dados do usuário autenticado
     const usuario = {
       id_usuario: req.userId,
       role: req.userRole,
-      id_empresa: req.id_empresa // precisa ser setado no auth.js
+      id_empresa: req.id_empresa
     };
     await eventosService.delete(id, usuario);
     return res.status(200).json({

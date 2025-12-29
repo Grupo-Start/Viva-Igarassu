@@ -23,9 +23,7 @@ export default async function auth(req, res, next) {
 
     req.userId = decoded.id_usuario;
     req.role = decoded.role;
-    // compatibilidade: alguns controllers usam `userRole`
     req.userRole = decoded.role;
-    // busca empresa do usuário (se houver) para autorizações por empresa
     try {
       const empresa = await prisma.empresa.findFirst({ where: { id_usuario: decoded.id_usuario } });
       req.id_empresa = empresa ? empresa.id_empresa : undefined;

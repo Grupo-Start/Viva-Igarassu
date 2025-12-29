@@ -85,7 +85,7 @@ async function countEventosByEmpresaByMonth(id, year) {
     }
   });
 
-  return counts; // index 0 => janeiro
+  return counts;
 }
 
 export default {
