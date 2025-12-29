@@ -1,4 +1,4 @@
-import visitaPontoService from "../services/visitasPontoService.js";
+import visitaPontoService from "../services/visitasPontoFigService.js";
 
 async function visitar(req, res) {
   try {

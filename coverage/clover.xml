@@ -1,0 +1,1247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1766986257932" clover="3.2.0">
+  <project timestamp="1766986257933" name="All files">
+    <metrics statements="1094" coveredstatements="716" conditionals="659" coveredconditionals="309" methods="189" coveredmethods="124" elements="1942" coveredelements="1149" complexity="0" loc="1094" ncloc="1094" packages="4" files="45" classes="45"/>
+    <package name="controllers">
+      <metrics statements="526" coveredstatements="304" conditionals="354" coveredconditionals="149" methods="62" coveredmethods="43"/>
+      <file name="dashboardsController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\dashboardsController.js">
+        <metrics statements="56" coveredstatements="20" conditionals="50" coveredconditionals="9" methods="7" coveredmethods="4"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="73" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="80" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="88" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="96" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="102" count="0" type="stmt"/>
+        <line num="104" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="105" count="0" type="stmt"/>
+        <line num="108" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="119" count="0" type="stmt"/>
+        <line num="120" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="121" count="0" type="stmt"/>
+        <line num="124" count="0" type="stmt"/>
+        <line num="125" count="0" type="stmt"/>
+        <line num="127" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="128" count="0" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="132" count="0" type="stmt"/>
+        <line num="135" count="0" type="stmt"/>
+      </file>
+      <file name="empresaController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\empresaController.js">
+        <metrics statements="71" coveredstatements="34" conditionals="24" coveredconditionals="9" methods="10" coveredmethods="7"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="44" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="57" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="70" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="83" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="96" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="104" count="3" type="stmt"/>
+        <line num="105" count="3" type="stmt"/>
+        <line num="106" count="3" type="stmt"/>
+        <line num="107" count="3" type="cond" truecount="3" falsecount="1"/>
+        <line num="108" count="3" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="111" count="0" type="stmt"/>
+        <line num="113" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="114" count="0" type="stmt"/>
+        <line num="116" count="0" type="stmt"/>
+        <line num="121" count="1" type="stmt"/>
+        <line num="122" count="1" type="stmt"/>
+        <line num="123" count="1" type="stmt"/>
+        <line num="124" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="127" count="0" type="stmt"/>
+        <line num="128" count="0" type="stmt"/>
+        <line num="130" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="133" count="0" type="stmt"/>
+      </file>
+      <file name="enderecosController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\enderecosController.js">
+        <metrics statements="66" coveredstatements="56" conditionals="86" coveredconditionals="37" methods="5" coveredmethods="5"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="1" type="cond" truecount="1" falsecount="4"/>
+        <line num="21" count="1" type="cond" truecount="3" falsecount="3"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="32" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="34" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="35" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="1" type="cond" truecount="2" falsecount="3"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="41" count="1" type="cond" truecount="2" falsecount="3"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="46" count="1" type="cond" truecount="4" falsecount="1"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="50" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="57" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="58" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="67" count="5" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="75" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="77" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="83" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="91" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="92" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="95" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="97" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="99" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+      </file>
+      <file name="eventosController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\eventosController.js">
+        <metrics statements="57" coveredstatements="26" conditionals="51" coveredconditionals="17" methods="5" coveredmethods="3"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="3" type="cond" truecount="4" falsecount="1"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="36" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="40" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="41" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="42" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="56" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="59" count="3" type="stmt"/>
+        <line num="65" count="3" type="stmt"/>
+        <line num="66" count="3" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="78" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="80" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="81" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="82" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="83" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="95" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="97" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="116" count="2" type="stmt"/>
+        <line num="117" count="2" type="stmt"/>
+        <line num="118" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="119" count="2" type="stmt"/>
+        <line num="121" count="0" type="stmt"/>
+        <line num="126" count="0" type="stmt"/>
+        <line num="127" count="0" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+      </file>
+      <file name="figurinhasController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\figurinhasController.js">
+        <metrics statements="12" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="3"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+      </file>
+      <file name="minhasFigurinhasController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\minhasFigurinhasController.js">
+        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+      </file>
+      <file name="pontosTuristicosController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\pontosTuristicosController.js">
+        <metrics statements="99" coveredstatements="87" conditionals="89" coveredconditionals="62" methods="6" coveredmethods="6"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="18" count="8" type="stmt"/>
+        <line num="19" count="8" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="25" count="8" type="stmt"/>
+        <line num="26" count="8" type="cond" truecount="5" falsecount="0"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="8" type="cond" truecount="4" falsecount="0"/>
+        <line num="32" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="45" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="50" count="5" type="stmt"/>
+        <line num="51" count="5" type="cond" truecount="5" falsecount="0"/>
+        <line num="52" count="5" type="cond" truecount="4" falsecount="0"/>
+        <line num="53" count="4" type="stmt"/>
+        <line num="54" count="4" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="56" count="4" type="cond" truecount="5" falsecount="0"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="60" count="2" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="70" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="71" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="77" count="2" type="stmt"/>
+        <line num="78" count="2" type="stmt"/>
+        <line num="81" count="2" type="stmt"/>
+        <line num="88" count="2" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="91" count="2" type="stmt"/>
+        <line num="92" count="2" type="stmt"/>
+        <line num="94" count="2" type="stmt"/>
+        <line num="96" count="2" type="stmt"/>
+        <line num="98" count="2" type="stmt"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="100" count="2" type="stmt"/>
+        <line num="102" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="103" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="104" count="0" type="cond" truecount="0" falsecount="8"/>
+        <line num="108" count="0" type="stmt"/>
+        <line num="110" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="111" count="0" type="stmt"/>
+        <line num="117" count="12" type="stmt"/>
+        <line num="119" count="4" type="stmt"/>
+        <line num="120" count="4" type="stmt"/>
+        <line num="121" count="4" type="stmt"/>
+        <line num="122" count="4" type="stmt"/>
+        <line num="123" count="4" type="stmt"/>
+        <line num="125" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="126" count="4" type="stmt"/>
+        <line num="127" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="128" count="2" type="stmt"/>
+        <line num="129" count="2" type="stmt"/>
+        <line num="133" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="134" count="4" type="stmt"/>
+        <line num="135" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="136" count="2" type="stmt"/>
+        <line num="137" count="2" type="stmt"/>
+        <line num="141" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="142" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="143" count="4" type="stmt"/>
+        <line num="145" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="146" count="4" type="stmt"/>
+        <line num="147" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="148" count="2" type="stmt"/>
+        <line num="149" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="150" count="2" type="stmt"/>
+        <line num="151" count="2" type="stmt"/>
+        <line num="155" count="4" type="stmt"/>
+        <line num="166" count="2" type="stmt"/>
+        <line num="167" count="2" type="stmt"/>
+        <line num="168" count="2" type="stmt"/>
+        <line num="170" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="171" count="1" type="stmt"/>
+        <line num="174" count="1" type="stmt"/>
+        <line num="177" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+        <line num="183" count="2" type="stmt"/>
+        <line num="184" count="2" type="stmt"/>
+        <line num="185" count="2" type="stmt"/>
+        <line num="187" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="188" count="1" type="stmt"/>
+        <line num="191" count="1" type="stmt"/>
+        <line num="193" count="0" type="stmt"/>
+        <line num="194" count="0" type="stmt"/>
+      </file>
+      <file name="qrCodeController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\qrCodeController.js">
+        <metrics statements="9" coveredstatements="7" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+      </file>
+      <file name="qrCodePdfController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\qrCodePdfController.js">
+        <metrics statements="27" coveredstatements="9" conditionals="4" coveredconditionals="1" methods="3" coveredmethods="2"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="42" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+      </file>
+      <file name="recompensasController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\recompensasController.js">
+        <metrics statements="53" coveredstatements="19" conditionals="24" coveredconditionals="8" methods="6" coveredmethods="3"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="35" count="1" type="cond" truecount="3" falsecount="3"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="44" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="46" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="57" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="66" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="74" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="102" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="105" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="117" count="0" type="stmt"/>
+      </file>
+      <file name="resgatesController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\resgatesController.js">
+        <metrics statements="11" coveredstatements="8" conditionals="6" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+      </file>
+      <file name="userController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\userController.js">
+        <metrics statements="47" coveredstatements="16" conditionals="10" coveredconditionals="3" methods="8" coveredmethods="3"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="33" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="54" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="86" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="97" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="98" count="0" type="stmt"/>
+      </file>
+      <file name="userFigurinhaController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\userFigurinhaController.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+      </file>
+      <file name="visitasPontoFigController.js" path="C:\Users\bianc\Desktop\Vivaigarassu\controllers\visitasPontoFigController.js">
+        <metrics statements="7" coveredstatements="6" conditionals="6" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+      </file>
+    </package>
+    <package name="repositories">
+      <metrics statements="89" coveredstatements="51" conditionals="24" coveredconditionals="8" methods="46" coveredmethods="29"/>
+      <file name="empresaRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\empresaRepository.js">
+        <metrics statements="21" coveredstatements="12" conditionals="8" coveredconditionals="2" methods="10" coveredmethods="4"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="60" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="79" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="80" count="3" type="stmt"/>
+        <line num="81" count="3" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="84" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="88" count="1" type="stmt"/>
+      </file>
+      <file name="enderecosRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\enderecosRepository.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+      </file>
+      <file name="eventosRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\eventosRepository.js">
+        <metrics statements="22" coveredstatements="14" conditionals="8" coveredconditionals="4" methods="6" coveredmethods="6"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="13" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="30" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="52" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="65" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+      </file>
+      <file name="figurinhasRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\figurinhasRepository.js">
+        <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="3"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+      </file>
+      <file name="minhasFigurinhasRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\minhasFigurinhasRepository.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+      </file>
+      <file name="pontosTuristicosRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\pontosTuristicosRepository.js">
+        <metrics statements="8" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="2"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="40" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+      </file>
+      <file name="qrCodeRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\qrCodeRepository.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+      </file>
+      <file name="qrCodepdfRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\qrCodepdfRepository.js">
+        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+      </file>
+      <file name="recompensasRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\recompensasRepository.js">
+        <metrics statements="18" coveredstatements="5" conditionals="6" coveredconditionals="1" methods="6" coveredmethods="2"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="13" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="47" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+      </file>
+      <file name="resgatesRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\resgatesRepository.js">
+        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+      </file>
+      <file name="userFigurinhaRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\userFigurinhaRepository.js">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+      </file>
+      <file name="userRepository.js" path="C:\Users\bianc\Desktop\Vivaigarassu\repositories\userRepository.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="426" coveredstatements="315" conditionals="240" coveredconditionals="123" methods="66" coveredmethods="41"/>
+      <file name="dashboardAdmService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\dashboardAdmService.js">
+        <metrics statements="25" coveredstatements="17" conditionals="11" coveredconditionals="1" methods="8" coveredmethods="3"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="95" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="97" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="108" count="0" type="stmt"/>
+      </file>
+      <file name="dashboardEmpresaService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\dashboardEmpresaService.js">
+        <metrics statements="11" coveredstatements="7" conditionals="23" coveredconditionals="5" methods="5" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="8" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+      </file>
+      <file name="dashboardUsuarioService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\dashboardUsuarioService.js">
+        <metrics statements="7" coveredstatements="7" conditionals="6" coveredconditionals="3" methods="2" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="12" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+      </file>
+      <file name="empresaService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\empresaService.js">
+        <metrics statements="45" coveredstatements="23" conditionals="18" coveredconditionals="7" methods="10" coveredmethods="5"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="11" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="28" count="2" type="cond" truecount="3" falsecount="3"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="74" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="75" count="2" type="stmt"/>
+        <line num="76" count="2" type="stmt"/>
+        <line num="77" count="2" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="92" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="103" count="2" type="stmt"/>
+        <line num="104" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="105" count="0" type="stmt"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="110" count="2" type="stmt"/>
+        <line num="111" count="2" type="stmt"/>
+      </file>
+      <file name="eventosService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\eventosService.js">
+        <metrics statements="79" coveredstatements="58" conditionals="70" coveredconditionals="37" methods="7" coveredmethods="5"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="11" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="31" count="2" type="cond" truecount="5" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="38" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="1" type="cond" truecount="4" falsecount="1"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="51" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="58" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="73" count="5" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="81" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="89" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="91" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="97" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="101" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="102" count="1" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="107" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="108" count="1" type="stmt"/>
+        <line num="110" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="111" count="1" type="stmt"/>
+        <line num="112" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="113" count="1" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="129" count="0" type="stmt"/>
+        <line num="139" count="0" type="stmt"/>
+        <line num="141" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="143" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="147" count="0" type="stmt"/>
+        <line num="148" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="149" count="0" type="stmt"/>
+        <line num="150" count="0" type="stmt"/>
+        <line num="151" count="0" type="stmt"/>
+        <line num="154" count="0" type="stmt"/>
+        <line num="165" count="2" type="stmt"/>
+        <line num="166" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="167" count="0" type="stmt"/>
+        <line num="168" count="0" type="stmt"/>
+        <line num="169" count="0" type="stmt"/>
+        <line num="172" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="173" count="1" type="stmt"/>
+        <line num="176" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="177" count="0" type="stmt"/>
+        <line num="180" count="1" type="stmt"/>
+        <line num="181" count="1" type="stmt"/>
+        <line num="182" count="1" type="stmt"/>
+      </file>
+      <file name="figurinhasService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\figurinhasService.js">
+        <metrics statements="8" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="3"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+      </file>
+      <file name="minhasFigurinhasService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\minhasFigurinhasService.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+      <file name="pontosTuristicosService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\pontosTuristicosService.js">
+        <metrics statements="17" coveredstatements="11" conditionals="16" coveredconditionals="5" methods="4" coveredmethods="3"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="18" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="1" type="stmt"/>
+      </file>
+      <file name="qrCodePDFService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\qrCodePDFService.js">
+        <metrics statements="38" coveredstatements="36" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="19" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+      </file>
+      <file name="qrCodeService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\qrCodeService.js">
+        <metrics statements="68" coveredstatements="51" conditionals="10" coveredconditionals="9" methods="3" coveredmethods="2"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="14" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="25" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="60" count="2" type="stmt"/>
+        <line num="61" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="78" count="2" type="stmt"/>
+        <line num="80" count="2" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="84" count="2" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="91" count="2" type="stmt"/>
+        <line num="93" count="2" type="stmt"/>
+        <line num="94" count="2" type="stmt"/>
+        <line num="96" count="2" type="stmt"/>
+        <line num="97" count="2" type="stmt"/>
+        <line num="98" count="2" type="stmt"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="101" count="2" type="stmt"/>
+        <line num="103" count="2" type="stmt"/>
+        <line num="106" count="2" type="stmt"/>
+        <line num="108" count="2" type="stmt"/>
+        <line num="110" count="2" type="stmt"/>
+        <line num="112" count="2" type="stmt"/>
+        <line num="113" count="2" type="stmt"/>
+        <line num="116" count="2" type="stmt"/>
+        <line num="118" count="2" type="stmt"/>
+        <line num="119" count="2" type="stmt"/>
+        <line num="123" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="124" count="1" type="stmt"/>
+        <line num="132" count="1" type="stmt"/>
+        <line num="142" count="2" type="stmt"/>
+        <line num="153" count="0" type="stmt"/>
+        <line num="159" count="0" type="stmt"/>
+        <line num="160" count="0" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="165" count="0" type="stmt"/>
+        <line num="172" count="0" type="stmt"/>
+        <line num="180" count="0" type="stmt"/>
+      </file>
+      <file name="recompensasService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\recompensasService.js">
+        <metrics statements="30" coveredstatements="13" conditionals="33" coveredconditionals="15" methods="6" coveredmethods="2"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="27" count="2" type="cond" truecount="5" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="32" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="34" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="37" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="49" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="64" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="65" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="67" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="70" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+      </file>
+      <file name="resgatesService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\resgatesService.js">
+        <metrics statements="18" coveredstatements="18" conditionals="10" coveredconditionals="10" methods="3" coveredmethods="3"/>
+        <line num="6" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="17" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="29" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="33" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+      </file>
+      <file name="userService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\userService.js">
+        <metrics statements="60" coveredstatements="58" conditionals="29" coveredconditionals="25" methods="8" coveredmethods="8"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="13" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="19" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="40" count="4" type="cond" truecount="5" falsecount="0"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="45" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="56" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="77" count="2" type="stmt"/>
+        <line num="81" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="91" count="2" type="stmt"/>
+        <line num="92" count="2" type="stmt"/>
+        <line num="94" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="98" count="2" type="stmt"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="108" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="111" count="0" type="stmt"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="131" count="1" type="stmt"/>
+        <line num="146" count="1" type="stmt"/>
+        <line num="150" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="152" count="2" type="stmt"/>
+        <line num="153" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="154" count="1" type="stmt"/>
+        <line num="157" count="1" type="stmt"/>
+        <line num="159" count="1" type="stmt"/>
+        <line num="160" count="1" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="164" count="1" type="stmt"/>
+        <line num="168" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="170" count="1" type="stmt"/>
+        <line num="171" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="173" count="1" type="stmt"/>
+        <line num="175" count="1" type="stmt"/>
+        <line num="180" count="1" type="stmt"/>
+        <line num="182" count="1" type="stmt"/>
+      </file>
+      <file name="visitasPontoFigService.js" path="C:\Users\bianc\Desktop\Vivaigarassu\services\visitasPontoFigService.js">
+        <metrics statements="14" coveredstatements="5" conditionals="8" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="5" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="29" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="53" coveredstatements="46" conditionals="41" coveredconditionals="29" methods="15" coveredmethods="11"/>
+      <file name="bcrypt.js" path="C:\Users\bianc\Desktop\Vivaigarassu\utils\bcrypt.js">
+        <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="11" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="1" type="stmt"/>
+      </file>
+      <file name="email.js" path="C:\Users\bianc\Desktop\Vivaigarassu\utils\email.js">
+        <metrics statements="18" coveredstatements="18" conditionals="12" coveredconditionals="12" methods="1" coveredmethods="1"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="6" type="cond" truecount="6" falsecount="0"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="22" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="29" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+      </file>
+      <file name="jwt.js" path="C:\Users\bianc\Desktop\Vivaigarassu\utils\jwt.js">
+        <metrics statements="7" coveredstatements="5" conditionals="11" coveredconditionals="10" methods="3" coveredmethods="2"/>
+        <line num="3" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="4" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="1" type="cond" truecount="4" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+      </file>
+      <file name="resetTokens.js" path="C:\Users\bianc\Desktop\Vivaigarassu\utils\resetTokens.js">
+        <metrics statements="21" coveredstatements="16" conditionals="7" coveredconditionals="2" methods="7" coveredmethods="4"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+      </file>
+      <file name="response.js" path="C:\Users\bianc\Desktop\Vivaigarassu\utils\response.js">
+        <metrics statements="2" coveredstatements="2" conditionals="5" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
