@@ -99,12 +99,26 @@ async function resetPassword(req, res) {
   }
 }
 
+async function changePassword(req, res) {
+  try {
+    const userId = req.userId;
+    const { senhaAtual, novaSenha } = req.body;
+    const result = await userService.changePassword(userId, senhaAtual, novaSenha);
+    return res.status(200).json(result);
+  } catch (error) {
+    const status = error.status || 500;
+    return res.status(status).json({ message: error.message });
+  }
+}
+
 export default {
   login,
   cadastrar,
   getMe,
   updateMe,
   logout,
-  getAllUsers
-  ,forgotPassword, resetPassword
+  getAllUsers,
+  forgotPassword,
+  resetPassword,
+  changePassword
 };

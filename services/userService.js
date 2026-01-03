@@ -182,13 +182,44 @@ async function resetPassword(token, novaSenha) {
   return { message: "Senha redefinida com sucesso" };
 }
 
+async function changePassword(userId, senhaAtual, novaSenha) {
+  if (!senhaAtual || !novaSenha) {
+    throw { status: 400, message: "Senha atual e nova senha são obrigatórias" };
+  }
+
+  const user = await prisma.usuarios.findUnique({
+    where: { id_usuario: userId }
+  });
+
+  if (!user) {
+    throw { status: 404, message: "Usuário não encontrado" };
+  }
+
+  const senhaCorreta = await bcrypt.compare(senhaAtual, user.senha);
+
+  if (!senhaCorreta) {
+    throw { status: 401, message: "Senha atual incorreta" };
+  }
+
+  const hash = await bcrypt.hash(novaSenha, 10);
+
+  await prisma.usuarios.update({
+    where: { id_usuario: userId },
+    data: { senha: hash }
+  });
+
+  return { message: "Senha alterada com sucesso" };
+}
+
 export default {
   login,
   cadastrar,
   getById,
   updateMe,
   logout,
-  getAllUsers
-  ,forgotPassword, resetPassword
+  getAllUsers,
+  forgotPassword,
+  resetPassword,
+  changePassword
 };
 

@@ -58,7 +58,8 @@ async function update(id, data) {
     nome,
     descricao,
     quantidade_disponivel,
-    preco_moedas
+    preco_moedas,
+    imagem_path
   } = data;
 
   const quantidadeNum = quantidade_disponivel !== undefined ? Number(quantidade_disponivel) : undefined;
@@ -71,12 +72,16 @@ async function update(id, data) {
     throw new Error("Campo 'preco_moedas' inválido");
   }
 
-  return await recompensasRepository.update(id, {
+  const updateData = {
     nome,
     descricao,
     quantidade_disponivel: quantidadeNum,
     preco_moedas: precoNum
-  });
+  };
+
+  if (imagem_path) updateData.imagem_path = imagem_path;
+
+  return await recompensasRepository.update(id, updateData);
 }
 
 async function deleteRecompensa(id) {

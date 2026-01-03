@@ -9,7 +9,7 @@ const router = Router();
 router.use(auth);
 
 router.post("/", permitir("empreendedor", "adm"), uploadRecompensaImagem, recompensasController.create);
-router.put("/:id", permitir("empreendedor", "adm"), recompensasController.update);
+router.put("/:id", permitir("empreendedor", "adm"), uploadRecompensaImagem, recompensasController.update);
 router.post("/:id/imagem", permitir("empreendedor", "adm"), uploadRecompensaImagem, recompensasController.uploadImagem);
 router.delete("/:id", permitir("empreendedor", "adm"), recompensasController.delete);
 

@@ -79,10 +79,24 @@ async function create(req, res) {
 async function update(req, res) {
   try {
     const { id } = req.params;
-    const recompensa = await recompensasService.update(id, req.body);
+    const data = { ...req.body };
+
+    if (req.file) {
+      data.imagem_path = `/uploads/recompensas/${req.file.filename}`;
+    }
+
+    const recompensa = await recompensasService.update(id, data);
     return res.status(200).json(recompensa);
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    console.error('[ERROR] Recompensas.update -', {
+      message: error.message,
+      stack: error.stack,
+      params: req.params,
+      body: req.body,
+      file: req.file
+    });
+    const status = error.status || 500;
+    return res.status(status).json({ message: error.message });
   }
 }
 

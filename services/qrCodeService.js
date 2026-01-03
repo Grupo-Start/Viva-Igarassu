@@ -29,7 +29,7 @@ async function criarQrCode(idPonto) {
     token = crypto.randomBytes(16).toString("hex");
   }
 
-  const url = `${process.env.API_URL}/visitas/qr?token=${token}`;
+  const url = `${process.env.FRONT_URL || process.env.API_URL}/visitas/qr?token=${token}`;
 
   const pastaQr = path.resolve("uploads/qrcodes");
   const pastaPdf = path.resolve("uploads/pdfs");

@@ -12,6 +12,7 @@ router.post("/reset-password", userController.resetPassword);
 
 router.get("/me", auth, userController.getMe);
 router.put("/me", auth, userController.updateMe);
+router.put("/me/senha", auth, userController.changePassword);
 router.post("/logout", auth, userController.logout);
 
 router.get("/", auth, isAdm, userController.getAllUsers);
