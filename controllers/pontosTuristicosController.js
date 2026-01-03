@@ -20,8 +20,6 @@ async function criarPonto(req, res) {
     console.log("[DEBUG] Ponto.create - userId:", req.userId, "role:", req.role);
     console.log("[DEBUG] Ponto.create - body:", body);
 
-    // Determinar id_empresa: usar req.id_empresa se existir;
-    // se for admin e não houver, usar/criar Empresa Admin
     let id_empresa = req.id_empresa;
     if (!id_empresa && body && body.id_empresa) id_empresa = body.id_empresa;
 
@@ -41,12 +39,10 @@ async function criarPonto(req, res) {
       id_empresa = empresa.id_empresa;
     }
 
-    // Se não houver empresa para criação, retornar erro
     if (!id_empresa) {
       return res.status(400).json({ message: "Usuário não possui empresa cadastrada" });
     }
 
-    // Se veio endereco_completo (ou variações), parsear e criar registro em enderecos
     let id_endereco_final = body.id_endereco;
     const rawEndereco = body.endereco_completo || body.enderecoCompleto || body.endereco || body.address || body.address_full;
     if (!id_endereco_final && rawEndereco) {
@@ -65,7 +61,6 @@ async function criarPonto(req, res) {
       }
     }
 
-    // Garantir criação de figurinha mínima se não foi informada
     let id_figurinha_final = body.id_figurinha;
     if (!id_figurinha_final) {
       const nomeFig = (body.nome) ? `${body.nome} - Figurinha` : `Figurinha ${Date.now()}`;
@@ -84,13 +79,11 @@ async function criarPonto(req, res) {
       id_figurinha: id_figurinha_final
     };
 
-    // remover campos temporários de endereço que não existem no model Prisma
     delete dadosParaCriar.endereco_completo;
     delete dadosParaCriar.enderecoCompleto;
     delete dadosParaCriar.endereco;
     delete dadosParaCriar.address;
     delete dadosParaCriar.address_full;
-    // pontos_turisticos model does not have id_empresa — não enviar
     delete dadosParaCriar.id_empresa;
 
     console.log('[DEBUG] Ponto.create - dadosParaCriar:', JSON.stringify(dadosParaCriar));
@@ -112,7 +105,6 @@ async function criarPonto(req, res) {
   }
 }
 
-// Reuso simples do parser de eventos para dividir endereco_completo
 function parseEndereco(completo) {
   const parts = completo.split(",").map(p => p.trim()).filter(Boolean);
 

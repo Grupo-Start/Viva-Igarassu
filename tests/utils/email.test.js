@@ -29,7 +29,6 @@ describe('utils/email', () => {
   });
 
   test('returns token info when transporter not configured', async () => {
-    // ensure transporter will be null at module load
     delete process.env.SMTP_HOST;
     const { sendResetPasswordEmail } = await import('../../utils/email.js');
     const result = await sendResetPasswordEmail('b@b.com', 't2');

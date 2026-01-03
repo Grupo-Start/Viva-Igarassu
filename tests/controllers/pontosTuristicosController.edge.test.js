@@ -37,7 +37,6 @@ describe('pontosTuristicosController edge cases', () => {
     const req = { body, userId: 'u2', role: 'adm' };
     const res = resMock();
 
-    // ensure empresa exists so flow reaches address parsing check
     empresaRepository.findById.mockResolvedValue({ id_empresa: 'e2' });
     figurinhasRepository.createFigurinha.mockResolvedValue({ id_figurinha: 'f2' });
 
@@ -53,7 +52,6 @@ describe('pontosTuristicosController edge cases', () => {
     const res = resMock();
 
     empresaRepository.findById.mockResolvedValue({ id_empresa: 'e3' });
-    // simulate DB error when creating endereco
     enderecosRepository.create.mockRejectedValue(new Error('fail'));
 
     await controller.criarPonto(req, res);

@@ -77,7 +77,7 @@ async function countEventosByEmpresaByMonth(id, year) {
   const counts = Array(12).fill(0);
   eventos.forEach(e => {
     if (e.data instanceof Date) {
-      const m = e.data.getMonth(); // 0-11
+      const m = e.data.getMonth();
       counts[m]++;
     } else {
       const d = new Date(e.data);

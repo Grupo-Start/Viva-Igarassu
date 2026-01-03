@@ -20,8 +20,6 @@ function resMock() {
 describe('pontosTuristicosController deeper', () => {
   afterEach(() => jest.clearAllMocks());
 
-  // parseEndereco is internal to the controller (not exported); behavior
-  // is covered indirectly by criarPonto tests above.
 
   test('criarPonto creates empresa when role adm and no empresa exists', async () => {
     const req = { body: {}, userId: 'u1', role: 'adm' };

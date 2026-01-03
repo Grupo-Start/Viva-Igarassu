@@ -13,7 +13,7 @@ describe('pontosTuristicosController branches', () => {
 
   test('criarPonto returns 400 when parsed endereco lacks cidade/estado/logradouro', async () => {
     const body = { endereco_completo: 'Somente Bairro', id_empresa: 'e1' };
-    // Provide id_empresa and mock empresaRepository.findById so controller reaches endereco parsing
+    
     const req = { body, userId: 'u', role: 'comum' };
     const empresaRepo = require('../../repositories/empresaRepository.js');
     empresaRepo.default.findById.mockResolvedValue({ id_empresa: 'e1' });

@@ -4,7 +4,6 @@ const PORT = process.env.PORT || 3001;
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  // opcional: process.exit(1);
 });
 
 process.on('uncaughtException', (err) => {
