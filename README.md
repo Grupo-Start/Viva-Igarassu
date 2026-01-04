@@ -1,11 +1,5 @@
 # Viva Igarassu — Backend
 
-<p align="center">
-  <img width="150" height="150" alt="Logo Viva Igarassu" src="./uploads/logo-viva-igarassu.png" />
-</p>
-
-**Versão:** 1.0 — Entrega para avaliação técnica
-
 Backend RESTful da plataforma **Viva Igarassu**, voltada ao turismo cultural e histórico da cidade de Igarassu/PE. O sistema integra pontos turísticos, eventos, álbum de figurinhas digitais, recompensas e registro de visitas via QR Code.
 
 ---
