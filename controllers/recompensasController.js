@@ -1,13 +1,18 @@
 import recompensasService from "../services/recompensasService.js";
 import empresaRepository from "../repositories/empresaRepository.js";
 import { uploadRecompensaImagem } from "../middleware/upload.js";
+import { buildImageUrl } from "../utils/imageUrl.js";
 
 async function getAll(req, res) {
   try {
     const { id_empresa } = req.query;
 
     const recompensas = await recompensasService.getAllByEmpresa(id_empresa);
-    return res.status(200).json(recompensas);
+    const mapped = (recompensas || []).map(r => ({
+      ...r,
+      imagem: buildImageUrl(r.imagem_path)
+    }));
+    return res.status(200).json(mapped);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -17,6 +22,9 @@ async function getById(req, res) {
   try {
     const { id } = req.params;
     const recompensa = await recompensasService.getById(id);
+    if (recompensa) {
+      recompensa.imagem = buildImageUrl(recompensa.imagem_path);
+    }
     return res.status(200).json(recompensa);
   } catch (error) {
     return res.status(404).json({ message: error.message });
@@ -26,8 +34,7 @@ async function getById(req, res) {
 async function create(req, res) {
   try {
 
-    console.log("[DEBUG] Recompensas.create - userId:", req.userId, "role:", req.role);
-    console.log("[DEBUG] Recompensas.create - body:", req.body);
+    
 
     const empresaIdAutomatico = req.id_empresa;
     let empresaIdToUse = empresaIdAutomatico;
@@ -63,14 +70,14 @@ async function create(req, res) {
       id_empresa: empresa.id_empresa
     };
 
-    if (req.file) {
-      data.imagem_path = `/uploads/recompensas/${req.file.filename}`;
+    const file = req.file || (Array.isArray(req.files) && req.files[0]);
+    if (file) {
+      data.imagem_path = file.path || file.secure_url || file.url || file.location || (file.filename ? `/uploads/recompensas/${file.filename}` : null);
     }
 
     const recompensa = await recompensasService.create(data);
     return res.status(201).json(recompensa);
   } catch (error) {
-    console.error("[ERROR] Recompensas.create -", error);
     const status = error.status || 400;
     return res.status(status).json({ message: error.message });
   }
@@ -81,20 +88,14 @@ async function update(req, res) {
     const { id } = req.params;
     const data = { ...req.body };
 
-    if (req.file) {
-      data.imagem_path = `/uploads/recompensas/${req.file.filename}`;
+    const file = req.file || (Array.isArray(req.files) && req.files[0]);
+    if (file) {
+      data.imagem_path = file.path || file.secure_url || file.url || file.location || (file.filename ? `/uploads/recompensas/${file.filename}` : null);
     }
 
     const recompensa = await recompensasService.update(id, data);
     return res.status(200).json(recompensa);
   } catch (error) {
-    console.error('[ERROR] Recompensas.update -', {
-      message: error.message,
-      stack: error.stack,
-      params: req.params,
-      body: req.body,
-      file: req.file
-    });
     const status = error.status || 500;
     return res.status(status).json({ message: error.message });
   }
@@ -116,11 +117,12 @@ async function uploadImagem(req, res) {
   try {
     const { id } = req.params;
 
-    if (!req.file) {
+    const file = req.file || (Array.isArray(req.files) && req.files[0]);
+    if (!file) {
       return res.status(400).json({ message: "Nenhuma imagem foi enviada" });
     }
 
-    const imagemPath = `/uploads/recompensas/${req.file.filename}`;
+    const imagemPath = file.path || file.secure_url || file.url || file.location || (file.filename ? `/uploads/recompensas/${file.filename}` : null);
     const recompensa = await recompensasService.updateImagem(id, imagemPath);
 
     return res.status(200).json({

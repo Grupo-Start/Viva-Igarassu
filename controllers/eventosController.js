@@ -1,10 +1,15 @@
 import eventosService from "../services/eventosService.js";
 import empresaRepository from "../repositories/empresaRepository.js";
+import { buildImageUrl } from "../utils/imageUrl.js";
 
 async function getAll(req, res) {
   try {
     const eventos = await eventosService.getAll();
-    return res.status(200).json(eventos);
+    const mapped = (eventos || []).map(e => ({
+      ...e,
+      imagem: buildImageUrl(e.imagem_path)
+    }));
+    return res.status(200).json(mapped);
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
@@ -14,6 +19,9 @@ async function getById(req, res) {
   try {
     const { id } = req.params;
     const evento = await eventosService.getById(id);
+    if (evento) {
+      evento.imagem = buildImageUrl(evento.imagem_path);
+    }
     return res.status(200).json(evento);
   } catch (error) {
     return res
@@ -24,8 +32,7 @@ async function getById(req, res) {
 
 async function create(req, res) {
   try {
-    console.log("[DEBUG] Eventos.create - userId:", req.userId, "role:", req.role);
-    console.log("[DEBUG] Eventos.create - body:", req.body);
+    
 
     let id_empresa = req.id_empresa;
     if (!id_empresa && req.body && req.body.id_empresa) {
@@ -61,6 +68,11 @@ async function create(req, res) {
       id_usuario: req.userId,
       id_empresa: id_empresa
     };
+
+    const file = req.file || (Array.isArray(req.files) && req.files[0]);
+    if (file) {
+      data.imagem_path = file.path || file.secure_url || file.url || file.location || (file.filename ? `/uploads/eventos/${file.filename}` : null);
+    }
 
     const evento = await eventosService.create(data);
     return res.status(201).json(evento);
@@ -102,6 +114,11 @@ async function update(req, res) {
       id_usuario: req.userId,
       id_empresa: id_empresa
     };
+
+    const file = req.file || (Array.isArray(req.files) && req.files[0]);
+    if (file) {
+      data.imagem_path = file.path || file.secure_url || file.url || file.location || (file.filename ? `/uploads/eventos/${file.filename}` : null);
+    }
 
     const evento = await eventosService.update(id, data);
     return res.status(200).json(evento);

@@ -25,7 +25,8 @@ async function create(data) {
     horario: horarioRaw,
     id_endereco,
     endereco_completo,
-    id_empresa
+    id_empresa,
+    imagem_path
   } = data;
 
   if (!nome || !dataRaw || !id_empresa) {
@@ -59,14 +60,18 @@ async function create(data) {
     ? new Date(`1970-01-01T${horarioRaw}Z`)
     : null;
 
-  return await eventosRepository.create({
+  const createData = {
     nome,
     descricao,
     data: dataFormatada,
     horario: horarioFormatado,
     id_endereco: String(idEnderecoFinal),
     id_empresa: String(id_empresa)
-  });
+  };
+
+  if (imagem_path) createData.imagem_path = imagem_path;
+
+  return await eventosRepository.create(createData);
 }
 
 function parseEndereco(completo) {
@@ -135,7 +140,8 @@ async function update(id, data) {
     horario: horarioRaw,
     id_endereco,
     endereco_completo,
-    id_empresa
+    id_empresa,
+    imagem_path
   } = data;
 
   const dataFormatada = dataRaw ? new Date(dataRaw) : undefined;
@@ -151,14 +157,18 @@ async function update(id, data) {
     idEnderecoFinal = enderecoCriado.id_endereco;
   }
 
-  return await eventosRepository.update(id, {
+  const updateData = {
     nome,
     descricao,
     data: dataFormatada,
     horario: horarioFormatado,
     id_endereco: idEnderecoFinal !== undefined ? String(idEnderecoFinal) : undefined,
     id_empresa: id_empresa !== undefined ? String(id_empresa) : undefined
-  });
+  };
+
+  if (imagem_path) updateData.imagem_path = imagem_path;
+
+  return await eventosRepository.update(id, updateData);
 }
 
 async function deleteEvento(id, usuario) {

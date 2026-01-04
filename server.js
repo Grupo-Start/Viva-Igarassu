@@ -12,9 +12,9 @@ process.on('uncaughtException', (err) => {
 });
 
 try {
-  app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-  });
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
 } catch (err) {
   console.error('Erro ao iniciar servidor:', err);
   process.exit(1);

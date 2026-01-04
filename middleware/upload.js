@@ -1,39 +1,45 @@
 import multer from "multer";
-import path from "path";
-import fs from "fs";
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const pasta = path.resolve("uploads/recompensas");
-    fs.mkdirSync(pasta, { recursive: true });
-    cb(null, pasta);
-  },
-  filename: (req, file, cb) => {
-    const nomeUnico = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
-    cb(null, nomeUnico);
-  }
-});
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../config/cloudinary.js";
 
 const fileFilter = (req, file, cb) => {
-  const tiposPermitidos = /jpeg|jpg|png|gif|webp/;
-  const extname = tiposPermitidos.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = tiposPermitidos.test(file.mimetype);
+  const tiposPermitidos = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+    "image/webp"
+  ];
 
-  if (mimetype && extname) {
-    return cb(null, true);
+  if (tiposPermitidos.includes(file.mimetype)) {
+    cb(null, true);
   } else {
     cb(new Error("Apenas imagens são permitidas (jpeg, jpg, png, gif, webp)"));
   }
 };
 
-export const uploadRecompensaImagem = multer({
-  storage: storage,
-  fileFilter: fileFilter,
-  limits: {
-    fileSize: 5 * 1024 * 1024
-  }
-}).single("imagem");
+function createCloudinaryUpload(folder = "viva-igarassu/default") {
+  const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder,
+      allowed_formats: ["jpeg", "jpg", "png", "gif", "webp"],
+      public_id: () => `upload-${Date.now()}-${Math.round(Math.random() * 1e9)}`
+    }
+  });
+
+  return multer({
+    storage,
+    fileFilter,
+    limits: { fileSize: 5 * 1024 * 1024 }
+  });
+}
+
+export const uploadRecompensaImagem = createCloudinaryUpload("viva-igarassu/recompensas").any();
+export const uploadEventoImagem = createCloudinaryUpload("viva-igarassu/eventos").any();
 
 export default {
-  uploadRecompensaImagem
+  createCloudinaryUpload,
+  uploadRecompensaImagem,
+  uploadEventoImagem
 };

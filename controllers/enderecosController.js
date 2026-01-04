@@ -23,8 +23,7 @@ async function create(req, res) {
       data = { ...data, ...parsed };
     }
 
-    console.log('[DEBUG] Enderecos.create - content-type:', req.headers['content-type']);
-    console.log('[DEBUG] Enderecos.create - raw body:', req.body);
+    
 
     const allowed = {};
     allowed.logradouro = (data.logradouro || "").toString().trim().slice(0,150);
@@ -49,7 +48,7 @@ async function create(req, res) {
 
     Object.keys(allowed).forEach(k => allowed[k] === undefined && delete allowed[k]);
 
-    console.log('[DEBUG] Enderecos.create - sanitized data:', allowed);
+    
     try {
       const endereco = await enderecosRepository.create(allowed);
       return res.status(201).json(endereco);

@@ -17,8 +17,7 @@ async function listarPublico(req, res) {
 async function criarPonto(req, res) {
   try {
     const { body } = req;
-    console.log("[DEBUG] Ponto.create - userId:", req.userId, "role:", req.role);
-    console.log("[DEBUG] Ponto.create - body:", body);
+    
 
     let id_empresa = req.id_empresa;
     if (!id_empresa && body && body.id_empresa) id_empresa = body.id_empresa;
@@ -46,9 +45,7 @@ async function criarPonto(req, res) {
     let id_endereco_final = body.id_endereco;
     const rawEndereco = body.endereco_completo || body.enderecoCompleto || body.endereco || body.address || body.address_full;
     if (!id_endereco_final && rawEndereco) {
-      console.log('[DEBUG] Ponto.create - endereco raw:', rawEndereco);
       const parsed = parseEndereco(rawEndereco);
-      console.log('[DEBUG] Ponto.create - parsed endereco:', parsed);
       if (!parsed.logradouro || !parsed.cidade || !parsed.estado) {
         return res.status(400).json({ message: "Endereço completo deve conter logradouro, cidade e estado." });
       }
@@ -86,7 +83,7 @@ async function criarPonto(req, res) {
     delete dadosParaCriar.address_full;
     delete dadosParaCriar.id_empresa;
 
-    console.log('[DEBUG] Ponto.create - dadosParaCriar:', JSON.stringify(dadosParaCriar));
+    
 
     try {
       const novoPonto = await pontosService.criarPonto(dadosParaCriar);

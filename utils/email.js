@@ -27,7 +27,7 @@ export async function sendResetPasswordEmail(to, token) {
   const html = `<p>Para redefinir sua senha, clique no link abaixo:</p><p><a href="${resetUrl}">${resetUrl}</a></p>`;
 
   if (!transporter) {
-    console.warn("[email] SMTP não configurado. Defina SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS.");
+    
     return { info: "transporter not configured", token };
   }
 
@@ -40,7 +40,6 @@ export async function sendResetPasswordEmail(to, token) {
       html
     });
 
-    console.log(`[email] Reset enviado para ${to} via ${host}:${port}`);
     return info;
   } catch (err) {
     console.error("[email] Erro ao enviar e-mail:", err);

@@ -1,4 +1,5 @@
 import prisma from "../database/prismaClient.js";
+import { buildImageUrl } from "../utils/imageUrl.js";
 
 async function getDashboardUsuario(userId) {
   const usuario = await prisma.usuarios.findUnique({
@@ -38,9 +39,7 @@ async function getDashboardUsuario(userId) {
     valor: r.valor_resgatado,
     codigo: r.id_resgates.slice(0, 6).toUpperCase(),
     data_resgate: r.data_resgate,
-    imagem: r.recompensas.imagem_path
-      ? `${process.env.API_URL}${r.recompensas.imagem_path}`
-      : null
+    imagem: buildImageUrl(r.recompensas.imagem_path)
   }));
 
   return {

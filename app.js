@@ -47,5 +47,19 @@ app.use("/qrcodes", qrCodeRoutes);
 app.use("/visitas", visitasPontoFigRoutes);
 app.use("/dashboard", dashboardsRoutes);
 
+app.use((err, req, res, next) => {
+	if (err && err.type === 'entity.parse.failed') {
+		return res.status(400).json({ message: 'Payload JSON inválido ou Content-Type incorreto' });
+	}
+	next(err);
+});
+
+app.use((err, req, res, next) => {
+	if (!err) return next();
+	console.error('[ERROR] Unhandled error:', err && err.stack ? err.stack : err);
+	const status = err && err.status ? err.status : 500;
+	res.status(status).send(err && err.message ? err.message : 'Internal Server Error');
+});
+
 
 export default app;

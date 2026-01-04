@@ -4,6 +4,7 @@ import prisma from "../database/prismaClient.js";
 import fs from "fs";
 import path from "path";
 import PDFDocument from "pdfkit";
+import { buildImageUrl } from "../utils/imageUrl.js";
 
 async function criarQrCode(idPonto) {
 
@@ -143,8 +144,8 @@ async function criarQrCode(idPonto) {
     id_qr_code: qr.id_qr_code,
     token,
     url,
-    imagem: `${process.env.API_URL}${qr.imagem_path}`,
-    pdf: `${process.env.API_URL}${qr.pdf_path}`,
+    imagem: buildImageUrl(qr.imagem_path),
+    pdf: buildImageUrl(qr.pdf_path),
     message: qrId ? "QR Code regenerado com sucesso" : "QR Code criado com sucesso"
   };
 }

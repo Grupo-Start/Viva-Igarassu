@@ -1,4 +1,5 @@
 import prisma from "../database/prismaClient.js";
+import { buildImageUrl } from "../utils/imageUrl.js";
 
 async function getDashboardEmpresa(id_empresa) {
   const empresa = await prisma.empresa.findUnique({
@@ -58,7 +59,7 @@ async function getResgatesRecentes(id_empresa, limit = 10) {
     recompensa: r.recompensas ? {
       id: r.recompensas.id_recompensas,
       nome: r.recompensas.nome,
-      imagem: r.recompensas.imagem_path ? `${process.env.API_URL}${r.recompensas.imagem_path}` : null
+      imagem: buildImageUrl(r.recompensas.imagem_path)
     } : null
   }));
 }
@@ -78,7 +79,7 @@ async function getRecompensasPorEmpresa(id_empresa) {
     nome: r.nome,
     quantidade_disponivel: r.quantidade_disponivel ?? 0,
     preco_moedas: r.preco_moedas ?? 0,
-    imagem: r.imagem_path ? `${process.env.API_URL}${r.imagem_path}` : null,
+    imagem: buildImageUrl(r.imagem_path),
     total_resgates: r._count ? r._count.resgates : 0
   }));
 }
