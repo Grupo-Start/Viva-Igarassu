@@ -35,8 +35,8 @@ function createCloudinaryUpload(folder = "viva-igarassu/default") {
   });
 }
 
-export const uploadRecompensaImagem = createCloudinaryUpload("viva-igarassu/recompensas").any();
-export const uploadEventoImagem = createCloudinaryUpload("viva-igarassu/eventos").any();
+export const uploadRecompensaImagem = createCloudinaryUpload("viva-igarassu/recompensas").single("imagem");
+export const uploadEventoImagem = createCloudinaryUpload("viva-igarassu/eventos").single("imagem");
 
 export default {
   createCloudinaryUpload,

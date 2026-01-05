@@ -1,6 +1,6 @@
 export function permitir(...rolesPermitidos) {
     return (req, res, next) => {
-        if (!rolesPermitidos.includes(req.role)) {
+        if (!rolesPermitidos.includes(req.userRole)) {
             return res.status(403).json({ message: "Acesso negado." });
         }
         next();
@@ -9,21 +9,21 @@ export function permitir(...rolesPermitidos) {
 
 
 export function isAdm(req, res, next) {
-    if (req.role !== "adm") {
+    if (req.userRole !== "adm") {
         return res.status(403).json({ message: "Apenas administradores podem acessar." });
     }
     next();
 };
 
 export function isComum(req, res, next) {
-    if (req.role !== "comum") {
+    if (req.userRole !== "comum") {
         return res.status(403).json({ message: "Apenas usuários comuns podem acessar." });
     }
     next();
 };
 
 export function isEmpreendedor(req, res, next) {
-    if (req.role !== "empreendedor") {
+    if (req.userRole !== "empreendedor") {
         return res.status(403).json({ message: "Apenas empreendedores podem acessar." });
     }
     next();
@@ -32,7 +32,7 @@ export function isEmpreendedor(req, res, next) {
 export function PermitirEvento(req, res, next) {
     const permitido = ["adm", "empreendedor"];
 
-    if (!permitido.includes(req.role)) {
+    if (!permitido.includes(req.userRole)) {
         return res.status(403).json({
             message: "Somente administradores ou empreendedores podem criar eventos."
         });

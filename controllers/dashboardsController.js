@@ -5,7 +5,7 @@ import empresaService from "../services/empresaService.js";
 
 async function dashboardUsuario(req, res) {
   try {
-    if (req.role !== "comum") {
+    if (req.userRole !== "comum") {
       return res.status(403).json({ message: "Acesso permitido apenas para usuários comuns" });
     }
 
@@ -21,7 +21,7 @@ async function dashboardUsuario(req, res) {
 
 async function dashboardAdmin(req, res) {
   try {
-  if (req.role !== "adm") {
+  if (req.userRole !== "adm") {
     return res.status(403).json({ message: "Acesso permitido apenas para usuários administrador" });
     }
 
@@ -37,7 +37,7 @@ async function dashboardAdmin(req, res) {
 
 async function getVisitasPorPonto(req, res) {
   try {
-    if (req.role !== "adm") {
+    if (req.userRole !== "adm") {
       return res.status(403).json({ message: "Acesso permitido apenas para administradores" });
     }
 
@@ -53,7 +53,7 @@ async function getVisitasPorPonto(req, res) {
 
 async function getVisitasPorPeriodo(req, res) {
   try {
-    if (req.role !== "adm") {
+    if (req.userRole !== "adm") {
       return res.status(403).json({ message: "Acesso permitido apenas para administradores" });
     }
 
@@ -70,14 +70,14 @@ async function getVisitasPorPeriodo(req, res) {
 
 async function dashboardEmpresa(req, res) {
   try {
-    if (!["empreendedor", "adm"].includes(req.role)) {
+    if (!["empreendedor", "adm"].includes(req.userRole)) {
       return res.status(403).json({ message: "Acesso permitido apenas para empreendedores ou administradores" });
     }
 
     const { id } = req.params;
       const empresa = await empresaService.getById(id);
 
-      if (req.role === "empreendedor" && empresa.id_usuario !== req.userId) {
+      if (req.userRole === "empreendedor" && empresa.id_usuario !== req.userId) {
         return res.status(403).json({ message: "Acesso negado à empresa" });
       }
 
@@ -93,7 +93,7 @@ async function dashboardEmpresa(req, res) {
 
 async function getResgatesEmpresa(req, res) {
   try {
-    if (!["empreendedor", "adm"].includes(req.role)) {
+    if (!["empreendedor", "adm"].includes(req.userRole)) {
       return res.status(403).json({ message: "Acesso permitido apenas para empreendedores ou administradores" });
     }
 
@@ -101,7 +101,7 @@ async function getResgatesEmpresa(req, res) {
     const { limit } = req.query;
       const empresa = await empresaService.getById(id);
 
-      if (req.role === "empreendedor" && empresa.id_usuario !== req.userId) {
+      if (req.userRole === "empreendedor" && empresa.id_usuario !== req.userId) {
         return res.status(403).json({ message: "Acesso negado à empresa" });
       }
 
@@ -117,14 +117,14 @@ async function getResgatesEmpresa(req, res) {
 
 async function getRecompensasEmpresa(req, res) {
   try {
-    if (!["empreendedor", "adm"].includes(req.role)) {
+    if (!["empreendedor", "adm"].includes(req.userRole)) {
       return res.status(403).json({ message: "Acesso permitido apenas para empreendedores ou administradores" });
     }
 
     const { id } = req.params;
       const empresa = await empresaService.getById(id);
 
-      if (req.role === "empreendedor" && empresa.id_usuario !== req.userId) {
+      if (req.userRole === "empreendedor" && empresa.id_usuario !== req.userId) {
         return res.status(403).json({ message: "Acesso negado à empresa" });
       }
 

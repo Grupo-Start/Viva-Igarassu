@@ -39,7 +39,7 @@ async function create(req, res) {
     const empresaIdAutomatico = req.id_empresa;
     let empresaIdToUse = empresaIdAutomatico;
 
-    if (!empresaIdToUse && req.role === "adm" && req.body && req.body.id_empresa) {
+    if (!empresaIdToUse && req.userRole === "adm" && req.body && req.body.id_empresa) {
       empresaIdToUse = req.body.id_empresa;
     }
 
@@ -48,7 +48,7 @@ async function create(req, res) {
       empresa = await empresaRepository.findById(empresaIdToUse);
     }
 
-    if (!empresa && req.role === "adm") {
+    if (!empresa && req.userRole === "adm") {
       empresa = (empresaRepository.findByName) ? await empresaRepository.findByName("Empresa Admin") : null;
       if (!empresa) {
         const adminEmpresaData = {

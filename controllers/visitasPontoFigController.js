@@ -11,7 +11,7 @@ async function visitarViaQr(req, res) {
     const resultado = await visitasPontoFigService.visitarViaQr({
       token,
       usuarioId: req.userId,
-      role: req.role
+      role: req.userRole
     });
 
     return res.status(201).json(resultado);

@@ -22,7 +22,6 @@ export default async function auth(req, res, next) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.userId = decoded.id_usuario;
-    req.role = decoded.role;
     req.userRole = decoded.role;
     try {
       const empresa = await prisma.empresa.findFirst({ where: { id_usuario: decoded.id_usuario } });

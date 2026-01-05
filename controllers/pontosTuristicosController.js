@@ -25,7 +25,7 @@ async function criarPonto(req, res) {
     let empresa = null;
     if (id_empresa) empresa = await empresaRepository.findById(id_empresa);
 
-    if (!empresa && req.role === "adm") {
+    if (!empresa && req.userRole === "adm") {
       empresa = (empresaRepository.findByName) ? await empresaRepository.findByName("Empresa Admin") : null;
       if (!empresa) {
         empresa = await empresaRepository.create({

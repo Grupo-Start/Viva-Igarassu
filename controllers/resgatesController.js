@@ -6,7 +6,7 @@ async function resgatar(req, res) {
 
     const result = await resgatesService.resgatarRecompensa({
       id_usuario: req.userId,
-      role: req.role,
+      role: req.userRole,
       id_recompensa: id
     });
 
