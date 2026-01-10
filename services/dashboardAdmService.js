@@ -17,7 +17,9 @@ async function dashboardAdmin() {
     prisma.eventos.count(),
     prisma.pontos_turisticos.count(),
     prisma.figurinhas.count(),
-    prisma.recompensas.count(),
+    (typeof prisma.recompensas.aggregate === 'function'
+      ? prisma.recompensas.aggregate({ _sum: { quantidade_disponivel: true } })
+      : prisma.recompensas.count()),
     prisma.resgates.count(),
     prisma.resgates.aggregate({ _sum: { valor_resgatado: true } }),
     prisma.usuario_figurinhas.count()
@@ -29,7 +31,7 @@ async function dashboardAdmin() {
     eventos: totalEventos,
     pontos_turisticos: totalPontos,
     figurinhas: totalFigurinhas,
-    recompensas_disponiveis: totalRecompensas,
+    recompensas_disponiveis: (totalRecompensas && totalRecompensas._sum && totalRecompensas._sum.quantidade_disponivel) || (Number.isInteger(totalRecompensas) ? totalRecompensas : 0),
     recompensas_resgatadas: totalResgates,
     total_moedas_resgatadas: sumResgates._sum.valor_resgatado || 0,
     total_visitas: totalVisitas

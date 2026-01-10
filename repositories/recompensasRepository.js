@@ -1,8 +1,27 @@
 import prisma from "../database/prismaClient.js";
 
 async function findAllByEmpresa(id_empresa) {
+  const disponibilidadeFilter = {
+    OR: [
+      { quantidade_disponivel: null },
+      { quantidade_disponivel: { gt: 0 } }
+    ]
+  };
+
+  if (id_empresa) {
+    return await prisma.recompensas.findMany({
+      where: {
+        id_empresa: String(id_empresa),
+        ...disponibilidadeFilter
+      },
+      include: {
+        empresa: true
+      }
+    });
+  }
+
   return await prisma.recompensas.findMany({
-    where: { id_empresa },
+    where: disponibilidadeFilter,
     include: {
       empresa: true
     }

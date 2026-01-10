@@ -8,7 +8,7 @@ describe('utils/bcrypt', () => {
   });
 
   test('hashPassword and comparePassword work', async () => {
-    const h = await bcryptUtil.hashPassword('pass');
+    const h = await bcryptUtil.hashPassword('password');
     expect(h).toBe('hashed');
     const ok = await bcryptUtil.comparePassword('pass', 'hashed');
     expect(ok).toBe(true);

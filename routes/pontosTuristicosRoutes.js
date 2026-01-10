@@ -7,6 +7,7 @@ import { permitir } from "../middleware/roles.js";
 const router = express.Router();
 
 router.get("/", pontosController.listarPublico);
+router.get("/:id", pontosController.getById);
 
 router.post(
   "/",

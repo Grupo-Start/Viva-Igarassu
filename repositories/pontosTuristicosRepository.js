@@ -18,6 +18,32 @@ async function listarTodos() {
   });
 }
 
+async function findById(id) {
+  if (!id) {
+    const error = new Error("Parâmetro 'id' é obrigatório para buscar ponto turístico.");
+    error.status = 400;
+    throw error;
+  }
+
+  return await prisma.pontos_turisticos.findUnique({
+    where: { id_ponto: String(id) },
+    include: {
+      enderecos: {
+        select: {
+          logradouro: true,
+          numero: true,
+          bairro: true,
+          cidade: true,
+          estado: true,
+          cep: true
+        }
+      },
+      figurinhas: true,
+      qr_codes: true
+    }
+  });
+}
+
 async function criarPonto(data) {
   return await prisma.pontos_turisticos.create({
     data
@@ -48,6 +74,7 @@ async function deletarPonto(id) {
 
 export default {
   listarTodos,
+  findById,
   criarPonto,
   atualizarPonto,
   deletarPonto

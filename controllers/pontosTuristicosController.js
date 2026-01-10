@@ -14,9 +14,21 @@ async function listarPublico(req, res) {
   }
 }
 
+async function getById(req, res) {
+  try {
+    const { id } = req.params;
+    const ponto = await pontosService.getById(id);
+    return res.status(200).json(ponto);
+  } catch (error) {
+    const status = error.status || 500;
+    return res.status(status).json({ message: error.message });
+  }
+}
+
 async function criarPonto(req, res) {
   try {
     const { body } = req;
+    const role = req.userRole || req.role;
     
 
     let id_empresa = req.id_empresa;
@@ -25,7 +37,7 @@ async function criarPonto(req, res) {
     let empresa = null;
     if (id_empresa) empresa = await empresaRepository.findById(id_empresa);
 
-    if (!empresa && req.userRole === "adm") {
+    if (!empresa && role === "adm") {
       empresa = (empresaRepository.findByName) ? await empresaRepository.findByName("Empresa Admin") : null;
       if (!empresa) {
         empresa = await empresaRepository.create({
@@ -186,6 +198,7 @@ async function deletarPonto(req, res) {
 
 export default {
   listarPublico,
+  getById,
   criarPonto,
   atualizarPonto,
   deletarPonto

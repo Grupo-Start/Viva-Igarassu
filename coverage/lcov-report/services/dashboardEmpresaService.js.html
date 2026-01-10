@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/13</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.73% </span>
+                <span class="strong">25.92% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/23</span>
+                <span class='fraction'>7/27</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.63% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/11</span>
+                <span class='fraction'>8/12</span>
             </div>
         
             
@@ -153,7 +153,15 @@
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
 <a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -178,6 +186,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -244,6 +258,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import prisma from "../database/prismaClient.js";
+import { buildImageUrl } from "../utils/imageUrl.js";
 &nbsp;
 async function getDashboardEmpresa(id_empresa) {
   const empresa = await prisma.empresa.findUnique({
@@ -258,12 +273,14 @@ async function getDashboardEmpresa(id_empresa) {
 &nbsp;
   const [
     totalEventos,
-    totalRecompensas,
+    recompensasDisponiveisRaw,
     totalResgates,
     sumResgates
   ] = await Promise.all([
     prisma.eventos.count({ where: { id_empresa } }),
-    prisma.recompensas.count({ where: { id_empresa } }),
+    (typeof prisma.recompensas.aggregate === 'function')
+      ? <span class="branch-0 cbranch-no" title="branch not covered" >prisma.recompensas.aggregate({ _sum: { quantidade_disponivel: true }, where: { id_empresa } })</span>
+      : prisma.recompensas.count({ where: { id_empresa } }),
     prisma.resgates.count({ where: { recompensas: { is: { id_empresa } } } }),
     prisma.resgates.aggregate({
       _sum: { valor_resgatado: true },
@@ -271,13 +288,17 @@ async function getDashboardEmpresa(id_empresa) {
     })
   ]);
 &nbsp;
+  const recompensas_disponiveis = typeof recompensasDisponiveisRaw === 'number'
+    ? recompensasDisponiveisRaw
+    : <span class="branch-1 cbranch-no" title="branch not covered" >(recompensasDisponiveisRaw &amp;&amp; recompensasDisponiveisRaw._sum &amp;&amp; recompensasDisponiveisRaw._sum.quantidade_disponivel) || 0;</span>
+&nbsp;
   return {
     empresa: {
       id: empresa.id_empresa,
       nome: empresa.nome_empresa
     },
     eventos: totalEventos,
-    recompensas_disponiveis: totalRecompensas,
+    recompensas_disponiveis: recompensas_disponiveis,
     recompensas_resgatadas: totalResgates,
     total_moedas_resgatadas: (sumResgates &amp;&amp; sumResgates._sum &amp;&amp; sumResgates._sum.valor_resgatado) || <span class="branch-3 cbranch-no" title="branch not covered" >0</span>
   };
@@ -303,7 +324,7 @@ async function <span class="fstat-no" title="function not covered" >getResgatesR
     recompensa: r.recompensas ? {
       id: r.recompensas.id_recompensas,
       nome: r.recompensas.nome,
-      imagem: r.recompensas.imagem_path ? `${process.env.API_URL}${r.recompensas.imagem_path}` : null
+      imagem: buildImageUrl(r.recompensas.imagem_path)
     } : null
   }));
 }
@@ -323,7 +344,7 @@ async function <span class="fstat-no" title="function not covered" >getRecompens
     nome: r.nome,
     quantidade_disponivel: r.quantidade_disponivel ?? 0,
     preco_moedas: r.preco_moedas ?? 0,
-    imagem: r.imagem_path ? `${process.env.API_URL}${r.imagem_path}` : null,
+    imagem: buildImageUrl(r.imagem_path),
     total_resgates: r._count ? r._count.resgates : 0
   }));
 }
@@ -340,7 +361,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-29T05:30:57.701Z
+                at 2026-01-10T03:32:45.277Z
             </div>
         <script src="../prettify.js"></script>
         <script>

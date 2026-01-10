@@ -5,6 +5,16 @@ async function listarPublico() {
   return pontosRepository.listarTodos();
 }
 
+async function getById(id) {
+  const ponto = await pontosRepository.findById(id);
+  if (!ponto) {
+    const error = new Error('Ponto turístico não encontrado');
+    error.status = 404;
+    throw error;
+  }
+  return ponto;
+}
+
 async function criarPonto(dados) {
   try {
     const ponto = await pontosRepository.criarPonto(dados);

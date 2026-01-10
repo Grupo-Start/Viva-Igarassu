@@ -32,6 +32,7 @@ async function getById(req, res) {
 
 async function create(req, res) {
   try {
+    const role = req.userRole || req.role;
     
 
     let id_empresa = req.id_empresa;
@@ -44,7 +45,7 @@ async function create(req, res) {
       empresa = await empresaRepository.findById(id_empresa);
     }
 
-    if (!empresa && req.userRole === "adm") {
+    if (!empresa && role === "adm") {
       empresa = (empresaRepository.findByName) ? await empresaRepository.findByName("Empresa Admin") : null;
       if (!empresa) {
         const adminEmpresaData = {
@@ -90,7 +91,8 @@ async function update(req, res) {
     let id_empresa = req.body && req.body.id_empresa ? req.body.id_empresa : req.id_empresa;
     let empresa = null;
     if (id_empresa) empresa = await empresaRepository.findById(id_empresa);
-    if (!empresa && req.userRole === "adm") {
+    const role = req.userRole || req.role;
+    if (!empresa && role === "adm") {
       empresa = (empresaRepository.findByName) ? await empresaRepository.findByName("Empresa Admin") : null;
       if (!empresa) {
         const adminEmpresaData = {

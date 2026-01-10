@@ -14,12 +14,14 @@ async function getDashboardEmpresa(id_empresa) {
 
   const [
     totalEventos,
-    totalRecompensas,
+    recompensasDisponiveisRaw,
     totalResgates,
     sumResgates
   ] = await Promise.all([
     prisma.eventos.count({ where: { id_empresa } }),
-    prisma.recompensas.count({ where: { id_empresa } }),
+    (typeof prisma.recompensas.aggregate === 'function')
+      ? prisma.recompensas.aggregate({ _sum: { quantidade_disponivel: true }, where: { id_empresa } })
+      : prisma.recompensas.count({ where: { id_empresa } }),
     prisma.resgates.count({ where: { recompensas: { is: { id_empresa } } } }),
     prisma.resgates.aggregate({
       _sum: { valor_resgatado: true },
@@ -27,13 +29,17 @@ async function getDashboardEmpresa(id_empresa) {
     })
   ]);
 
+  const recompensas_disponiveis = typeof recompensasDisponiveisRaw === 'number'
+    ? recompensasDisponiveisRaw
+    : (recompensasDisponiveisRaw && recompensasDisponiveisRaw._sum && recompensasDisponiveisRaw._sum.quantidade_disponivel) || 0;
+
   return {
     empresa: {
       id: empresa.id_empresa,
       nome: empresa.nome_empresa
     },
     eventos: totalEventos,
-    recompensas_disponiveis: totalRecompensas,
+    recompensas_disponiveis: recompensas_disponiveis,
     recompensas_resgatadas: totalResgates,
     total_moedas_resgatadas: (sumResgates && sumResgates._sum && sumResgates._sum.valor_resgatado) || 0
   };

@@ -34,14 +34,15 @@ app.use("/enderecos", enderecosRoutes);
 app.use("/endereco", enderecosRoutes);
 
 
+app.use("/eventos", eventosRoutes);
+app.use("/recompensas", recompensasRoutes);
+app.use("/pontos-turisticos", pontosTuristicosRoutes);
+
 app.use(auth);
 
-app.use("/eventos", eventosRoutes);
 app.use("/empresa", empresaRoutes);
 app.use("/figurinhas", figurinhasRoutes);
-app.use("/recompensas", recompensasRoutes);
 app.use("/resgates", resgatesRoutes);
-app.use("/pontos-turisticos", pontosTuristicosRoutes);
 app.use("/meu-album-de-figurinhas", minhasFigurinhasRoutes);
 app.use("/qrcodes", qrCodeRoutes);
 app.use("/visitas", visitasPontoFigRoutes);

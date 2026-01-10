@@ -6,12 +6,36 @@ import { uploadRecompensaImagem } from "../middleware/upload.js";
 
 const router = Router();
 
-router.use(auth);
+router.post(
+	"/",
+	auth,
+	permitir("empreendedor", "adm"),
+	uploadRecompensaImagem,
+	recompensasController.create
+);
 
-router.post("/", permitir("empreendedor", "adm"), uploadRecompensaImagem, recompensasController.create);
-router.put("/:id", permitir("empreendedor", "adm"), uploadRecompensaImagem, recompensasController.update);
-router.post("/:id/imagem", permitir("empreendedor", "adm"), uploadRecompensaImagem, recompensasController.uploadImagem);
-router.delete("/:id", permitir("empreendedor", "adm"), recompensasController.delete);
+router.put(
+	"/:id",
+	auth,
+	permitir("empreendedor", "adm"),
+	uploadRecompensaImagem,
+	recompensasController.update
+);
+
+router.post(
+	"/:id/imagem",
+	auth,
+	permitir("empreendedor", "adm"),
+	uploadRecompensaImagem,
+	recompensasController.uploadImagem
+);
+
+router.delete(
+	"/:id",
+	auth,
+	permitir("empreendedor", "adm"),
+	recompensasController.delete
+);
 
 
 router.get("/", recompensasController.getAll);

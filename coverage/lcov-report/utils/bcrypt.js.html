@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>13/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -81,17 +81,46 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -99,24 +128,55 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import bcrypt from 'bcryptjs';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+import bcrypt from 'bcryptjs';
 &nbsp;
-const SALT_ROUNDS = Number(process.env.BCRYPT_ROUNDS) || 10;
+const DEFAULT_SALT_ROUNDS = 10;
+const DEFAULT_MIN_PASSWORD_LENGTH = 8;
 &nbsp;
+const parsedRounds = Number(process.env.BCRYPT_ROUNDS);
+export const SALT_ROUNDS = Number.isInteger(parsedRounds) &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >parsedRounds &gt; 0 </span>? <span class="branch-0 cbranch-no" title="branch not covered" >parsedRounds </span>: DEFAULT_SALT_ROUNDS;
+&nbsp;
+const parsedMin = Number(process.env.MIN_PASSWORD_LENGTH);
+export const MIN_PASSWORD_LENGTH = Number.isInteger(parsedMin) &amp;&amp; parsedMin &gt; 0 ? parsedMin : <span class="branch-1 cbranch-no" title="branch not covered" >DEFAULT_MIN_PASSWORD_LENGTH;</span>
+&nbsp;
+/**
+ * Gera o hash de uma senha.
+ * @param {string} password Senha em texto claro
+ * @returns {Promise&lt;string&gt;} Hash da senha
+ */
 export async function hashPassword(password) {
-  if (typeof password !== 'string') throw new TypeError('Password must be a string');
+  if (typeof password !== 'string') throw new TypeError('A senha deve ser uma string');
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (password.length &lt; MIN_PASSWORD_LENGTH) <span class="cstat-no" title="statement not covered" >throw new Error(`A senha deve ter ao menos ${MIN_PASSWORD_LENGTH} caracteres`);</span>
   return await bcrypt.hash(password, SALT_ROUNDS);
 }
 &nbsp;
+/**
+ * Compara uma senha em texto com um hash.
+ * @param {string} password Senha em texto claro
+ * @param {string} hash Hash salvo
+ * @returns {Promise&lt;boolean&gt;} Resultado da comparação
+ */
 export async function comparePassword(password, hash) {
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof password !== 'string') <span class="cstat-no" title="statement not covered" >throw new TypeError('Password must be a string');</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof password !== 'string') <span class="cstat-no" title="statement not covered" >throw new TypeError('A senha deve ser uma string');</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof hash !== 'string') <span class="cstat-no" title="statement not covered" >throw new TypeError('Hash deve ser uma string');</span>
   return await bcrypt.compare(password, hash);
 }
 &nbsp;
-export default {
-  hashPassword,
-  comparePassword
-};
+&nbsp;
+&nbsp;
+&nbsp;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -124,7 +184,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-29T05:30:57.701Z
+                at 2026-01-10T03:32:45.277Z
             </div>
         <script src="../prettify.js"></script>
         <script>
