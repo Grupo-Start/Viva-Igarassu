@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
-
 import userRoutes from "./routes/userRoutes.js";
 import empresaRoutes from "./routes/empresaRoutes.js";
 import eventosRoutes from "./routes/eventosRoutes.js";
@@ -58,6 +57,9 @@ app.use((err, req, res, next) => {
 app.use((err, req, res, next) => {
 	if (!err) return next();
 	console.error('[ERROR] Unhandled error:', err && err.stack ? err.stack : err);
+	if (err && err.name === 'MulterError') {
+		return res.status(400).json({ message: err.message });
+	}
 	const status = err && err.status ? err.status : 500;
 	res.status(status).send(err && err.message ? err.message : 'Internal Server Error');
 });

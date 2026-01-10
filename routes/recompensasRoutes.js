@@ -22,6 +22,14 @@ router.put(
 	recompensasController.update
 );
 
+router.patch(
+	"/:id",
+	auth,
+	permitir("empreendedor", "adm"),
+	uploadRecompensaImagem,
+	recompensasController.update
+);
+
 router.post(
 	"/:id/imagem",
 	auth,
