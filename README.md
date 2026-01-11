@@ -256,6 +256,9 @@ npm test -- --coverage
 @@unique([id_usuario, id_figurinha])
 ```
 
+## Diagrama EER
+
+![Diagrama EER  do banco de dados Viva Igarassu](asset/DiagramaEER.png)
 ---
 
 ## Segurança
