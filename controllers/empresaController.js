@@ -1,148 +1,66 @@
 import empresaService from "../services/empresaService.js";
+import { wrap, crud } from "./baseController.js";
 
-async function getAll(req, res) {
-  try {
-    const empresas = await empresaService.getAll();
-    return res.status(200).json(empresas);
-  } catch (error) {
-    return res.status(500).json({ message: "Erro interno do servidor" });
-  }
-}
-
-async function getById(req, res) {
-  try {
-    const { id } = req.params;
-    const empresa = await empresaService.getById(id);
-    return res.status(200).json(empresa);
-  } catch (error) {
-    if (error.message === "Empresa não encontrada") {
-      return res.status(404).json({ message: error.message });
-    }
-    return res.status(500).json({ message: "Erro interno do servidor" });
-  }
-}
+const handlers = crud(empresaService, { idParam: "id" });
 
 async function create(req, res) {
-  try {
-    const data = {
-      ...req.body,
-      id_usuario: req.userId
-    };
-    const empresa = await empresaService.create(data);
-    return res.status(201).json(empresa);
-  } catch (error) {
-    return res.status(400).json({ message: error.message });
-  }
-}
-
-async function update(req, res) {
-  try {
-    const { id } = req.params;
-    const empresa = await empresaService.update(id, req.body);
-    return res.status(200).json(empresa);
-  } catch (error) {
-    if (error.message === "Empresa não encontrada") {
-      return res.status(404).json({ message: error.message });
-    }
-    return res.status(400).json({ message: error.message });
-  }
-}
-
-async function deleteEmpresa(req, res) {
-  try {
-    const { id } = req.params;
-    await empresaService.delete(id);
-    return res.status(200).json({ message: "Empresa excluída com sucesso" });
-  } catch (error) {
-    if (error.message === "Empresa não encontrada") {
-      return res.status(404).json({ message: error.message });
-    }
-    return res.status(500).json({ message: "Erro interno do servidor" });
-  }
+  const data = {
+    ...req.body,
+    id_usuario: req.userId
+  };
+  const empresa = await empresaService.create(data);
+  return res.status(201).json(empresa);
 }
 
 async function getEventosCount(req, res) {
-  try {
-    const { id } = req.params;
-    const result = await empresaService.countEventos(id);
-    return res.status(200).json(result);
-  } catch (error) {
-    if (error.message === "Empresa não encontrada") {
-      return res.status(404).json({ message: error.message });
-    }
-    return res.status(500).json({ message: "Erro interno do servidor" });
-  }
+  const { id } = req.params;
+  const result = await empresaService.countEventos(id);
+  return res.status(200).json(result);
 }
 
 async function getMeEventosCount(req, res) {
-  try {
-    const userId = req.userId;
-    const result = await empresaService.countEventosByUser(userId);
-    return res.status(200).json(result);
-  } catch (error) {
-    if (error.message === "Empresa não encontrada") {
-      return res.status(404).json({ message: error.message });
-    }
-    return res.status(500).json({ message: "Erro interno do servidor" });
-  }
+  const userId = req.userId;
+  const result = await empresaService.countEventosByUser(userId);
+  return res.status(200).json(result);
 }
 
 async function getMeEventos(req, res) {
-  try {
-    const userId = req.userId;
-    const eventos = await empresaService.getMeEventos(userId);
-    return res.status(200).json(eventos);
-  } catch (error) {
-    if (error.message === "Empresa não encontrada") {
-      return res.status(404).json({ message: error.message });
-    }
-    return res.status(500).json({ message: "Erro interno do servidor" });
-  }
+  const userId = req.userId;
+  const eventos = await empresaService.getMeEventos(userId);
+  return res.status(200).json(eventos);
 }
 
 async function getEventosCountByMonth(req, res) {
-  try {
-    const { id } = req.params;
-    const { year } = req.query;
-    if (year !== undefined && isNaN(Number(year))) {
-      return res.status(400).json({ message: "Ano inválido" });
-    }
-    const result = await empresaService.countEventosByMonth(id, year);
-    return res.status(200).json(result);
-  } catch (error) {
-    if (error.message === "Empresa não encontrada") {
-      return res.status(404).json({ message: error.message });
-    }
-    return res.status(500).json({ message: "Erro interno do servidor" });
+  const { id } = req.params;
+  const { year } = req.query;
+  if (year !== undefined && isNaN(Number(year))) {
+    return res.status(400).json({ message: "Ano inválido" });
   }
+  const result = await empresaService.countEventosByMonth(id, year);
+  return res.status(200).json(result);
 }
 
 async function getMeEventosCountByMonth(req, res) {
-  try {
-    const userId = req.userId;
-    const { year } = req.query;
-    if (year !== undefined && isNaN(Number(year))) {
-      return res.status(400).json({ message: "Ano inválido" });
-    }
-    const result = await empresaService.countMeEventosByMonth(userId, year);
-    return res.status(200).json(result);
-  } catch (error) {
-    if (error.message === "Empresa não encontrada") {
-      return res.status(404).json({ message: error.message });
-    }
-    return res.status(500).json({ message: "Erro interno do servidor" });
+  const userId = req.userId;
+  const { year } = req.query;
+  if (year !== undefined && isNaN(Number(year))) {
+    return res.status(400).json({ message: "Ano inválido" });
   }
+  const result = await empresaService.countMeEventosByMonth(userId, year);
+  return res.status(200).json(result);
 }
 
 export default {
-  getAll,
-  getById,
-  create,
-  update,
-  delete: deleteEmpresa
-  ,getEventosCount,getMeEventosCount
-  ,getEventosCountByMonth,getMeEventosCountByMonth
-  ,getMeEventos
+  getAll: handlers.findAll,
+  getById: handlers.getById,
+  create: wrap(create),
+  update: handlers.update,
+  delete: handlers.remove,
+  getEventosCount: wrap(getEventosCount),
+  getMeEventosCount: wrap(getMeEventosCount),
+  getEventosCountByMonth: wrap(getEventosCountByMonth),
+  getMeEventosCountByMonth: wrap(getMeEventosCountByMonth),
+  getMeEventos: wrap(getMeEventos)
 };
 
 

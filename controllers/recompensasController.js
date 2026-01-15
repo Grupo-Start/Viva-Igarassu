@@ -2,6 +2,7 @@ import recompensasService from "../services/recompensasService.js";
 import empresaRepository from "../repositories/empresaRepository.js";
 import { uploadRecompensaImagem } from "../middleware/upload.js";
 import { buildImageUrl } from "../utils/imageUrl.js";
+import { wrap } from "./baseController.js";
 
 async function getAll(req, res) {
   try {
@@ -135,10 +136,10 @@ async function uploadImagem(req, res) {
 }
 
 export default {
-  getAll,
-  getById,
-  create,
-  update,
-  delete: deleteRecompensa,
-  uploadImagem
+  getAll: wrap(getAll),
+  getById: wrap(getById),
+  create: wrap(create),
+  update: wrap(update),
+  delete: wrap(deleteRecompensa),
+  uploadImagem: wrap(uploadImagem)
 };
