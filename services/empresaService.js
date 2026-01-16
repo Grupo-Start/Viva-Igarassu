@@ -22,6 +22,7 @@ async function create(data) {
     nome_empresa,
     cnpj,
     tipo_servico,
+    imagem_path,
     id_usuario
   } = data;
 
@@ -35,6 +36,7 @@ async function create(data) {
     nome_empresa,
     cnpj,
     tipo_servico,
+    imagem_path,
     id_usuario: String(id_usuario),
     data_cadastro: new Date()
   });
@@ -47,6 +49,7 @@ async function update(id, data) {
     nome_empresa,
     cnpj,
     tipo_servico,
+    imagem_path,
     id_usuario
   } = data;
 
@@ -54,6 +57,7 @@ async function update(id, data) {
     nome_empresa,
     cnpj,
     tipo_servico,
+    imagem_path,
     id_usuario: id_usuario !== undefined ? String(id_usuario) : undefined
   });
 }

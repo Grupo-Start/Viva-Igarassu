@@ -37,9 +37,11 @@ function createCloudinaryUpload(folder = "viva-igarassu/default") {
 
 export const uploadRecompensaImagem = createCloudinaryUpload("viva-igarassu/recompensas").single("imagem");
 export const uploadEventoImagem = createCloudinaryUpload("viva-igarassu/eventos").single("imagem");
+export const uploadEmpresaImagem = createCloudinaryUpload("viva-igarassu/empresas").single("imagem");
 
 export default {
   createCloudinaryUpload,
   uploadRecompensaImagem,
   uploadEventoImagem
+  ,uploadEmpresaImagem
 };

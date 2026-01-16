@@ -1,7 +1,6 @@
+jest.mock('../../services/visitasPontoFigService.js', () => ({ __esModule: true, default: { visitarPonto: jest.fn() } }));
 import userFigurinhaController from '../../controllers/userFigurinhaController.js';
 import visitaPontoService from '../../services/visitasPontoFigService.js';
-
-jest.mock('../../services/visitasPontoFigService.js', () => ({ __esModule: true, default: { visitarPonto: jest.fn() } }));
 
 describe('userFigurinhaController', () => {
   afterEach(() => jest.clearAllMocks());

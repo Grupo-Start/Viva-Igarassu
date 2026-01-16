@@ -2,6 +2,10 @@ import jwt from "jsonwebtoken";
 import prisma from "../database/prismaClient.js";
 
 export default async function auth(req, res, next) {
+  // Permitir listagem pública de empresas sem autenticação
+  if (req.method === 'GET' && (req.path === '/empresa' || req.path === '/empresa/')) {
+    return next();
+  }
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {

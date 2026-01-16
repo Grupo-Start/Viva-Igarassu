@@ -11,6 +11,7 @@ model empresa {
   id_empresa    String               @id @default(uuid())
   nome_empresa  String               @db.VarChar(100)
   cnpj          String               @db.VarChar(18)
+  imagem_path   String?
   tipo_servico  empresa_tipo_servico
   data_cadastro DateTime             @default(now()) @db.Timestamp(0)
   id_usuario    String

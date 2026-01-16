@@ -37,7 +37,7 @@ describe('empresaController', () => {
     await empresaController.getAll(req, res);
 
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith(empresas);
+    expect(res.json).toHaveBeenCalledWith([{ id_empresa: 1, imagem: null }]);
   });
 
   it('getById returns 200 when found', async () => {
